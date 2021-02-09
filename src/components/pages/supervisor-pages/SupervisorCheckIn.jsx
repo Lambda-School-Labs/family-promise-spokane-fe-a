@@ -4,7 +4,6 @@ import LoadingComponent from '../../common/LoadingComponent';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 import { tableIcons } from '../../../utils/tableIcons';
 import { Switch } from 'antd';
-import { axiosWithAuth } from '../../../api/axiosWithAuth';
 
 export default function SupervisorCheckIn() {
   const [loading, setLoading] = useState(true);
