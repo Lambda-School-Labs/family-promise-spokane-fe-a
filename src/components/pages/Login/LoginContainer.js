@@ -7,6 +7,7 @@ const LoginContainer = () => {
   useEffect(() => {
     const { pkce, issuer, clientId, redirectUri, scopes } = config;
     // destructure your config so that you can pass it into the required fields in your widget.
+
     const widget = new OktaSignIn({
       baseUrl: issuer ? issuer.split('/oauth2')[0] : '',
       clientId,
@@ -27,12 +28,20 @@ const LoginContainer = () => {
       authParams: {
         pkce,
         issuer,
-        display: 'page',
+        display: 'popup',
         scopes,
       },
       features: {
         registration: true,
       },
+      idpDiscovery: true,
+      idpDisplay: 'SECONDARY',
+      idps: [
+        {
+          type: 'FACEBOOK',
+          id: '0oa5odlngtLe0azaO5d6',
+        },
+      ],
     });
 
     widget.renderEl(
