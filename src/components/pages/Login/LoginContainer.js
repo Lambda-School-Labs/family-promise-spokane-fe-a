@@ -58,10 +58,6 @@ const LoginContainer = () => {
     );
   }, []);
 
-  const responseFacebook = res => {
-    console.log(res);
-  };
-
   return <div id="sign-in-widget" />;
 };
 
