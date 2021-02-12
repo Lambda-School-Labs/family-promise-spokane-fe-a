@@ -52,9 +52,11 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
       .get(`/logs/${resID}`)
       .then(res => {
         console.log('Logs', res.data);
-        setFamilyID(res.data[0].family_id);
-        setMembersStaying(res.data[0].members_staying);
-        setWaitList(res.data.waitlist);
+        if (res.data[0]) {
+          setFamilyID(res.data[0].family_id);
+          setMembersStaying(res.data[0].members_staying);
+          setWaitList(res.data.waitlist);
+        }
       });
   }, []);
 
@@ -130,7 +132,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
         })
         .catch(err => console.log('get family error'));
     } catch (error) {
-      alert('error');
+      //alert('error');
     }
   };
 

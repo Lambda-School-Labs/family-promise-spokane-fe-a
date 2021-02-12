@@ -21,6 +21,8 @@ function RenderHomePage(props) {
       return <Redirect to="/guests" />;
     case 'executive_director':
       return <Redirect to="/analytics" />;
+    case 'pending':
+      return <Redirect to="/guest-dashboard" />;
     default:
       return <Redirect to="/login" />;
   }

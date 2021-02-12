@@ -84,7 +84,7 @@ const SideBar = () => {
             >
               Analytics
             </Menu.Item>
-            {user.role === 'guest' && (
+            {(user.role === 'guest' || user.role === 'pending') && (
               <Menu>
                 <Menu.Item
                   onClick={redirectToMembers}
