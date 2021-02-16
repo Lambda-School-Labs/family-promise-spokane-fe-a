@@ -57,10 +57,20 @@ const Analytics = () => {
   const user = useSelector(state => state.CURRENT_USER);
 
   useEffect(() => {
-    axiosWithAuth()
-      .get(`/logs`)
-      .then(res => console.log(setLogs(res.data)));
-  }, [logs]);
+    const interval = setInterval(() => {
+      axiosWithAuth()
+        .get(`/logs`)
+        .then(res => console.log(setLogs(res.data)));
+    }, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setSeconds(seconds => seconds + 1);
+  //   }, 1000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   const fetchLogs = e => {
     e.preventDefault();
