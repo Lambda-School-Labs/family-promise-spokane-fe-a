@@ -23,4 +23,17 @@ export const setCurrentUser = () => async dispatch => {
   }
 };
 
-export const getFamily = () => {};
+export const getFamily = () => async dispatch => {
+  dispatch({ type: 'GET_FAMILY_FETCHING' });
+  try {
+    const currentUser = await axiosWithAuth().get('/users/me');
+    let myFamily = await axiosWithAuth().get(
+      `families/user/${currentUser.data.user.id}`
+    );
+    console.log(myFamily);
+    dispatch({ type: 'GET_FAMILY_SUCCESS', payload: myFamily.data });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'GET_FAMILY_FAILURE', payload: error });
+  }
+};

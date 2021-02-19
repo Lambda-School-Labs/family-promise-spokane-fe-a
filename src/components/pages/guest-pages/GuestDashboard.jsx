@@ -18,6 +18,10 @@ import { useSelector } from 'react-redux';
 const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   // The current user
   const user = useSelector(state => state.CURRENT_USER);
+  const mystate = useSelector(state => state);
+  useEffect(() => {
+    console.log(mystate);
+  }, []);
 
   //UserState
   const [users, setUsers] = useState([]);
@@ -46,30 +50,33 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   const [familyID, setFamilyID] = useState(null);
 
   //Sets state for members staying and waitlist members
-  useEffect(() => {
-    axiosWithAuth()
-      //This can persist if you useParams to pull in the id of the api and change the hard coded 7 to ${id}
-      .get(`/logs/${resID}`)
-      .then(res => {
-        console.log('Logs', res.data);
-        if (res.data[0]) {
-          setFamilyID(res.data[0].family_id);
-          setMembersStaying(res.data[0].members_staying);
-          setWaitList(res.data.waitlist);
-        }
-      });
-  }, []);
+  // useEffect(() => {
+  //   axiosWithAuth()
+  //     //This can persist if you useParams to pull in the id of the api and change the hard coded 7 to ${id}
+  //     .get(`/logs/${resID}`)
+  //     .then(res => {
+  //       console.log('Logs', res.data);
+  //       console.log('hello?')
+  //       if (res.data[0]) {
+  //         setFamilyID(res.data[0].family_id);
+  //         setMembersStaying(res.data[0].members_staying);
+  //         setWaitList(res.data.waitlist);
+  //       }
+  //     });
+  // }, []);
 
   //1> Create another useEffect that will make an axios call to the logs endpoint using the family ID (wait, that doesn't make sense because we will need to go through the family id. So )
   // console.log("FAMILYID", familyID);
   useEffect(() => {
-    if (familyID) {
-      axiosWithAuth()
-        .get(`/families/${familyID}/logs`)
-        .then(res => console.log('families/logs', res))
-        .catch(err => console.log(err));
-    }
-  }, [familyID]);
+    console.log('inside weird useeffect');
+
+    // if (familyID) {
+    //   axiosWithAuth()
+    //     .get(`/families/${familyID}/logs`)
+    //     .then(res => console.log('families/logs', res))
+    //     .catch(err => console.log(err));
+    // }
+  }, []);
 
   // console.log('Is Reserved', isReserved);
   //************THIS COULD BE A FUNCTION BECAUSE IT IS BEING USED TWICE:******************
@@ -133,6 +140,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
         .catch(err => console.log('get family error'));
     } catch (error) {
       //alert('error');
+      console.log(error);
     }
   };
 
@@ -173,20 +181,20 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
           total_beds: count,
         });
 
-        return (
-          <div>
-            <p>
-              Congratulations, you have reserved {membersStaying.length} amount
-              of beds at 904 E Hartson Ave, Spokane, WA 99202 for MM/DD/YYY.
-              Please be sure to have at least ONED ADULT available at the
-              shelter before 7pm to check in with the supervisor.
-            </p>
-            <p>
-              If you do not show ip with your total amont of family members,
-              those beds will be reserved for other guests.
-            </p>
-          </div>
-        );
+        // return (
+        //   <div>
+        //     <p>
+        //       Congratulations, you have reserved {membersStaying.length} amount
+        //       of beds at 904 E Hartson Ave, Spokane, WA 99202 for MM/DD/YYY.
+        //       Please be sure to have at least ONED ADULT available at the
+        //       shelter before 7pm to check in with the supervisor.
+        //     </p>
+        //     <p>
+        //       If you do not show ip with your total amont of family members,
+        //       those beds will be reserved for other guests.
+        //     </p>
+        //   </div>
+        // );
       })
       .catch(err => {
         console.log('Nope', err);
