@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-
+import Guests from '../Guests/Guests';
+import SupervisorCheckIn from './SupervisorCheckIn';
+import SupervisorGuestLogs from './SupervisorGuestLogs';
 // UI
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import Container from '@material-ui/core/Container';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import MaterialTable from 'material-table';
@@ -12,19 +15,52 @@ import { axiosWithAuth } from '../../../api/axiosWithAuth';
 
 // utils
 import { tableIcons } from '../../../utils/tableIcons';
+import { findLastIndex } from 'underscore';
 
 const useStyles = makeStyles({
-  root: {
-    minWidth: 275,
-    minHeight: 200,
+  bigContainer: {
+    //border: '1px solid red',
+    marginLeft: '100px',
+    width: '90%',
+    //display: 'flex',
   },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
+  heading: {
+    marginTop: '2rem',
+  },
+  container1: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+    margin: '1rem 0',
+    //border: '1px solid red',
+  },
+  monthlyContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+    margin: '1rem 0',
+    //border: '1px solid red',
+  },
+  container2: {
+    //border: '1px solid red',
+    margin: '1rem 0',
+  },
+  container3: {
+    border: '1px solid red',
+    display: 'flex',
+    justifyContent: 'space-between',
+    margin: '1rem 0',
+  },
+  root: {
+    width: '32%',
+    textAlign: 'center',
+    //border: '1px solid blue',
   },
   title: {
-    fontSize: 24,
+    fontSize: 18,
+  },
+  number: {
+    fontSize: 36,
   },
   pos: {
     marginBottom: 12,
@@ -78,104 +114,108 @@ const Analytics = () => {
   };
 
   return (
-    <div className="cards-container">
-      <div className="cards">
-        <Card className={classes.root} variant="outlined">
-          <CardContent>
-            <Typography
-              className={classes.title}
-              color="textPrimary"
-              gutterBottom
-            >
-              Logs
-            </Typography>
-            <button
-              onClick={e => {
-                fetchLogs(e);
-              }}
-            >
-              Fetch Logs
-            </button>
-            {card
-              ? logs.map(log => (
-                  <Card key={log.id}>
-                    <CardContent>
-                      <p> Checked in: {log.checked_in ? 'Yes' : 'No'}</p>
-                      <p>Date: {new Date(log.date).toString()}</p>
-                      <p>Family Id: {log.family_id}</p>
-                      <p> On-Site: {log.on_sight ? 'Yes' : 'No'}</p>
-                      <p>Supervisor Id: {log.supervisor_id}</p>
-                      <p> Time: {new Date(logs.time).toLocaleTimeString()}</p>
-                    </CardContent>
-                  </Card>
-                ))
-              : ''}
-            {/* <Typography>22</Typography> */}
-          </CardContent>
-        </Card>
-        <Card className={classes.root} variant="outlined">
-          <CardContent>
-            <Typography
-              className={classes.title}
-              color="textPrimary"
-              gutterBottom
-            >
-              Staying the night
-            </Typography>
-            <Typography>Total: 37</Typography>
-            <Typography>Adults: 17</Typography>
-            <Typography>Children: 24</Typography>
-          </CardContent>
-        </Card>
-        <Card className={classes.root} variant="outlined">
-          <CardContent>
-            <Typography
-              className={classes.title}
-              color="textPrimary"
-              gutterBottom
-            >
-              Total # of guests
-            </Typography>
-            <Typography>90</Typography>
-          </CardContent>
-        </Card>
-      </div>
-      <div className="second">
-        {user.role == 'executive_director' && (
-          <div style={{ height: 400, width: '100%' }}>
-            <MaterialTable
-              icons={tableIcons}
-              title="Staff"
-              columns={columns}
-              data={staffMembers}
-              actions={[]}
-              cellEditable={true}
-            />
-          </div>
-        )}
-        <div className="carrying-capacity">
-          <h2>Carrying Capacity</h2>
-          <Circle
-            animate={true} // Boolean: Animated/Static progress
-            animationDuration="4s" //String: Length of animation
-            // responsive={true} // Boolean: Make SVG adapt to parent size
-            size={380} // Number: Defines the size of the circle.
-            lineWidth={10} // Number: Defines the thickness of the circle's stroke.
-            progress={43} // Number: Update to change the progress and percentage.
-            progressColor="cornflowerblue" // String: Color of "progress" portion of circle.
-            bgColor="whitesmoke" // String: Color of "empty" portion of circle.
-            textColor="hotpink" // String: Color of percentage text color.
-            textStyle={{
-              font: 'bold 5rem Helvetica, Arial, sans-serif', // CSSProperties: Custom styling for percentage.
-            }}
-            percentSpacing={10} // Number: Adjust spacing of "%" symbol and number.
-            roundedStroke={true} // Boolean: Rounded/Flat line ends
-            showPercentage={true} // Boolean: Show/hide percentage.
-            showPercentageSymbol={true} // Boolean: Show/hide only the "%" symbol.
-          />
-        </div>
-      </div>
-    </div>
+    <>
+      <Container className={classes.bigContainer}>
+        <Container className={classes.heading}>
+          <h1>Welcome, Executive Director!</h1>
+        </Container>
+        <Container>
+          <h2>Daily Shelter Stats</h2>
+          <hr></hr>
+        </Container>
+        <Container className={classes.container1}>
+          <Card className={classes.root} variant="outlined">
+            <CardContent>
+              <Typography
+                className={classes.title}
+                color="textPrimary"
+                gutterBottom
+              >
+                Beds Reserved
+              </Typography>
+              <Typography className={classes.number}>20</Typography>
+            </CardContent>
+          </Card>
+          <Card className={classes.root} variant="outlined">
+            <CardContent>
+              <Typography
+                className={classes.title}
+                color="textPrimary"
+                gutterBottom
+              >
+                Guests Checked In
+              </Typography>
+              <Typography className={classes.number}>12</Typography>
+            </CardContent>
+          </Card>
+          <Card className={classes.root} variant="outlined">
+            <CardContent>
+              <Typography
+                className={classes.title}
+                color="textPrimary"
+                gutterBottom
+              >
+                Beds Available
+              </Typography>
+              <Typography className={classes.number}>70</Typography>
+            </CardContent>
+          </Card>
+        </Container>
+        <Container>
+          <h2>Monthly Stats</h2>
+          <hr></hr>
+        </Container>
+        <Container className={classes.monthlyContainer}>
+          <Card className={classes.root} variant="outlined">
+            <CardContent>
+              <Typography
+                className={classes.title}
+                color="textPrimary"
+                gutterBottom
+              >
+                Guests Exit To
+              </Typography>
+              <Typography>Permanent: 37%</Typography>
+              <Typography>Temporary: 17%</Typography>
+              <Typography>Transitional: 24%</Typography>
+            </CardContent>
+          </Card>
+          <Card className={classes.root} variant="outlined">
+            <CardContent>
+              <Typography
+                className={classes.title}
+                color="textPrimary"
+                gutterBottom
+              >
+                Increased Family Income
+              </Typography>
+              <Typography className={classes.number}>60</Typography>
+              <Typography>Families</Typography>
+            </CardContent>
+          </Card>
+          <Card className={classes.root} variant="outlined">
+            <CardContent>
+              <Typography
+                className={classes.title}
+                color="textPrimary"
+                gutterBottom
+              >
+                Guest Average Stay
+              </Typography>
+              <Typography className={classes.number}>37</Typography>
+              <Typography>Days</Typography>
+            </CardContent>
+          </Card>
+        </Container>
+        <Container>
+          <h2>Daily Guest Logs</h2>
+          <hr></hr>
+        </Container>
+        <Container className={classes.container2}>
+          <SupervisorGuestLogs />
+        </Container>
+      </Container>
+    </>
   );
 };
 
