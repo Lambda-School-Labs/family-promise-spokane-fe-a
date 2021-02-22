@@ -6,10 +6,10 @@ const environment = process.env.ENV || 'development';
 //   : console.log('something else');
 
 // // for testing BE on localhost
-// const ApiUrl =
-//   environment !== 'development'
-//     ? process.env.REACT_APP_API_HEROKU
-//     : process.env.REACT_APP_API_URI;
+const ApiUrl =
+  environment !== 'development'
+    ? process.env.REACT_APP_API_HEROKU
+    : process.env.REACT_APP_API_URI;
 
 export const axiosWithAuth = () => {
   const token = JSON.parse(localStorage.getItem('okta-token-storage'))?.idToken
@@ -18,7 +18,7 @@ export const axiosWithAuth = () => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    baseURL: 'https://family-promise-spokane-be-b.herokuapp.com',
-    //baseURL: ApiUrl,
+    //baseURL: 'https://family-promise-spokane-be-b.herokuapp.com',
+    baseURL: ApiUrl,
   });
 };

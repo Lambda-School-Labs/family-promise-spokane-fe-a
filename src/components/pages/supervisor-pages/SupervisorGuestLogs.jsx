@@ -13,9 +13,9 @@ import GuestNotes from '../../modals/GuestNotes';
 // import { CopyrightOutlined } from '@material-ui/icons';
 import LoadingComponent from '../../common/LoadingComponent';
 import Modal from 'react-modal';
-import './guest.css';
+import '../Guests/guest.css';
 // import { CardContent, Card } from '@material-ui/core';
-import GuestMoreInfo from './GuestMoreInfo';
+import GuestMoreInfo from '../Guests/GuestMoreInfo';
 Modal.setAppElement('#root');
 
 const Guests = () => {
@@ -76,7 +76,7 @@ const Guests = () => {
 
   if (loading) {
     return (
-      <div className="guest-table-container">
+      <div className="exec-guest-table-container">
         <LoadingComponent />
       </div>
     );
@@ -94,7 +94,7 @@ const Guests = () => {
       >
         {result ? <GuestMoreInfo familyInfo={result} /> : ''}
       </Modal>
-      <div className="guest-table-container">
+      <div className="exec-guest-table-container">
         {isNotesOpen && <GuestNotes setIsNotesOpen={setIsNotesOpen} />}
         {isFlagOpen && (
           <FlagGuest
@@ -103,7 +103,7 @@ const Guests = () => {
             guestId={guestId}
           />
         )}
-        <div className="guest-table">
+        <div className="exec-guest-table">
           <MaterialTable
             options={{
               exportButton: true,
