@@ -30,10 +30,59 @@ export const getFamily = () => async dispatch => {
     let myFamily = await axiosWithAuth().get(
       `families/user/${currentUser.data.user.id}`
     );
-    console.log(myFamily);
     dispatch({ type: 'GET_FAMILY_SUCCESS', payload: myFamily.data });
   } catch (error) {
     console.log(error);
-    dispatch({ type: 'GET_FAMILY_FAILURE', payload: error });
+    dispatch({ type: 'GET_FAMILY_FAILURE', payload: error.message });
+  }
+};
+
+export const getHousehold = () => async dispatch => {
+  dispatch({ type: 'GET_HOUSEHOLD_FETCHING' });
+  try {
+    const currentUser = await axiosWithAuth().get('/users/me');
+    let myFamily = await axiosWithAuth().get(
+      `families/user/${currentUser.data.user.id}`
+    );
+    let household = await axiosWithAuth().get(
+      `families/${myFamily.data.id}/household`
+    );
+    dispatch({ type: 'GET_HOUSEHOLD_SUCCESS', payload: household.data });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'GET_HOUSEHOLD_FAILURE', payload: error.message });
+  }
+};
+
+export const getBeds = () => async dispatch => {
+  dispatch({ type: 'TOTAL_BEDS_FETCHING' });
+  try {
+    const beds = await axiosWithAuth().get('/beds');
+    dispatch({ type: 'TOTAL_BEDS_SUCCESS', payload: beds.data[0].total_beds });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'TOTAL_BEDS_FAILURE', payload: error.message });
+  }
+};
+
+export const getLatestLog = () => async dispatch => {
+  dispatch({ type: 'LATEST_LOG_FETCHING' });
+  try {
+    const currentUser = await axiosWithAuth().get('/users/me');
+    let myFamily = await axiosWithAuth().get(
+      `families/user/${currentUser.data.user.id}`
+    );
+    const logs = await axiosWithAuth().get('/logs/by', {
+      family_id: myFamily.data.id,
+    });
+    let log = [];
+    if (logs.data != []) {
+      log = logs.data[logs.data.length - 1];
+    }
+
+    dispatch({ type: 'LATEST_LOG_SUCCESS', payload: log });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'LATEST_LOG_FAILURE', payload: error.message });
   }
 };

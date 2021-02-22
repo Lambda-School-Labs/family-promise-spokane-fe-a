@@ -17,6 +17,9 @@ import {
   TOTAL_BEDS_FAILURE,
   TOTAL_BEDS_FETCHING,
   TOTAL_BEDS_SUCCESS,
+  LATEST_LOG_FETCHING,
+  LATEST_LOG_SUCCESS,
+  LATEST_LOG_FAILURE,
   // Total beds at shelter
 } from '../types';
 
@@ -28,7 +31,8 @@ const INITIAL_STATE = {
   LOGGED_IN: false,
   LOADING: false,
   ERROR: '',
-  TOTAL_BEDS: 60,
+  TOTAL_BEDS: null,
+  LATEST_LOG: {},
 };
 
 export const rootReducer = (state = INITIAL_STATE, action) => {
@@ -64,6 +68,12 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
     case TOTAL_BEDS_SUCCESS:
       return { ...state, LOADING: false, TOTAL_BEDS: action.payload };
     case TOTAL_BEDS_FAILURE:
+      return { ...state, LOADING: false, ERROR: action.payload };
+    case LATEST_LOG_FETCHING:
+      return { ...state, LOADING: true };
+    case LATEST_LOG_SUCCESS:
+      return { ...state, LOADING: false, LATEST_LOG: action.payload };
+    case LATEST_LOG_FAILURE:
       return { ...state, LOADING: false, ERROR: action.payload };
     default:
       return state;

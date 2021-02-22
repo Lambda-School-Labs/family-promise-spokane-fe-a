@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react';
 import RenderHomePage from './RenderHomePage';
-import { setCurrentUser, getFamily } from '../../../state/actions/index';
+import {
+  setCurrentUser,
+  getFamily,
+  getHousehold,
+  getBeds,
+  getLatestLog,
+} from '../../../state/actions/index';
 import { useDispatch, useSelector } from 'react-redux';
 
 function HomeContainer({ LoadingComponent }) {
@@ -13,6 +19,9 @@ function HomeContainer({ LoadingComponent }) {
     if (!LOGGED_IN) {
       dispatch(setCurrentUser());
       dispatch(getFamily());
+      dispatch(getHousehold());
+      dispatch(getBeds());
+      dispatch(getLatestLog());
     }
   }, []);
 

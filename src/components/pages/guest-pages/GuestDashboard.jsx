@@ -82,6 +82,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   //************THIS COULD BE A FUNCTION BECAUSE IT IS BEING USED TWICE:******************
   // This will target the checked members and add or take them away from the holding array or state of the membersStaying list. It will also update the state of the count for total beds.
   const familyStaying = e => {
+    console.log(membersStaying.indexOf(e.target.value));
     if (e.target.checked === true) {
       if (count > 0) {
         setCount(count - 1);
