@@ -4,6 +4,8 @@ import CurrentReservation from './CurrentReservation';
 
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 
+import { getLatestLog } from '../../../state/actions/index';
+
 // UI
 import { Divider, Button, Checkbox, Typography } from 'antd';
 import '../../../styles/app.scss';
@@ -13,15 +15,13 @@ import actions from '../../../state/actions/families';
 import { connect } from 'react-redux';
 
 // state
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
+  const dispatch = useDispatch();
   // The current user
   const user = useSelector(state => state.CURRENT_USER);
-  const mystate = useSelector(state => state);
-  useEffect(() => {
-    console.log(mystate);
-  }, []);
+  const log = useSelector(state => state.LATEST_LOG);
 
   //UserState
   const [users, setUsers] = useState([]);
@@ -37,6 +37,13 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
       });
   }, []);
 
+  useEffect(() => {
+    if (log.date === fullDate && log.reservation_status === true) {
+      setIsReserved(true);
+      setResID(log.reservation_id);
+    }
+  }, [users]);
+
   const { Text } = Typography;
 
   // For Members Staying
@@ -48,35 +55,6 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   //logs user state of reservation status
   const [isReserved, setIsReserved] = useState(false);
   const [familyID, setFamilyID] = useState(null);
-
-  //Sets state for members staying and waitlist members
-  // useEffect(() => {
-  //   axiosWithAuth()
-  //     //This can persist if you useParams to pull in the id of the api and change the hard coded 7 to ${id}
-  //     .get(`/logs/${resID}`)
-  //     .then(res => {
-  //       console.log('Logs', res.data);
-  //       console.log('hello?')
-  //       if (res.data[0]) {
-  //         setFamilyID(res.data[0].family_id);
-  //         setMembersStaying(res.data[0].members_staying);
-  //         setWaitList(res.data.waitlist);
-  //       }
-  //     });
-  // }, []);
-
-  //1> Create another useEffect that will make an axios call to the logs endpoint using the family ID (wait, that doesn't make sense because we will need to go through the family id. So )
-  // console.log("FAMILYID", familyID);
-  useEffect(() => {
-    console.log('inside weird useeffect');
-
-    // if (familyID) {
-    //   axiosWithAuth()
-    //     .get(`/families/${familyID}/logs`)
-    //     .then(res => console.log('families/logs', res))
-    //     .catch(err => console.log(err));
-    // }
-  }, []);
 
   // console.log('Is Reserved', isReserved);
   //************THIS COULD BE A FUNCTION BECAUSE IT IS BEING USED TWICE:******************
@@ -200,6 +178,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
       .catch(err => {
         console.log('Nope', err);
       });
+    dispatch(getLatestLog());
   };
 
   // the cancel button
@@ -210,7 +189,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
     e.preventDefault();
 
     axiosWithAuth().put('/beds', {
-      total_beds: count + membersStaying.length,
+      total_beds: count + log.beds_reserved,
     });
 
     membersStaying.length = 0;
@@ -294,6 +273,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
           <CurrentReservation
             membersStaying={membersStaying}
             cancelButton={cancelButton}
+            beds={log.beds_reserved}
           />
         </>
       ) : (

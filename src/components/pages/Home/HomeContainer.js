@@ -6,6 +6,7 @@ import {
   getHousehold,
   getBeds,
   getLatestLog,
+  getMembers,
 } from '../../../state/actions/index';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -21,6 +22,7 @@ function HomeContainer({ LoadingComponent }) {
       dispatch(getFamily());
       dispatch(getHousehold());
       dispatch(getBeds());
+      dispatch(getMembers());
       dispatch(getLatestLog());
     }
   }, []);

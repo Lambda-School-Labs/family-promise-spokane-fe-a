@@ -54,6 +54,23 @@ export const getHousehold = () => async dispatch => {
   }
 };
 
+export const getMembers = () => async dispatch => {
+  dispatch({ type: 'GET_MEMBERS_FETCHING' });
+  try {
+    const currentUser = await axiosWithAuth().get('/users/me');
+    let myFamily = await axiosWithAuth().get(
+      `families/user/${currentUser.data.user.id}`
+    );
+    let members = await axiosWithAuth().get(
+      `families/${myFamily.data.id}/members`
+    );
+    dispatch({ type: 'GET_MEMBERS_SUCCESS', payload: members.data });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'GET_MEMBERS_FAILURE', payload: error.message });
+  }
+};
+
 export const getBeds = () => async dispatch => {
   dispatch({ type: 'TOTAL_BEDS_FETCHING' });
   try {
