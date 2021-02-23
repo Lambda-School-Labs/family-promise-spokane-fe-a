@@ -1,4 +1,3 @@
-
 {
   "header": {
     "reportVersion": 1,
@@ -168,9 +167,7 @@
   },
   "javascriptStack": {
     "message": "No stack.",
-    "stack": [
-      "Unavailable."
-    ]
+    "stack": ["Unavailable."]
   },
   "nativeStack": [
     {
@@ -309,8 +306,7 @@
       "writes": 0
     }
   },
-  "libuv": [
-  ],
+  "libuv": [],
   "environmentVariables": {
     "npm_config_save_dev": "",
     "npm_config_legacy_bundling": "",

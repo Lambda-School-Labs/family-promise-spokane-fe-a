@@ -87,13 +87,13 @@ export default function SupervisorCheckIn() {
       });
   }, []);
 
-  if (loading) {
-    return (
-      <div className="guest-table-container">
-        <LoadingComponent />
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="guest-table-container">
+  //       <LoadingComponent />
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="guest-table-container">

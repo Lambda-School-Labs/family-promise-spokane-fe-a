@@ -1,42 +1,43 @@
-
-
 # Family Promise of Spokane
 
 You can find the deployed project at [Family Promise of Spokane](https://family-profile-styling-emily.d3hmwb1bmjh3u1.amplifyapp.com//).
 
 # Description
 
-The Family Promise of Spokane  Organization is a US-based nonprofit organization based in Spokane, WA. They are an organization that helps homeless families as well as preventing families from becoming homeless. They provide shelter for families as well as rental assistance. For the full description visit their website [Family Promise of Spokane](https://www.familypromiseofspokane.org/)
+The Family Promise of Spokane Organization is a US-based nonprofit organization based in Spokane, WA. They are an organization that helps homeless families as well as preventing families from becoming homeless. They provide shelter for families as well as rental assistance. For the full description visit their website [Family Promise of Spokane](https://www.familypromiseofspokane.org/)
+
 # Contributors
 
-| [Kristine Wang](https://github.com/KristineYW) | [Tyler Etheridge](https://github.com/tyleretheridge) | [Santiago Berniz](https://github.com/sberniz/) | [Leslie Rodriguez](https://github.com/thereactgirl) |
-| :---: | :---: | :---: | :---: | 
+|                                                           [Kristine Wang](https://github.com/KristineYW)                                                            |                                                          [Tyler Etheridge](https://github.com/tyleretheridge)                                                           |                                                          [Santiago Berniz](https://github.com/sberniz/)                                                          |                                                          [Leslie Rodriguez](https://github.com/thereactgirl)                                                          |
+| :-----------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | [<img src="https://avatars0.githubusercontent.com/u/63246056?s=400&u=a10524916b756eb26132d0803bec3cbe62ede1ef&v=4" width = "200" />](https://github.com/KristineYW) | [<img src="https://avatars3.githubusercontent.com/u/61953470?s=400&u=8f8538f4d10dcb45b9179eb6990d1ef9c1aadc8d&v=4" width = "200" />](https://github.com/tyleretheridge) | [<img src="https://avatars3.githubusercontent.com/u/6207914?s=460&u=8bfaa068f7942170423371ff10e8f04f09f41e81&v=4" width = "200" />](https://github.com/sberniz/) | [<img src="https://avatars3.githubusercontent.com/u/46256764?s=400&u=337301ad07625f6977ed520ff7092ae54bb0852f&v=4" width = "200" />](https://github.com/thereactgirl) |
-| TPL | Data Scientist | Data Scientist | Web Developer | Web Developer | 
-|[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/KristineYW) | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/tyleretheridge) | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/sberniz/) | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/thereactgirl) |
-| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/kristine-wang-ds/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/tylerjetheridge/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/santiago-berniz/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/thereactgirl/) |          
+|                                                                                 TPL                                                                                 |                                                                             Data Scientist                                                                              |                                                                          Data Scientist                                                                          |                                                                             Web Developer                                                                             | Web Developer |
+|                                       [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/KristineYW)                                       |                                       [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/tyleretheridge)                                       |                                      [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/sberniz/)                                       |                                       [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/thereactgirl)                                       |
+|                  [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/kristine-wang-ds/)                  |                    [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/tylerjetheridge/)                     |                 [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/santiago-berniz/)                 |                     [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/thereactgirl/)                     |
 
-| [Emily Huntwork](https://github.com/Ehuntwork) | [Abdi Mo](https://github.com/abdimohamud) | [Isaiah Fowler](https://github.com/idongessien) |
-| :---: | :---: | :---: |  
-| [<img src="https://avatars1.githubusercontent.com/u/27293120?s=400&u=e6c0fc75189b75dea5233e02562784ed1cfa2faf&v=4" width = "200" />](https://github.com/Ehuntwork) | [<img src="https://avatars1.githubusercontent.com/u/65041807?s=400&u=2ff3514545d906fe2b734fed79c7f8d640b58ae6&v=4" width = "200" />](https://github.com/abdimohamud) | [<img src="https://avatars1.githubusercontent.com/u/66272034?s=400&u=db133631ead14125bb0d5e9515932985c6293448&v=4" width = "200" />](https://github.com/isaiah-j) | 
-| Web Developer | Web Developer | Web Developer | 
-|[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Ehuntwork) | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/abdimohamud) | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/isaiah-j) | 
-| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/emily-huntwork/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/abdinajib-mohamud/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/isaiah-fowler/) |              
+|                                                           [Emily Huntwork](https://github.com/Ehuntwork)                                                           |                                                              [Abdi Mo](https://github.com/abdimohamud)                                                               |                                                          [Isaiah Fowler](https://github.com/idongessien)                                                          |
+| :----------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| [<img src="https://avatars1.githubusercontent.com/u/27293120?s=400&u=e6c0fc75189b75dea5233e02562784ed1cfa2faf&v=4" width = "200" />](https://github.com/Ehuntwork) | [<img src="https://avatars1.githubusercontent.com/u/65041807?s=400&u=2ff3514545d906fe2b734fed79c7f8d640b58ae6&v=4" width = "200" />](https://github.com/abdimohamud) | [<img src="https://avatars1.githubusercontent.com/u/66272034?s=400&u=db133631ead14125bb0d5e9515932985c6293448&v=4" width = "200" />](https://github.com/isaiah-j) |
+|                                                                           Web Developer                                                                            |                                                                            Web Developer                                                                             |                                                                           Web Developer                                                                           |
+|                                       [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Ehuntwork)                                       |                                       [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/abdimohamud)                                       |                                       [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/isaiah-j)                                       |
+|                  [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/emily-huntwork/)                   |                  [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/abdinajib-mohamud/)                  |                  [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/isaiah-fowler/)                   |
 
-<br>          
+<br>
 
 <br>
 <br>
 
 # Deployed Product
+
 [Front End Dashboard](https://family-profile-styling-emily.d3hmwb1bmjh3u1.amplifyapp.com/) |
 [Data Science API](http://a-labs29-family-promise.eba-syir5yx3.us-east-1.elasticbeanstalk.com/) |
 [Back End API](https://family-pomise-spokane.herokuapp.com/) |
 
 # Linked Repositories
+
 [Family Promise of Spokane Back End](https://github.com/Lambda-School-Labs/family-promise-spokane-be-a) |
 [Family Promise of Spokane Data Science](https://github.com/Lambda-School-Labs/family-promise-spokane-ds-a) |
-[Family Promise of Spokane Front end](https://github.com/Lambda-School-Labs/family-promise-spokane-fe-a) 
+[Family Promise of Spokane Front end](https://github.com/Lambda-School-Labs/family-promise-spokane-fe-a)
 
 # Getting Started
 
@@ -54,25 +55,26 @@ Our product supported the following user roles:
 - Guest : A "head of household" arriving to or checked into the shelter as part of a family unit of some kind.
 
 and the following user stories:
+
 - All users should be able to view and update a user profile.
-- Guests should be able to check in to the shelter using a form. This form should be as simple and user-friendly as possible. We need to distinguish new guests from returning guests and log the check-in accordingly. 
+- Guests should be able to check in to the shelter using a form. This form should be as simple and user-friendly as possible. We need to distinguish new guests from returning guests and log the check-in accordingly.
 - New guests should have a profile created for them.
 - Supervisors should be able to view all guests currently checked into the shelter.
-- Case Managers should be able to look up guests and log notes associated with ongoing case management. 
+- Case Managers should be able to look up guests and log notes associated with ongoing case management.
 - Case Managers should be able to view and edit and Guests should be able to view those notes. Entries should be confidential between the case manager and the guest.
 
 ### Key Features
 
-- Supervisors can Create guest profile 
-- Case Manager can view guest profile 
+- Supervisors can Create guest profile
+- Case Manager can view guest profile
 - Case Manager can view the exit destination prediction
 - Guest can be flagged for mis conduct
-- notes can be added to guest's profile. 
-- Guest can view their own profile. 
+- notes can be added to guest's profile.
+- Guest can view their own profile.
 
 # Tech Stack
 
-###  Front-End:
+### Front-End:
 
 - Styling/Design : ANT Design
 - State Management : Redux
@@ -80,16 +82,15 @@ and the following user stories:
 - PostgreSQL
 - Testing: React Testing Library
 
-###  Back-End:
+### Back-End:
+
 - Database : PostgreSQL
- - Auth: Okta JSON Web Token Verifiyer
- - Testing: Jest SuperTest
- - Migrations/Seeding: Knex
- - Express
+- Auth: Okta JSON Web Token Verifiyer
+- Testing: Jest SuperTest
+- Migrations/Seeding: Knex
+- Express
 - CORS
 - Helmet
-
-
 
 # User Flow
 
@@ -102,8 +103,8 @@ and the following user stories:
 - Create a live example of the problem.
 - Submit a detailed bug report including your environment & browser, steps to reproduce the issue, actual and expected outcomes, where you believe the issue is originating from, and any potential solutions you have considered.
 
-
 # Support
+
 Please reach out to [Abdi](https://github.com/abdimohamud/), [Isaiah](https://github.com/isaiah-j), [Leslie](https://github.com/thereactgirl) or [Emily](https://github.com/Ehuntwork) for any support or questions.
 
 ### Contributing
@@ -136,6 +137,7 @@ Remember that this project is licensed under the MIT license, and by submitting 
 These contribution guidelines have been adapted from [this good-Contributing.md-template](https://gist.github.com/PurpleBooth/b24679402957c63ec426).
 
 ### Documentation
+
 [Front End](https://github.com/Lambda-School-Labs/family-promise-spokane-fe-a/blob/main/README.md)
 
 [Back End](https://github.com/Lambda-School-Labs/family-promise-spokane-be-a/blob/main/README.md)

@@ -1,11 +1,11 @@
 import axios from 'axios';
 const environment = process.env.ENV || 'development';
 
-environment == 'development'
-  ? console.log('development mode')
-  : console.log('something else');
+// environment !== 'development'
+//   ? console.log('development mode')
+//   : console.log('something else');
 
-// for testing BE on localhost
+// // for testing BE on localhost
 const ApiUrl =
   environment !== 'development'
     ? process.env.REACT_APP_API_HEROKU
@@ -18,6 +18,7 @@ export const axiosWithAuth = () => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
+    //baseURL: 'https://family-promise-spokane-be-b.herokuapp.com',
     baseURL: ApiUrl,
   });
 };
