@@ -1,15 +1,14 @@
 import React from 'react';
 import { Button, Typography } from 'antd';
 import '../../../styles/app.scss';
-const CurrentReservation = ({ membersStaying, cancelButton }) => {
+const CurrentReservation = ({ membersStaying, cancelButton, beds }) => {
   const { Text } = Typography;
   return (
     <div className="container">
       <h3>Your Current Reservation</h3>
 
       <Text strong>
-        You currently have{' '}
-        <span className="number-of-beds">{membersStaying.length}</span> beds
+        You currently have <span className="number-of-beds">{beds}</span> beds
         reserved for{' '}
         {membersStaying.length === 2
           ? membersStaying.join(' and ')

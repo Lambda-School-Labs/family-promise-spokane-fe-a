@@ -4,6 +4,8 @@ import CurrentReservation from './CurrentReservation';
 
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 
+import { getLatestLog } from '../../../state/actions/index';
+
 // UI
 import { Divider, Button, Checkbox, Typography } from 'antd';
 import '../../../styles/app.scss';
@@ -13,11 +15,13 @@ import actions from '../../../state/actions/families';
 import { connect } from 'react-redux';
 
 // state
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
+  const dispatch = useDispatch();
   // The current user
   const user = useSelector(state => state.CURRENT_USER);
+  const log = useSelector(state => state.LATEST_LOG);
 
   //UserState
   const [users, setUsers] = useState([]);
@@ -33,6 +37,13 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
       });
   }, []);
 
+  useEffect(() => {
+    if (log.date === fullDate && log.reservation_status === true) {
+      setIsReserved(true);
+      setResID(log.reservation_id);
+    }
+  }, [users]);
+
   const { Text } = Typography;
 
   // For Members Staying
@@ -45,36 +56,11 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   const [isReserved, setIsReserved] = useState(false);
   const [familyID, setFamilyID] = useState(null);
 
-  //Sets state for members staying and waitlist members
-  useEffect(() => {
-    axiosWithAuth()
-      //This can persist if you useParams to pull in the id of the api and change the hard coded 7 to ${id}
-      .get(`/logs/${resID}`)
-      .then(res => {
-        console.log('Logs', res.data);
-        if (res.data[0]) {
-          setFamilyID(res.data[0].family_id);
-          setMembersStaying(res.data[0].members_staying);
-          setWaitList(res.data.waitlist);
-        }
-      });
-  }, []);
-
-  //1> Create another useEffect that will make an axios call to the logs endpoint using the family ID (wait, that doesn't make sense because we will need to go through the family id. So )
-  // console.log("FAMILYID", familyID);
-  useEffect(() => {
-    if (familyID) {
-      axiosWithAuth()
-        .get(`/families/${familyID}/logs`)
-        .then(res => console.log('families/logs', res))
-        .catch(err => console.log(err));
-    }
-  }, [familyID]);
-
   // console.log('Is Reserved', isReserved);
   //************THIS COULD BE A FUNCTION BECAUSE IT IS BEING USED TWICE:******************
   // This will target the checked members and add or take them away from the holding array or state of the membersStaying list. It will also update the state of the count for total beds.
   const familyStaying = e => {
+    console.log(membersStaying.indexOf(e.target.value));
     if (e.target.checked === true) {
       if (count > 0) {
         setCount(count - 1);
@@ -133,6 +119,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
         .catch(err => console.log('get family error'));
     } catch (error) {
       //alert('error');
+      console.log(error);
     }
   };
 
@@ -173,24 +160,25 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
           total_beds: count,
         });
 
-        return (
-          <div>
-            <p>
-              Congratulations, you have reserved {membersStaying.length} amount
-              of beds at 904 E Hartson Ave, Spokane, WA 99202 for MM/DD/YYY.
-              Please be sure to have at least ONED ADULT available at the
-              shelter before 7pm to check in with the supervisor.
-            </p>
-            <p>
-              If you do not show ip with your total amont of family members,
-              those beds will be reserved for other guests.
-            </p>
-          </div>
-        );
+        // return (
+        //   <div>
+        //     <p>
+        //       Congratulations, you have reserved {membersStaying.length} amount
+        //       of beds at 904 E Hartson Ave, Spokane, WA 99202 for MM/DD/YYY.
+        //       Please be sure to have at least ONED ADULT available at the
+        //       shelter before 7pm to check in with the supervisor.
+        //     </p>
+        //     <p>
+        //       If you do not show ip with your total amont of family members,
+        //       those beds will be reserved for other guests.
+        //     </p>
+        //   </div>
+        // );
       })
       .catch(err => {
         console.log('Nope', err);
       });
+    dispatch(getLatestLog());
   };
 
   // the cancel button
@@ -201,7 +189,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
     e.preventDefault();
 
     axiosWithAuth().put('/beds', {
-      total_beds: count + membersStaying.length,
+      total_beds: count + log.beds_reserved,
     });
 
     membersStaying.length = 0;
@@ -285,6 +273,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
           <CurrentReservation
             membersStaying={membersStaying}
             cancelButton={cancelButton}
+            beds={log.beds_reserved}
           />
         </>
       ) : (
