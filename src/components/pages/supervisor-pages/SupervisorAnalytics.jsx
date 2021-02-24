@@ -120,6 +120,7 @@ const Analytics = () => {
   const user = useSelector(state => state.CURRENT_USER);
   const date = new Date();
   const fullDate = date.toDateString();
+  const globalCount = useSelector(state => state.TOTAL_BEDS);
 
   useEffect(() => {
     //const interval = setInterval(() => {
@@ -128,17 +129,17 @@ const Analytics = () => {
       .then(res => {
         console.log('full date', fullDate);
         console.log('zero log', res.data[res.data.length - 1]);
-        const filteredLogs = res.data.filter(item => {
-          if (fullDate === item.date && item.reservation_status === true) {
-            return item;
-          }
-        });
-        //setLogs(res.data)
-        console.log('filtered data', filteredLogs);
-        setLogs(filteredLogs);
-        filteredLogs.forEach(item => {
-          setTotalBedsReserved(totalBedsReserved + item.beds_reserved);
-        });
+        // const filteredLogs = res.data.filter(item => {
+        //   if (fullDate === item.date && item.reservation_status === true) {
+        //     return item;
+        //   }
+        //});
+        setLogs(res.data);
+        //console.log('filtered data', filteredLogs);
+        //setLogs(filteredLogs);
+        // filteredLogs.forEach(item => {
+        //   setTotalBedsReserved(totalBedsReserved + item.beds_reserved);
+        // });
       });
 
     // }, 30000);
@@ -222,9 +223,7 @@ const Analytics = () => {
               >
                 Beds Available
               </Typography>
-              <Typography className={classes.number}>
-                {90 - totalBedsReserved}
-              </Typography>
+              <Typography className={classes.number}>{globalCount}</Typography>
             </CardContent>
           </Card>
         </Container>

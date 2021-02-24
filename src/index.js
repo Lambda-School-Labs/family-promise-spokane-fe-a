@@ -32,6 +32,7 @@ import './styles/app.scss';
 import { rootReducer } from './state/reducers/index';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 import { Provider } from 'react-redux';
 // import logger from 'redux-logger';
 import GuestDashboard from './components/pages/guest-pages/GuestDashboard';
@@ -40,7 +41,7 @@ import Notes from './components/pages/Notes/Notes';
 import Members from './components/pages/guest-pages/Members';
 import CaseAnalytics from './components/pages/casemanager-pages/CaseManagerAnalytics';
 import ShelterInfo from './components/pages/guest-pages/ShelterInfo';
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 ReactDOM.render(
   <Provider store={store}>

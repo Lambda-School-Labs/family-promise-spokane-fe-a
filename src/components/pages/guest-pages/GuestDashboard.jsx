@@ -4,7 +4,7 @@ import CurrentReservation from './CurrentReservation';
 
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 
-import { getLatestLog } from '../../../state/actions/index';
+import { getLatestLog, updateBedCount } from '../../../state/actions/index';
 
 // UI
 import { Divider, Button, Checkbox, Typography } from 'antd';
@@ -22,27 +22,38 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   // The current user
   const user = useSelector(state => state.CURRENT_USER);
   const log = useSelector(state => state.LATEST_LOG);
-
+  const globalCount = useSelector(state => state.TOTAL_BEDS);
+  const fam = useSelector(state => state.FAMILY);
+  const household = useSelector(state => state.HOUSEHOLD);
+  const [checkLogs, setCheckLogs] = useState(true);
   //UserState
   const [users, setUsers] = useState([]);
   // console.log("users", users);
   //Mock beds counter
   const [count, setCount] = useState();
+  // useEffect(() => {
+  //   axiosWithAuth()
+  //     .get('/beds')
+  //     .then(res => {
+  //       console.log('Beds', res.data[0].total_beds);
+  //       setCount(res.data[0].total_beds);
+  //     });
+  // }, []);
+
   useEffect(() => {
-    axiosWithAuth()
-      .get('/beds')
-      .then(res => {
-        console.log('Beds', res.data[0].total_beds);
-        setCount(res.data[0].total_beds);
-      });
+    dispatch(getLatestLog());
   }, []);
 
   useEffect(() => {
+    //const myLog =  await
+    //console.log('myLog', myLog);
+
     if (log.date === fullDate && log.reservation_status === true) {
+      console.log('THIS IS THE RES STATUS');
       setIsReserved(true);
       setResID(log.reservation_id);
     }
-  }, [users]);
+  }, [log]);
 
   const { Text } = Typography;
 
@@ -55,7 +66,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   //logs user state of reservation status
   const [isReserved, setIsReserved] = useState(false);
   const [familyID, setFamilyID] = useState(null);
-
+  const [localBedCount, setLocalBedCount] = useState(0);
   // console.log('Is Reserved', isReserved);
   //************THIS COULD BE A FUNCTION BECAUSE IT IS BEING USED TWICE:******************
   // This will target the checked members and add or take them away from the holding array or state of the membersStaying list. It will also update the state of the count for total beds.
@@ -123,10 +134,10 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
     }
   };
 
-  //Warning shows for this but it is needed in order to render the checkboxes
+  //Warning shows for this but it is needed in order to render the checkboxes *******************
   useEffect(() => {
     fetchFamilyInformation().then(res => console.log(res));
-  }, [count]);
+  }, [globalCount]);
 
   let userId = users.map(user => {
     return user.family_id;
@@ -139,7 +150,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
     axiosWithAuth()
       .post('/logs', {
         supervisor_id: '00u2lh0bsAliwLEe75d6',
-        family_id: 1,
+        family_id: fam.id,
         reservation_status: true,
         waitlist: false,
         on_site_7pm: false,
@@ -152,33 +163,21 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
       })
       .then(res => {
         const resId = res.data.logs.reservation_id;
-        console.log('res data', res.data);
+        console.log('res data', res.data.logs.reservation_status);
         setResID(resId);
         setIsReserved(res.data.logs.reservation_status);
-
-        axiosWithAuth().put('/beds', {
-          total_beds: count,
-        });
-
-        // return (
-        //   <div>
-        //     <p>
-        //       Congratulations, you have reserved {membersStaying.length} amount
-        //       of beds at 904 E Hartson Ave, Spokane, WA 99202 for MM/DD/YYY.
-        //       Please be sure to have at least ONED ADULT available at the
-        //       shelter before 7pm to check in with the supervisor.
-        //     </p>
-        //     <p>
-        //       If you do not show ip with your total amont of family members,
-        //       those beds will be reserved for other guests.
-        //     </p>
-        //   </div>
-        // );
+        //setLocalBedCount(res.data.logs.beds_reserved);
+        // axiosWithAuth().put('/beds', {
+        //   total_beds: count,
+        // });
       })
       .catch(err => {
         console.log('Nope', err);
       });
-    dispatch(getLatestLog());
+    console.log('local bed count', localBedCount);
+    console.log('global bed count', globalCount);
+    dispatch(updateBedCount(globalCount - membersStaying.length));
+    dispatch(getLatestLog()); //We want to get log by res id ***********
   };
 
   // the cancel button
@@ -188,9 +187,10 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
     console.log('before put inside cancel function', resID);
     e.preventDefault();
 
-    axiosWithAuth().put('/beds', {
-      total_beds: count + log.beds_reserved,
-    });
+    // axiosWithAuth().put('/beds', {
+    //   total_beds: globalCount + log.beds_reserved,
+    // });
+    dispatch(updateBedCount(globalCount + log.actual_beds_reserved));
 
     membersStaying.length = 0;
 
@@ -199,7 +199,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
     axiosWithAuth()
       .put(`/logs/${resID}`, {
         supervisor_id: '00u2lh0bsAliwLEe75d6',
-        family_id: 1,
+        family_id: fam.id,
         reservation_status: false,
         waitlist: false,
         on_site_7pm: true,
@@ -221,6 +221,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
       .catch(err => {
         console.log('Nope', err);
       });
+    dispatch(getLatestLog());
 
     // setIsReserved(false);
     /*
@@ -260,8 +261,9 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
         Welcome To Family Promise of Spokane
       </h1>
       <h2>
-        There are currently <span className="number-of-beds">{count}</span> beds
-        remaining at the shelter
+        There are currently{' '}
+        <span className="number-of-beds">{globalCount}</span> beds remaining at
+        the shelter
       </h2>
 
       <Divider />
@@ -271,7 +273,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
       {isReserved === true ? (
         <>
           <CurrentReservation
-            membersStaying={membersStaying}
+            membersStaying={log.members_staying}
             cancelButton={cancelButton}
             beds={log.beds_reserved}
           />
