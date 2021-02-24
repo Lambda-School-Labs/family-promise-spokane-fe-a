@@ -82,6 +82,18 @@ export const getBeds = () => async dispatch => {
   }
 };
 
+export const updateBedCount = count => async dispatch => {
+  dispatch({ type: 'BEDS_UPDATE_LOADING' });
+  try {
+    axiosWithAuth().put('/beds', { id: 1, total_beds: count });
+
+    dispatch({ type: 'BEDS_UPDATE_SUCCESS', payload: count });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'BEDS_UPDATE_FAILURE', payload: error.message });
+  }
+};
+
 export const getLatestLog = () => async dispatch => {
   dispatch({ type: 'LATEST_LOG_FETCHING' });
   try {
