@@ -101,10 +101,8 @@ export const getLatestLog = () => async dispatch => {
     let myFamily = await axiosWithAuth().get(
       `families/user/${currentUser.data.user.id}`
     );
-    const logs = await axiosWithAuth().get('/logs/by', {
-      family_id: myFamily.data.id,
-    });
-    let log = [];
+    const logs = await axiosWithAuth().get(`/logs/family/${myFamily.data.id}`);
+    let log = {};
     if (logs.data != []) {
       log = logs.data[logs.data.length - 1];
     }

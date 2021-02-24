@@ -41,7 +41,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   // }, []);
 
   useEffect(() => {
-    dispatch(getLatestLog(household[0].family_id));
+    dispatch(getLatestLog());
   }, []);
 
   useEffect(() => {
@@ -221,6 +221,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
       .catch(err => {
         console.log('Nope', err);
       });
+    dispatch(getLatestLog());
 
     // setIsReserved(false);
     /*
