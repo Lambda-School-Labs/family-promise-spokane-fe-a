@@ -71,7 +71,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
       console.log('membersStaying', membersStaying);
     } else if (e.target.checked === false) {
       setCount(count + 1);
-
+      //taking member out if canceling
       let temp = membersStaying;
       temp = temp.filter(item => {
         if (item !== e.target.value) return item;
@@ -110,7 +110,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
         .then(res => {
           // console.log('families/family.id/members', res.data);
           setUsers(res.data);
-          console.log('dub ax out', res.data[0].family_id);
+          //console.log('dub ax out', res.data[0].family_id);
           axiosWithAuth()
             .get(`logs/${res.data[0].family_id}`)
             .then(res => console.log(res.data[0].reservation_status))
@@ -194,7 +194,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
 
     membersStaying.length = 0;
 
-    setCount(count);
+    setCount(count); //This might be causing a weird bug?????
 
     axiosWithAuth()
       .put(`/logs/${resID}`, {
