@@ -35,7 +35,7 @@ const INITIAL_STATE = {
   LOGGED_IN: false,
   LOADING: false,
   ERROR: '',
-  TOTAL_BEDS: null,
+  TOTAL_BEDS: 90,
   LATEST_LOG: {},
 };
 

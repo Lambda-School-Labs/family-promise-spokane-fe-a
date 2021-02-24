@@ -24,6 +24,8 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   const log = useSelector(state => state.LATEST_LOG);
   const globalCount = useSelector(state => state.TOTAL_BEDS);
   const fam = useSelector(state => state.FAMILY);
+  const household = useSelector(state => state.HOUSEHOLD);
+  const [checkLogs, setCheckLogs] = useState(true);
   //UserState
   const [users, setUsers] = useState([]);
   // console.log("users", users);
@@ -39,14 +41,19 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   // }, []);
 
   useEffect(() => {
-    const myLog = dispatch(getLatestLog());
-    console.log('myLog', myLog);
+    dispatch(getLatestLog(household[0].family_id));
+  }, []);
+
+  useEffect(() => {
+    //const myLog =  await
+    //console.log('myLog', myLog);
+
     if (log.date === fullDate && log.reservation_status === true) {
       console.log('THIS IS THE RES STATUS');
       setIsReserved(true);
       setResID(log.reservation_id);
     }
-  }, [users]);
+  }, [log]);
 
   const { Text } = Typography;
 
@@ -127,10 +134,10 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
     }
   };
 
-  //Warning shows for this but it is needed in order to render the checkboxes
+  //Warning shows for this but it is needed in order to render the checkboxes *******************
   useEffect(() => {
     fetchFamilyInformation().then(res => console.log(res));
-  }, [count]);
+  }, [globalCount]);
 
   let userId = users.map(user => {
     return user.family_id;
@@ -159,7 +166,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
         console.log('res data', res.data.logs.reservation_status);
         setResID(resId);
         setIsReserved(res.data.logs.reservation_status);
-        setLocalBedCount(res.data.logs.beds_reserved);
+        //setLocalBedCount(res.data.logs.beds_reserved);
         // axiosWithAuth().put('/beds', {
         //   total_beds: count,
         // });
@@ -170,7 +177,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
     console.log('local bed count', localBedCount);
     console.log('global bed count', globalCount);
     dispatch(updateBedCount(globalCount - membersStaying.length));
-    dispatch(getLatestLog());
+    dispatch(getLatestLog()); //We want to get log by res id ***********
   };
 
   // the cancel button
