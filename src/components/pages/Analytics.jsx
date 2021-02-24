@@ -13,13 +13,15 @@ const Analytics = () => {
   const user = useSelector(state => state.CURRENT_USER);
 
   return (
-    <div className="dashboard-container">
+    <div>
       {['supervisor', 'case_manager', 'executive_director'].includes(
         user.role
       ) ? (
         <SupervisorAnalitcs />
       ) : (
-        <GuestAnalitics />
+        <div className="dashboard-container">
+          <GuestAnalitics />
+        </div>
       )}
     </div>
   );
