@@ -3,10 +3,14 @@ import MaterialTable from 'material-table';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 import { useHistory } from 'react-router-dom';
 import NoteIcon from '@material-ui/icons/Note';
+import NoteOutlinedIcon from '@material-ui/icons/NoteOutlined';
 import PeopleIcon from '@material-ui/icons/People';
+import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
 import InfoIcon from '@material-ui/icons/Info';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { tableIcons } from '../../../utils/tableIcons';
 import FlagIcon from '@material-ui/icons/Flag';
+import FlagOutlinedIcon from '@material-ui/icons/FlagOutlined';
 // import CardShadow from '../../CardShadow';
 import FlagGuest from '../../modals/FlagGuest';
 import GuestNotes from '../../modals/GuestNotes';
@@ -120,9 +124,10 @@ const Guests = () => {
             title="Guests"
             columns={state.columns}
             data={state.data}
+            options={{ actionsColumnIndex: -1 }}
             actions={[
               {
-                icon: PeopleIcon,
+                icon: PeopleOutlinedIcon,
                 tooltip: 'Family Members',
                 onClick: (event, rowData) => {
                   // Do save operation
@@ -131,7 +136,7 @@ const Guests = () => {
                 },
               },
               {
-                icon: NoteIcon,
+                icon: NoteOutlinedIcon,
                 tooltip: 'Notes',
                 onClick: (event, rowData) => {
                   // Do save operation
@@ -139,7 +144,7 @@ const Guests = () => {
                 },
               },
               {
-                icon: FlagIcon,
+                icon: FlagOutlinedIcon,
                 tooltip: 'Flag Guest',
                 onClick: (event, rowData) => {
                   setIsFlagOpen(true);
@@ -147,7 +152,7 @@ const Guests = () => {
                 },
               },
               {
-                icon: InfoIcon,
+                icon: InfoOutlinedIcon,
                 tooltip: 'More Info',
                 onClick: (event, rowData) => {
                   setResult(state.data[rowData.id - 1]); // BUG HERE -- Not getting correct data -Meg

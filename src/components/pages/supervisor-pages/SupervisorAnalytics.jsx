@@ -10,9 +10,14 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import MaterialTable from 'material-table';
 import Circle from 'react-circle';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+
 import { useSelector } from 'react-redux';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
-
+import axios from 'axios';
 // utils
 import { tableIcons } from '../../../utils/tableIcons';
 import { findLastIndex } from 'underscore';
@@ -27,11 +32,20 @@ const useStyles = makeStyles({
   heading: {
     marginTop: '2rem',
   },
+  hr: {
+    border: '.5px solid lightgrey',
+  },
+  formControl: {
+    minWidth: 150,
+    height: 15,
+  },
   container1: {
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
     margin: '1rem 0',
+    paddingTop: '1rem',
+    paddingBottom: '1rem',
     //border: '1px solid red',
   },
   monthlyContainer: {
@@ -39,18 +53,28 @@ const useStyles = makeStyles({
     justifyContent: 'space-between',
     width: '100%',
     margin: '1rem 0',
+    paddingTop: '1rem',
+    paddingBottom: '1rem',
     //border: '1px solid red',
+  },
+  monthly: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    //border: '1px solid red',
+    padding: 0,
   },
   container2: {
     //border: '1px solid red',
     margin: '1rem 0',
+    paddingTop: '1rem',
+    paddingBottom: '1rem',
   },
-  container3: {
-    border: '1px solid red',
-    display: 'flex',
-    justifyContent: 'space-between',
-    margin: '1rem 0',
-  },
+  // container3: {
+  //   border: '1px solid red',
+  //   display: 'flex',
+  //   justifyContent: 'space-between',
+  //   margin: '1rem 0',
+  // },
   root: {
     width: '32%',
     textAlign: 'center',
@@ -89,16 +113,36 @@ const Analytics = () => {
   const [logs, setLogs] = useState([]);
   const [card, setCard] = useState(false);
   const [staffMembers, setStaffMembers] = useState([]);
+  const [totalBedsReserved, setTotalBedsReserved] = useState(0);
+  const [monthlyData, setMonthlyData] = useState({});
+  const [rangeValue, setRangeValue] = useState(90);
   const classes = useStyles();
   const user = useSelector(state => state.CURRENT_USER);
+  const date = new Date();
+  const fullDate = date.toDateString();
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      axiosWithAuth()
-        .get(`/logs`)
-        .then(res => console.log(setLogs(res.data)));
-    }, 30000);
-    return () => clearInterval(interval);
+    //const interval = setInterval(() => {
+    axiosWithAuth()
+      .get(`/logs`)
+      .then(res => {
+        console.log('full date', fullDate);
+        console.log('zero log', res.data[res.data.length - 1]);
+        const filteredLogs = res.data.filter(item => {
+          if (fullDate === item.date && item.reservation_status === true) {
+            return item;
+          }
+        });
+        //setLogs(res.data)
+        console.log('filtered data', filteredLogs);
+        setLogs(filteredLogs);
+        filteredLogs.forEach(item => {
+          setTotalBedsReserved(totalBedsReserved + item.beds_reserved);
+        });
+      });
+
+    // }, 30000);
+    // return () => clearInterval(interval);
   }, []);
 
   // useEffect(() => {
@@ -113,15 +157,34 @@ const Analytics = () => {
     setCard(!card);
   };
 
+  //----Call to DS API for Monthly Stats -----//
+
+  const changeRange = e => {
+    e.preventDefault();
+    setRangeValue(e.target.value);
+    console.log('range value', rangeValue);
+  };
+
+  // useEffect(() => {
+  //   axios()
+  //   .get(`urladdress/${rangeValue}`)
+  //   .then(res => {
+  //     console.log('monthly object', res.data)
+  //     setMonthlyData(res.data)
+  //   })
+  //   .catch(err => {console.log(err)})
+
+  // }, [rangeButton]);
+
   return (
     <>
       <Container className={classes.bigContainer}>
         <Container className={classes.heading}>
-          <h1>Welcome, Executive Director!</h1>
+          <h1>Dashboard</h1>
         </Container>
         <Container>
+          <hr className={classes.hr}></hr>
           <h2>Daily Shelter Stats</h2>
-          <hr></hr>
         </Container>
         <Container className={classes.container1}>
           <Card className={classes.root} variant="outlined">
@@ -133,7 +196,9 @@ const Analytics = () => {
               >
                 Beds Reserved
               </Typography>
-              <Typography className={classes.number}>20</Typography>
+              <Typography className={classes.number}>
+                {totalBedsReserved}
+              </Typography>
             </CardContent>
           </Card>
           <Card className={classes.root} variant="outlined">
@@ -145,7 +210,7 @@ const Analytics = () => {
               >
                 Guests Checked In
               </Typography>
-              <Typography className={classes.number}>12</Typography>
+              <Typography className={classes.number}>3</Typography>
             </CardContent>
           </Card>
           <Card className={classes.root} variant="outlined">
@@ -157,13 +222,35 @@ const Analytics = () => {
               >
                 Beds Available
               </Typography>
-              <Typography className={classes.number}>70</Typography>
+              <Typography className={classes.number}>
+                {90 - totalBedsReserved}
+              </Typography>
             </CardContent>
           </Card>
         </Container>
         <Container>
-          <h2>Monthly Stats</h2>
-          <hr></hr>
+          <hr className={classes.hr}></hr>
+          <Container className={classes.monthly}>
+            <h2>Monthly Stats</h2>
+            <FormControl variant="outlined" className={classes.formControl}>
+              <InputLabel id="demo-simple-select-outlined-label">
+                Range
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={rangeValue}
+                onChange={changeRange}
+                label="Age"
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={90}>90 days</MenuItem>
+                <MenuItem value={365}>365 days</MenuItem>
+              </Select>
+            </FormControl>
+          </Container>
         </Container>
         <Container className={classes.monthlyContainer}>
           <Card className={classes.root} variant="outlined">
@@ -208,11 +295,47 @@ const Analytics = () => {
           </Card>
         </Container>
         <Container>
+          <hr className={classes.hr}></hr>
           <h2>Daily Guest Logs</h2>
-          <hr></hr>
         </Container>
         <Container className={classes.container2}>
           <SupervisorGuestLogs />
+        </Container>
+        <Container>
+          <Card className={classes.root} variant="outlined">
+            <CardContent>
+              <Typography
+                className={classes.title}
+                color="textPrimary"
+                gutterBottom
+              >
+                Logs
+              </Typography>
+              <button
+                onClick={e => {
+                  fetchLogs(e);
+                }}
+              >
+                Fetch Logs
+              </button>
+              {card
+                ? logs.map(log => (
+                    <Card key={log.id}>
+                      <CardContent>
+                        <p> Checked in: {log.checked_in ? 'Yes' : 'No'}</p>
+                        <p>Date: {log.date}</p>
+                        <p>Family Id: {log.family_id}</p>
+                        <p> On-Site: {log.on_sight ? 'Yes' : 'No'}</p>
+                        <p>Supervisor Id: {log.supervisor_id}</p>
+                        <p> Time: {log.time}</p>
+                        <p>Beds Reserved: {log.beds_reserved}</p>
+                      </CardContent>
+                    </Card>
+                  ))
+                : ''}
+              {/* <Typography>22</Typography> */}
+            </CardContent>
+          </Card>
         </Container>
       </Container>
     </>
