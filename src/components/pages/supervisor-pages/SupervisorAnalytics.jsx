@@ -34,7 +34,8 @@ const useStyles = makeStyles({
     marginTop: '2rem',
   },
   hr: {
-    border: '.5px solid lightgrey',
+    border: '1px solid grey',
+    opacity: '8%',
   },
   formControl: {
     minWidth: 150,
@@ -44,8 +45,8 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
-    margin: '1rem 0',
-    paddingTop: '1rem',
+    marginBottom: '1rem',
+    //paddingTop: '1rem',
     paddingBottom: '1rem',
     //border: '1px solid red',
   },
@@ -53,21 +54,22 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
-    margin: '1rem 0',
-    paddingTop: '1rem',
+    marginBottom: '1rem',
+    //paddingTop: '1rem',
     paddingBottom: '1rem',
     //border: '1px solid red',
   },
   monthly: {
     display: 'flex',
     justifyContent: 'space-between',
+    alignItems: 'baseline',
     //border: '1px solid red',
     padding: 0,
   },
   container2: {
     //border: '1px solid red',
     margin: '1rem 0',
-    paddingTop: '1rem',
+    //paddingTop: '1rem',
     paddingBottom: '1rem',
   },
   // container3: {
@@ -245,16 +247,12 @@ const Analytics = () => {
           <hr className={classes.hr}></hr>
           <Container className={classes.monthly}>
             <h2>Monthly Stats</h2>
-            <FormControl variant="outlined" className={classes.formControl}>
-              <InputLabel id="demo-simple-select-outlined-label">
-                Range
-              </InputLabel>
+            <FormControl className={classes.formControl}>
               <Select
-                labelId="demo-simple-select-outlined-label"
-                id="demo-simple-select-outlined"
                 value={rangeValue}
                 onChange={changeRange}
-                label="Age"
+                label="Range"
+                displayEmpty
               >
                 <MenuItem value="">
                   <em>None</em>
