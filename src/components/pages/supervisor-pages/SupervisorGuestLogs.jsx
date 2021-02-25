@@ -20,9 +20,12 @@ import Modal from 'react-modal';
 import '../Guests/guest.css';
 // import { CardContent, Card } from '@material-ui/core';
 import GuestMoreInfo from '../Guests/GuestMoreInfo';
+import { Paper } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import DoneOutlinedIcon from '@material-ui/icons/DoneOutlined';
 import { makeStyles } from '@material-ui/core';
+
 Modal.setAppElement('#root');
 
 const useStyles = makeStyles({
@@ -38,6 +41,8 @@ const Guests = () => {
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const user = useSelector(state => state.CURRENT_USER);
+
   const [state, setState] = useState({
     columns: [
       { title: 'First', field: 'first_name', type: 'hidden' },

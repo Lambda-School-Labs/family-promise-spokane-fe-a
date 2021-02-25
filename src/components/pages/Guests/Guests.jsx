@@ -106,8 +106,8 @@ const Guests = () => {
         )}
         <div className="guest-table">
           <MaterialTable
-            boxShadow={0}
             options={{
+              boxShadow: 'none',
               exportButton: true,
               rowStyle: rowData => ({
                 backgroundColor:

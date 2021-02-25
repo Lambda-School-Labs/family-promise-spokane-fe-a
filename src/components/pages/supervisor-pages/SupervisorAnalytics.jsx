@@ -15,12 +15,13 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 import axios from 'axios';
 // utils
 import { tableIcons } from '../../../utils/tableIcons';
 import { findLastIndex } from 'underscore';
+import { getDailyReservationLogs } from '../../../state/actions/index';
 
 const useStyles = makeStyles({
   bigContainer: {
@@ -33,7 +34,8 @@ const useStyles = makeStyles({
     marginTop: '2rem',
   },
   hr: {
-    border: '.5px solid lightgrey',
+    border: '1px solid grey',
+    opacity: '8%',
   },
   formControl: {
     minWidth: 150,
@@ -43,8 +45,8 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
-    margin: '1rem 0',
-    paddingTop: '1rem',
+    marginBottom: '1rem',
+    //paddingTop: '1rem',
     paddingBottom: '1rem',
     //border: '1px solid red',
   },
@@ -52,21 +54,22 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
-    margin: '1rem 0',
-    paddingTop: '1rem',
+    marginBottom: '1rem',
+    //paddingTop: '1rem',
     paddingBottom: '1rem',
     //border: '1px solid red',
   },
   monthly: {
     display: 'flex',
     justifyContent: 'space-between',
+    alignItems: 'baseline',
     //border: '1px solid red',
     padding: 0,
   },
   container2: {
     //border: '1px solid red',
     margin: '1rem 0',
-    paddingTop: '1rem',
+    //paddingTop: '1rem',
     paddingBottom: '1rem',
   },
   // container3: {
@@ -116,35 +119,48 @@ const Analytics = () => {
   const [totalBedsReserved, setTotalBedsReserved] = useState(0);
   const [monthlyData, setMonthlyData] = useState({});
   const [rangeValue, setRangeValue] = useState(90);
+  const dispatch = useDispatch();
   const classes = useStyles();
   const user = useSelector(state => state.CURRENT_USER);
   const date = new Date();
   const fullDate = date.toDateString();
   const globalCount = useSelector(state => state.TOTAL_BEDS);
+  const globalLogs = useSelector(state => state.RESERVATION_LOGS);
 
   useEffect(() => {
-    //const interval = setInterval(() => {
-    axiosWithAuth()
-      .get(`/logs`)
-      .then(res => {
-        console.log('full date', fullDate);
-        console.log('zero log', res.data[res.data.length - 1]);
-        // const filteredLogs = res.data.filter(item => {
-        //   if (fullDate === item.date && item.reservation_status === true) {
-        //     return item;
-        //   }
-        //});
-        setLogs(res.data);
-        //console.log('filtered data', filteredLogs);
-        //setLogs(filteredLogs);
-        // filteredLogs.forEach(item => {
-        //   setTotalBedsReserved(totalBedsReserved + item.beds_reserved);
-        // });
-      });
-
-    // }, 30000);
-    // return () => clearInterval(interval);
+    dispatch(getDailyReservationLogs());
   }, []);
+
+  useEffect(() => {
+    const filteredLogs = globalLogs.filter(item => {
+      if (fullDate === item.date && item.reservation_status === true) {
+        return item;
+      }
+    });
+    console.log('filtered data', filteredLogs);
+    setLogs(filteredLogs);
+    let total = 0;
+    filteredLogs.forEach(item => {
+      total = total + item.beds_reserved;
+    });
+    setTotalBedsReserved(total);
+  }, [globalLogs]);
+  // axiosWithAuth()
+  //   .get(`/logs`)
+  //   .then(res => {
+  //     const filteredLogs = res.data.filter(item => {
+  //       if (fullDate === item.date && item.reservation_status === true) {
+  //         return item;
+  //       }
+  //     });
+  //     console.log('filtered data', filteredLogs);
+  //     setLogs(filteredLogs);
+  //     let total = 0;
+  //     filteredLogs.forEach(item => {
+  //       total = total + item.beds_reserved
+  //     });
+  //     setTotalBedsReserved(total);
+  //   });
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -231,16 +247,12 @@ const Analytics = () => {
           <hr className={classes.hr}></hr>
           <Container className={classes.monthly}>
             <h2>Monthly Stats</h2>
-            <FormControl variant="outlined" className={classes.formControl}>
-              <InputLabel id="demo-simple-select-outlined-label">
-                Range
-              </InputLabel>
+            <FormControl className={classes.formControl}>
               <Select
-                labelId="demo-simple-select-outlined-label"
-                id="demo-simple-select-outlined"
                 value={rangeValue}
                 onChange={changeRange}
-                label="Age"
+                label="Range"
+                displayEmpty
               >
                 <MenuItem value="">
                   <em>None</em>
@@ -328,6 +340,10 @@ const Analytics = () => {
                         <p>Supervisor Id: {log.supervisor_id}</p>
                         <p> Time: {log.time}</p>
                         <p>Beds Reserved: {log.beds_reserved}</p>
+                        <p>
+                          Reservation Status:{' '}
+                          {log.reservation_status ? 'Yes' : 'No'}
+                        </p>
                       </CardContent>
                     </Card>
                   ))
