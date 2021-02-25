@@ -113,3 +113,16 @@ export const getLatestLog = () => async dispatch => {
     dispatch({ type: 'LATEST_LOG_FAILURE', payload: error.message });
   }
 };
+
+export const getDailyReservationLogs = () => dispatch => {
+  dispatch({ type: 'LOGS_DAILY_LOADING' });
+  axiosWithAuth()
+    .get('/logs')
+    .then(res => {
+      dispatch({ type: 'LOGS_DAILY_SUCCESS', payload: res.data });
+    })
+    .catch(error => {
+      console.log(error);
+      dispatch({ type: 'LOGS_DAILY_FAILURE', payload: error.message });
+    });
+};

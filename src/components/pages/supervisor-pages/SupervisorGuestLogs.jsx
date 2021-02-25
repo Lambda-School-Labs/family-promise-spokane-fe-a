@@ -20,11 +20,15 @@ import Modal from 'react-modal';
 import '../Guests/guest.css';
 // import { CardContent, Card } from '@material-ui/core';
 import GuestMoreInfo from '../Guests/GuestMoreInfo';
+import { Paper } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 Modal.setAppElement('#root');
 
 const Guests = () => {
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const user = useSelector(state => state.CURRENT_USER);
+
   const [state, setState] = useState({
     columns: [
       { title: 'First', field: 'first_name', type: 'hidden' },
@@ -110,6 +114,7 @@ const Guests = () => {
         <div className="exec-guest-table">
           <MaterialTable
             options={{
+              actionsColumnIndex: -1,
               exportButton: true,
               rowStyle: rowData => ({
                 backgroundColor:
@@ -124,7 +129,6 @@ const Guests = () => {
             title="Guests"
             columns={state.columns}
             data={state.data}
-            options={{ actionsColumnIndex: -1 }}
             actions={[
               {
                 icon: PeopleOutlinedIcon,
