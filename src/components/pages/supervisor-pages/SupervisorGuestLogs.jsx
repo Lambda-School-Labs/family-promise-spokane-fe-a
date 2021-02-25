@@ -20,9 +20,22 @@ import Modal from 'react-modal';
 import '../Guests/guest.css';
 // import { CardContent, Card } from '@material-ui/core';
 import GuestMoreInfo from '../Guests/GuestMoreInfo';
+import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
+import DoneOutlinedIcon from '@material-ui/icons/DoneOutlined';
+import { makeStyles } from '@material-ui/core';
 Modal.setAppElement('#root');
 
+const useStyles = makeStyles({
+  buttonColor: {
+    color: 'green',
+  },
+  tableStyle: {
+    shadows: ['none'],
+  },
+});
+
 const Guests = () => {
+  const classes = useStyles();
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [state, setState] = useState({
@@ -32,7 +45,7 @@ const Guests = () => {
       { title: 'DOB', field: 'DOB', type: 'date' },
       { title: 'Relationship', field: 'relationship' },
       { title: 'Reservation', field: '0.reservation_status' },
-      { title: 'Checked In', field: '0.on_site_7pm' },
+      { title: 'Checked In', field: '0.on_site_10pm' },
     ],
     data: [],
   });
@@ -76,7 +89,14 @@ const Guests = () => {
   const [isNotesOpen, setIsNotesOpen] = useState(false);
   const [guestId, setGuestId] = useState(null);
   const [result, setResult] = useState(null);
+  const [clicked, setClicked] = useState(false);
   const history = useHistory();
+
+  const handleCheckInClick = () => {
+    setClicked(!clicked);
+
+    axiosWithAuth().put('/members');
+  };
 
   if (loading) {
     return (
@@ -109,7 +129,9 @@ const Guests = () => {
         )}
         <div className="exec-guest-table">
           <MaterialTable
+            className={classes.tableStyle}
             options={{
+              actionsColumnIndex: -1,
               exportButton: true,
               rowStyle: rowData => ({
                 backgroundColor:
@@ -124,8 +146,15 @@ const Guests = () => {
             title="Guests"
             columns={state.columns}
             data={state.data}
-            options={{ actionsColumnIndex: -1 }}
             actions={[
+              {
+                onClick: () => {
+                  handleCheckInClick();
+                },
+                icon: () =>
+                  clicked ? <DoneOutlinedIcon /> : <AddOutlinedIcon />,
+                tooltip: 'Check In',
+              },
               {
                 icon: PeopleOutlinedIcon,
                 tooltip: 'Family Members',
