@@ -8,6 +8,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import InfoIcon from '@material-ui/icons/Info';
 import { tableIcons } from '../../../utils/tableIcons';
 import FlagIcon from '@material-ui/icons/Flag';
+import { Paper } from '@material-ui/core';
 // import CardShadow from '../../CardShadow';
 import FlagGuest from '../../modals/FlagGuest';
 import GuestNotes from '../../modals/GuestNotes';
@@ -106,8 +107,10 @@ const Guests = () => {
         )}
         <div className="guest-table">
           <MaterialTable
+            components={{
+              Container: props => <Paper {...props} elevation={0} />,
+            }}
             options={{
-              boxShadow: 'none',
               exportButton: true,
               rowStyle: rowData => ({
                 backgroundColor:
@@ -122,6 +125,7 @@ const Guests = () => {
             title="Guests"
             columns={state.columns}
             data={state.data}
+            elevation={0}
             actions={[
               {
                 icon: PeopleIcon,

@@ -25,6 +25,7 @@ import { useSelector } from 'react-redux';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import DoneOutlinedIcon from '@material-ui/icons/DoneOutlined';
 import { makeStyles } from '@material-ui/core';
+import { borders } from '@material-ui/system';
 
 Modal.setAppElement('#root');
 
@@ -33,7 +34,8 @@ const useStyles = makeStyles({
     color: 'green',
   },
   tableStyle: {
-    shadows: ['none'],
+    shadows: 'none',
+    border: '1px solid gray',
   },
 });
 
@@ -134,6 +136,9 @@ const Guests = () => {
         )}
         <div className="exec-guest-table">
           <MaterialTable
+            components={{
+              Container: props => <Paper {...props} elevation={0} />,
+            }}
             className={classes.tableStyle}
             options={{
               actionsColumnIndex: -1,
