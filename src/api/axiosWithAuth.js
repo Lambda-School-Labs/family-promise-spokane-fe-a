@@ -1,9 +1,5 @@
 import axios from 'axios';
-const environment = process.env.ENV || 'development';
-
-// environment !== 'development'
-//   ? console.log('development mode')
-//   : console.log('something else');
+const environment = process.env.NODE_ENV || 'development';
 
 // // for testing BE on localhost
 const ApiUrl =
