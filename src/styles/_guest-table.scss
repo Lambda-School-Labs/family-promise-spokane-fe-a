@@ -3,10 +3,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
 }
 
 .exec-guest-table {
   width: 100%;
+  
 }
 
 .guest-table-container {
@@ -15,6 +18,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  
 }
 
 .guest-table {
