@@ -135,7 +135,7 @@ const GuestMoreInfo = ({ familyInfo }) => {
             <Text type="secondary">HIV/AIDS:</Text>
 
             {familyInfo.barriers.HIV_AIDs
-              ? familyInfo.barriers.HIV_AIDs == true
+              ? familyInfo.barriers.HIV_AIDs === true
                 ? 'yes'
                 : 'no'
               : ''}
@@ -146,7 +146,7 @@ const GuestMoreInfo = ({ familyInfo }) => {
             <Text type="secondary">Alcohol Abuse:</Text>
             <p>
               {familyInfo.barriers.alcohol_abuse
-                ? familyInfo.barriers.alcohol_abuse == true
+                ? familyInfo.barriers.alcohol_abuse === true
                   ? 'yes'
                   : 'no'
                 : ''}
@@ -156,7 +156,7 @@ const GuestMoreInfo = ({ familyInfo }) => {
             <Text type="secondary">Chronic Health Issues:</Text>
             <p>
               {familyInfo.barriers.chronic_health_issues
-                ? familyInfo.barriers.chronic_health_issues == true
+                ? familyInfo.barriers.chronic_health_issues === true
                   ? 'yes'
                   : 'no'
                 : ''}
@@ -167,7 +167,7 @@ const GuestMoreInfo = ({ familyInfo }) => {
             <Text type="secondary">Physcial Disabilites:</Text>
             <p>
               {familyInfo.barriers.physcial_disabilites
-                ? familyInfo.barriers.physcial_disabilites == true
+                ? familyInfo.barriers.physcial_disabilites === true
                   ? 'yes'
                   : 'no'
                 : ''}
@@ -178,7 +178,7 @@ const GuestMoreInfo = ({ familyInfo }) => {
             <Text type="secondary">Development Disabilites:</Text>
             <p>
               {familyInfo.barriers.developmental_disabilites
-                ? familyInfo.barriers.developmental_disabilites == true
+                ? familyInfo.barriers.developmental_disabilites === true
                   ? 'yes'
                   : 'no'
                 : ''}
@@ -188,7 +188,7 @@ const GuestMoreInfo = ({ familyInfo }) => {
             <Text type="secondary">Drug Abuse:</Text>
             <p>
               {familyInfo.barriers.drug_abuse
-                ? familyInfo.barriers.drug_abuse == true
+                ? familyInfo.barriers.drug_abuse === true
                   ? 'yes'
                   : 'no'
                 : ''}
@@ -198,7 +198,7 @@ const GuestMoreInfo = ({ familyInfo }) => {
             <Text type="secondary">Indefinite Conditions:</Text>
             <p>
               {familyInfo.barriers.list_indefinite_conditions
-                ? familyInfo.barriers.list_indefinite_conditions == true
+                ? familyInfo.barriers.list_indefinite_conditions === true
                   ? 'yes'
                   : 'no'
                 : ''}
@@ -208,7 +208,7 @@ const GuestMoreInfo = ({ familyInfo }) => {
             <Text type="secondary">Issues:</Text>
             <p>
               {familyInfo.barriers.issues
-                ? familyInfo.barriers.issues == true
+                ? familyInfo.barriers.issues === true
                   ? 'yes'
                   : 'no'
                 : ''}

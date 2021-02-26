@@ -41,6 +41,7 @@ const FamilyProfile = ({ familyInfo, fetchFamily }) => {
 
   useEffect(() => {
     fetchFamily(familyId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [tab, setTab] = useState({ key: 'tab1', noTitleKey: 'Contact Info' });
@@ -52,7 +53,7 @@ const FamilyProfile = ({ familyInfo, fetchFamily }) => {
   let contentListNoTitle = {};
 
   //This makes sure it fetches completely before calling to prevet an error
-  if (familyInfo?.phone_one != undefined && familyInfo?.phone_one != {}) {
+  if (familyInfo?.phone_one !== undefined && familyInfo?.phone_one !== {}) {
     contentListNoTitle = {
       'Contact Info': (
         <div className="contact_info">
@@ -134,27 +135,29 @@ const FamilyProfile = ({ familyInfo, fetchFamily }) => {
               {familyInfo?.insurance?.members_covered}
             </Descriptions.Item>
             <Descriptions.Item label="Has pregnant member">
-              {familyInfo?.insurance?.pregnancies == true ? 'yes' : 'no'}
+              {familyInfo?.insurance?.pregnancies === true ? 'yes' : 'no'}
             </Descriptions.Item>
           </Descriptions>
           <Descriptions title="Goverment Benefits">
             <Descriptions.Item label="RRH">
-              {familyInfo?.gov_benefits?.RRH == true ? 'yes' : 'no'}
+              {familyInfo?.gov_benefits?.RRH === true ? 'yes' : 'no'}
             </Descriptions.Item>
             <Descriptions.Item label="CPS/FPS">
-              {familyInfo?.gov_benefits?.cps_fps == true ? 'yes' : 'no'}
+              {familyInfo?.gov_benefits?.cps_fps === true ? 'yes' : 'no'}
             </Descriptions.Item>
             <Descriptions.Item label="Foodstamps">
-              {familyInfo?.gov_benefits?.foodstamps == true ? 'yes' : 'no'}
+              {familyInfo?.gov_benefits?.foodstamps === true ? 'yes' : 'no'}
             </Descriptions.Item>
             <Descriptions.Item label="Housing Voucher">
-              {familyInfo?.gov_benefits?.housing_voucher == true ? 'yes' : 'no'}
+              {familyInfo?.gov_benefits?.housing_voucher === true
+                ? 'yes'
+                : 'no'}
             </Descriptions.Item>
             <Descriptions.Item label="SNAP">
-              {familyInfo?.gov_benefits?.snap == true ? 'yes' : 'no'}
+              {familyInfo?.gov_benefits?.snap === true ? 'yes' : 'no'}
             </Descriptions.Item>
             <Descriptions.Item label="Veteran Services">
-              {familyInfo?.gov_benefits?.veteran_servcies == true
+              {familyInfo?.gov_benefits?.veteran_servcies === true
                 ? 'yes'
                 : 'no'}
             </Descriptions.Item>
@@ -181,22 +184,22 @@ const FamilyProfile = ({ familyInfo, fetchFamily }) => {
               {familyInfo?.domestic_violence_info?.date_last_incident}
             </Descriptions.Item>
             <Descriptions.Item label="YWCA has been contacted">
-              {familyInfo?.domestic_violence_info?.YWCA_contacted == true
+              {familyInfo?.domestic_violence_info?.YWCA_contacted === true
                 ? 'yes'
                 : 'no'}
             </Descriptions.Item>
             <Descriptions.Item label="Anonymity Preferred">
-              {familyInfo?.domestic_violence_info?.anonymity_preferred == true
+              {familyInfo?.domestic_violence_info?.anonymity_preferred === true
                 ? 'yes'
                 : 'no'}
             </Descriptions.Item>
             <Descriptions.Item label="Fleeing Domestic Violence">
-              {familyInfo?.domestic_violence_info?.fleeing_dv == true
+              {familyInfo?.domestic_violence_info?.fleeing_dv === true
                 ? 'yes'
                 : 'no'}
             </Descriptions.Item>
             <Descriptions.Item label="Has court order of protection">
-              {familyInfo?.domestic_violence_info?.has_court_order == true
+              {familyInfo?.domestic_violence_info?.has_court_order === true
                 ? 'yes'
                 : 'no'}
             </Descriptions.Item>

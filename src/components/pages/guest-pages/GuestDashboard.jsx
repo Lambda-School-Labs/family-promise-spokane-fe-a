@@ -7,7 +7,10 @@ import { axiosWithAuth } from '../../../api/axiosWithAuth';
 import { getLatestLog, updateBedCount } from '../../../state/actions/index';
 
 // UI
-import { Divider, Button, Checkbox, Typography } from 'antd';
+import { Divider, Typography } from 'antd';
+import { Checkbox, Button } from '@material-ui/core/';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 import '../../../styles/app.scss';
 
 //redux
@@ -289,13 +292,19 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
           {users.map(member => {
             return (
               <div className="members">
-                <Checkbox
-                  value={`${member.demographics.first_name} ${member.demographics.last_name}`}
-                  onChange={waitListMembers}
-                >
-                  {member.demographics.first_name}{' '}
-                  {member.demographics.last_name}
-                </Checkbox>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value={`${member.demographics.first_name} ${member.demographics.last_name}`}
+                      onChange={waitListMembers}
+                      color="primary"
+                    >
+                      {member.demographics.first_name}{' '}
+                      {member.demographics.last_name}
+                    </Checkbox>
+                  }
+                  label={`${member.demographics.first_name} ${member.demographics.last_name}`}
+                />
               </div>
             );
           })}
@@ -313,26 +322,45 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
         //MEMBERS STAYING ___________________________
         <div className={isReserved === true ? 'isReserved' : ''}>
           <Text strong>
-            {' '}
-            If you would like to reserve {membersStaying.length} beds, please
-            click the button below:{' '}
+            Select which family members you would like to check in:
           </Text>
-
           {users.map(member => {
             return (
               <div>
-                <Checkbox
-                  value={`${member.demographics.first_name} ${member.demographics.last_name}`}
-                  onChange={familyStaying}
-                >
-                  {member.demographics.first_name}{' '}
-                  {member.demographics.last_name}
-                </Checkbox>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value={`${member.demographics.first_name} ${member.demographics.last_name}`}
+                      onChange={familyStaying}
+                      color="primary"
+                      size="large"
+                    >
+                      {member.demographics.first_name}{' '}
+                      {member.demographics.last_name}
+                    </Checkbox>
+                  }
+                  label={`${member.demographics.first_name} ${member.demographics.last_name}`}
+                />
               </div>
             );
           })}
-          <Button className="reserve-button" onClick={reserveButton}>
-            Reserve Beds
+          <Text strong>
+            {' '}
+            {membersStaying.length !== 0
+              ? `After you select family members, click the button below.`
+              : 'Remember to select family members to reserve.'}
+          </Text>
+          <br />
+          <br />
+          <Button
+            variant="contained"
+            color="primary"
+            size={'large'}
+            onClick={reserveButton}
+          >
+            {membersStaying.length == 0
+              ? `Check in`
+              : `Reserve ${membersStaying.length} Beds + Check In`}
           </Button>
         </div>
       )}

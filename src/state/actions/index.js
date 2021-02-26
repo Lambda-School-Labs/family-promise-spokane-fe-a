@@ -103,7 +103,7 @@ export const getLatestLog = () => async dispatch => {
     );
     const logs = await axiosWithAuth().get(`/logs/family/${myFamily.data.id}`);
     let log = {};
-    if (logs.data != []) {
+    if (logs.data !== []) {
       log = logs.data[logs.data.length - 1];
     }
 

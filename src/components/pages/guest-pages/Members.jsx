@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 import LoadingComponent from '../../common/LoadingComponent';
-import { useParams } from 'react-router-dom';
 import MaterialTable, { MTableToolbar } from 'material-table';
 import { useHistory } from 'react-router-dom';
 import { tableIcons } from '../../../utils/tableIcons';
@@ -58,6 +57,7 @@ const MembersPage = () => {
 
   useEffect(() => {
     fetchFamilyInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) {
@@ -76,9 +76,9 @@ const MembersPage = () => {
             exportButton: true,
             rowStyle: rowData => ({
               backgroundColor:
-                rowData.flag_level == 2
+                rowData.flag_level === 2
                   ? 'rgba(255, 255, 0, 0.419)'
-                  : rowData.flag_level == 3
+                  : rowData.flag_level === 3
                   ? 'rgba(255, 0, 0, 0.418)'
                   : 'white',
             }),

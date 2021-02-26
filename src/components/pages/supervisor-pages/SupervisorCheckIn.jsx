@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
-import LoadingComponent from '../../common/LoadingComponent';
+//import LoadingComponent from '../../common/LoadingComponent';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 import { tableIcons } from '../../../utils/tableIcons';
 import { Switch } from 'antd';
 
 export default function SupervisorCheckIn() {
-  const [loading, setLoading] = useState(true);
+  //const [loading, setLoading] = useState(true);
   //this sets the table so that materiatable can display it
   //the data[] array is retrieved from the API and represents the row
   const [table, setTable] = useState({
@@ -36,13 +36,14 @@ export default function SupervisorCheckIn() {
       .then(res => {
         const date = new Date();
         const fullDate = date.toDateString();
-        const hours = new Date().getHours();
-        const getMinutes = new Date().getMinutes();
-        const minutes = (getMinutes < 10 ? '0' : '') + getMinutes;
+        //const hours = new Date().getHours();
+        //const getMinutes = new Date().getMinutes();
+        //const minutes = (getMinutes < 10 ? '0' : '') + getMinutes;
 
         //filter logs by today's date
         let results = res.data.filter(d => {
           if (d.date === fullDate) return d;
+          // eslint-disable-next-line
           else return;
         });
 
@@ -79,12 +80,13 @@ export default function SupervisorCheckIn() {
           });
           //create the row for the table
           setTable({ ...table, data: temp });
-          setLoading(false);
+          //setLoading(false);
         }
       })
       .catch(err => {
         console.log(err);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // if (loading) {
@@ -103,9 +105,9 @@ export default function SupervisorCheckIn() {
             exportButton: true,
             rowStyle: rowData => ({
               backgroundColor:
-                rowData.flag_level == 2
+                rowData.flag_level === 2
                   ? 'rgba(255, 255, 0, 0.419)'
-                  : rowData.flag_level == 3
+                  : rowData.flag_level === 3
                   ? 'rgba(255, 0, 0, 0.418)'
                   : 'white',
             }),

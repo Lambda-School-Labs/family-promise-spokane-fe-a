@@ -4,7 +4,7 @@ a user is logged in as a guest
 potential URL here '/analytics'
 */
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 
 // ant design
@@ -29,18 +29,18 @@ const GuestAnalytics = ({
   const user = useSelector(state => state.CURRENT_USER);
   const [idRoute, setIdRoute] = useState(null);
 
-  const fetchFamilyInformation = async () => {
-    try {
-      const res = await axiosWithAuth().get(`/users/${user.id}/family`);
+  // const fetchFamilyInformation = async () => {
+  //   try {
+  //     const res = await axiosWithAuth().get(`/users/${user.id}/family`);
 
-      const family = res.data.family;
-      setIdRoute(family.id);
-      fetchFamily(family.id);
-      fetchHousehold(family.id);
-    } catch (error) {
-      alert('error');
-    }
-  };
+  //     const family = res.data.family;
+  //     setIdRoute(family.id);
+  //     fetchFamily(family.id);
+  //     fetchHousehold(family.id);
+  //   } catch (error) {
+  //     alert('error');
+  //   }
+  // };
 
   const fetchFamilyHousehold = async () => {
     try {

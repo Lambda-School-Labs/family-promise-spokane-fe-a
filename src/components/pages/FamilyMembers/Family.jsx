@@ -11,7 +11,8 @@ const FamilyMembers = () => {
   const history = useHistory();
   const params = useParams();
   const [loading, setLoading] = useState(true);
-  const [familyInfo, setFamilyInfo] = useState({});
+  // State below is unused
+  //const [familyInfo, setFamilyInfo] = useState({});
   const [state, setState] = useState({
     columns: [
       { title: 'First', field: 'first_name', type: 'hidden' },
@@ -28,7 +29,7 @@ const FamilyMembers = () => {
         .get(`/families/${params.id}`)
         .then(res => res.data);
 
-      setFamilyInfo(info);
+      //setFamilyInfo(info);
 
       const data = await axiosWithAuth()
         .get(`/families/${params.id}/members`)
@@ -48,6 +49,7 @@ const FamilyMembers = () => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     fetchFamilyInfo();
   }, []);
 
