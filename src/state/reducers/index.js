@@ -26,6 +26,7 @@ import {
   LOGS_DAILY_LOADING,
   LOGS_DAILY_SUCCESS,
   LOGS_DAILY_FAILURE,
+  DOCUSIGN_REDIRECT,
   // Total beds at shelter
 } from '../types';
 
@@ -40,6 +41,7 @@ const INITIAL_STATE = {
   TOTAL_BEDS: 90,
   LATEST_LOG: {},
   RESERVATION_LOGS: [],
+  DOCUSIGN_URL: '',
 };
 
 export const rootReducer = (state = INITIAL_STATE, action) => {
@@ -94,6 +96,8 @@ export const rootReducer = (state = INITIAL_STATE, action) => {
       return { ...state, LOADING: true };
     case LOGS_DAILY_SUCCESS:
       return { ...state, RESERVATION_LOGS: action.payload, LOADING: false };
+    case DOCUSIGN_REDIRECT:
+      return { ...state, DOCUSIGN_URL: action.payload, LOADING: false };
     default:
       return state;
   }

@@ -34,7 +34,7 @@
     "underscore": "^1.12.0"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "craco --max_old_space_size=8192 start",
     "build": "craco --max_old_space_size=8192 build",
     "test": "craco test --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject",

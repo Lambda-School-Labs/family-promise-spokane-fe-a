@@ -5,13 +5,27 @@ This component contains:
  
 */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import moment from 'moment';
+import { useHistory, Route } from 'react-router-dom';
+
 // import { useHistory } from 'react-router-dom';
 //Previous/Next buttons
 import IntakeButton from '../IntakeButtons';
 
 //Ant Design imports (https://ant.design/components/overview/)
 import { Form, Input, Checkbox, Card, Progress } from 'antd';
+
+let envelopeArgs = {
+  accessToken: '',
+  accountId: 'd9ae37f1-949c-4649-87f1-bba5125c0159',
+  accountName: '6193c946-ca9e-4413-8fc7-e96e2e9e5776',
+  basePath: 'https://demo.docusign.net/restapi',
+  signer1Email: 'djviodes@ymail.com',
+  signer1Name: 'David Viodes',
+  tokenExpirationTimestamp: moment().add(3600, 's'),
+};
 
 const Pets = ({
   navigation,
@@ -21,6 +35,25 @@ const Pets = ({
   steps,
   step,
 }) => {
+  //docusign
+  const [link, setLink] = useState('');
+  const history = useHistory();
+  const [noRefresh, setRefresh] = useState('');
+  useEffect(() => {
+    if (link) {
+      history.push('/redirect');
+    }
+  }, [noRefresh]);
+
+  function accessedBE() {
+    console.log('This is our envelope arguments: ', envelopeArgs);
+    axios.post('http://localhost:8000/callDS', envelopeArgs).then(res => {
+      console.log(res.data);
+      setLink(res.data);
+      setRefresh(!noRefresh);
+    });
+  }
+
   //Progress bar
   const pageNumber = steps.findIndex(item => item === step);
   const pages = steps.length;
@@ -124,6 +157,16 @@ const Pets = ({
               onChange={setForm}
             />
           </Form.Item>
+          <div className="docusign btn">
+            <button onClick={accessedBE}>Sign your life away</button>
+            <Route
+              path="/redirect"
+              component={() => {
+                window.location.href = link;
+                return null;
+              }}
+            />
+          </div>
         </Form>
       </Card>
     </div>
