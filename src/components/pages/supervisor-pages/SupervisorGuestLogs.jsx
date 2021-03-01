@@ -21,7 +21,7 @@ import '../Guests/guest.css';
 // import { CardContent, Card } from '@material-ui/core';
 import GuestMoreInfo from '../Guests/GuestMoreInfo';
 import { Paper } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import DoneOutlinedIcon from '@material-ui/icons/DoneOutlined';
 import { makeStyles } from '@material-ui/core';
@@ -44,15 +44,14 @@ const Guests = () => {
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const user = useSelector(state => state.CURRENT_USER);
+  const globalLogs = useSelector(state => state.RESERVATION_LOGS);
 
   const [state, setState] = useState({
     columns: [
       { title: 'First', field: 'first_name', type: 'hidden' },
       { title: 'Last ', field: 'last_name' },
-      { title: 'DOB', field: 'DOB', type: 'date' },
       { title: 'Relationship', field: 'relationship' },
-      { title: 'Reservation', field: '0.reservation_status' },
-      { title: 'Checked In', field: '0.on_site_10pm' },
+      { title: 'Checked In', field: 'on_site_10pm' },
     ],
     data: [],
   });
@@ -62,35 +61,56 @@ const Guests = () => {
   }
 
   useEffect(() => {
-    axiosWithAuth()
-      .get('/members')
-      .then(res => {
-        console.log(res.data);
-        let copy = { ...state };
+    let copy = { ...state };
 
-        let formattedData = res.data.map(member => {
-          return {
-            ...member.demographics,
-            ...member.bearers,
-            ...member.schools,
-            ...member.check_in,
-            flag_level: 0,
-            ...member,
-          };
-        });
+    let formattedData = globalLogs.map(member => {
+      return {
+        ...member.demographics,
+        ...member.bearers,
+        ...member.schools,
+        ...member.check_in,
+        flag_level: 0,
+        ...member,
+      };
+    });
 
-        copy.data.push(...formattedData);
-        console.log(copy);
+    copy.data.push(...formattedData);
+    console.log(copy);
 
-        setState(copy);
-      })
-      .catch(err => {
-        alert('error');
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+    setState(copy);
+    setLoading(false);
+  }, [globalLogs]);
+
+  // useEffect(() => {
+  //   axiosWithAuth()
+  //     .get('/members')
+  //     .then(res => {
+  //       console.log(res.data);
+  //       let copy = { ...state };
+
+  //       let formattedData = res.data.map(member => {
+  //         return {
+  //           ...member.demographics,
+  //           ...member.bearers,
+  //           ...member.schools,
+  //           ...member.check_in,
+  //           flag_level: 0,
+  //           ...member,
+  //         };
+  //       });
+
+  //       copy.data.push(...formattedData);
+  //       console.log(copy);
+
+  //       setState(copy);
+  //     })
+  //     .catch(err => {
+  //       alert('error');
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // }, []);
 
   const [isFlagOpen, setIsFlagOpen] = useState(false);
   const [isNotesOpen, setIsNotesOpen] = useState(false);
@@ -158,10 +178,12 @@ const Guests = () => {
             data={state.data}
             actions={[
               {
-                onClick: () => {
+                onClick: (e, rowData) => {
+                  console.log(rowData);
+
                   handleCheckInClick();
                 },
-                icon: () =>
+                icon: rowData =>
                   clicked ? <DoneOutlinedIcon /> : <AddOutlinedIcon />,
                 tooltip: 'Check In',
               },
