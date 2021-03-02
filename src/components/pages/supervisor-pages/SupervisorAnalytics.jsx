@@ -22,13 +22,13 @@ import axios from 'axios';
 import { tableIcons } from '../../../utils/tableIcons';
 import { findLastIndex } from 'underscore';
 import { getDailyReservationLogs } from '../../../state/actions/index';
+import { red } from 'kleur';
 
 const useStyles = makeStyles({
   bigContainer: {
-    //border: '1px solid red',
     marginLeft: '100px',
     width: '90%',
-    //display: 'flex',
+    opacity: 0.87,
   },
   heading: {
     marginTop: '2rem',
@@ -46,51 +46,48 @@ const useStyles = makeStyles({
     justifyContent: 'space-between',
     width: '100%',
     marginBottom: '1rem',
-    //paddingTop: '1rem',
     paddingBottom: '1rem',
-    //border: '1px solid red',
   },
   monthlyContainer: {
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
     marginBottom: '1rem',
-    //paddingTop: '1rem',
     paddingBottom: '1rem',
-    //border: '1px solid red',
   },
   monthly: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'baseline',
-    //border: '1px solid red',
     padding: 0,
   },
   container2: {
-    //border: '1px solid red',
     margin: '1rem 0',
-    //paddingTop: '1rem',
     paddingBottom: '1rem',
   },
-  // container3: {
-  //   border: '1px solid red',
-  //   display: 'flex',
-  //   justifyContent: 'space-between',
-  //   margin: '1rem 0',
-  // },
   root: {
     width: '32%',
     textAlign: 'center',
-    //border: '1px solid blue',
   },
   title: {
     fontSize: 18,
   },
   number: {
     fontSize: 36,
+    fontWeight: 'bold',
   },
   pos: {
     marginBottom: 12,
+  },
+
+  exitStats: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  h2: {
+    opacity: 0.67,
   },
 });
 
@@ -117,7 +114,11 @@ const Analytics = () => {
   const [card, setCard] = useState(false);
   const [staffMembers, setStaffMembers] = useState([]);
   const [totalBedsReserved, setTotalBedsReserved] = useState(0);
-  const [monthlyData, setMonthlyData] = useState({});
+
+  const [monthlyExit, setMonthlyExit] = useState({});
+  const [monthlyIncome, setMonthlyIncome] = useState();
+  const [monthlyStay, setMonthlyStay] = useState();
+
   const [rangeValue, setRangeValue] = useState(90);
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -132,42 +133,10 @@ const Analytics = () => {
   }, []);
 
   useEffect(() => {
-    const filteredLogs = globalLogs.filter(item => {
-      if (fullDate === item.date && item.reservation_status === true) {
-        return item;
-      }
-    });
-    console.log('filtered data', filteredLogs);
-    setLogs(filteredLogs);
-    let total = 0;
-    filteredLogs.forEach(item => {
-      total = total + item.beds_reserved;
-    });
-    setTotalBedsReserved(total);
-  }, [globalLogs]);
-  // axiosWithAuth()
-  //   .get(`/logs`)
-  //   .then(res => {
-  //     const filteredLogs = res.data.filter(item => {
-  //       if (fullDate === item.date && item.reservation_status === true) {
-  //         return item;
-  //       }
-  //     });
-  //     console.log('filtered data', filteredLogs);
-  //     setLogs(filteredLogs);
-  //     let total = 0;
-  //     filteredLogs.forEach(item => {
-  //       total = total + item.beds_reserved
-  //     });
-  //     setTotalBedsReserved(total);
-  //   });
+    const testBeds = 5;
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setSeconds(seconds => seconds + 1);
-  //   }, 1000);
-  //   return () => clearInterval(interval);
-  // }, []);
+    setTotalBedsReserved(testBeds);
+  }, [globalLogs]);
 
   const fetchLogs = e => {
     e.preventDefault();
@@ -179,19 +148,43 @@ const Analytics = () => {
   const changeRange = e => {
     e.preventDefault();
     setRangeValue(e.target.value);
-    console.log('range value', rangeValue);
   };
 
-  // useEffect(() => {
-  //   axios()
-  //   .get(`urladdress/${rangeValue}`)
-  //   .then(res => {
-  //     console.log('monthly object', res.data)
-  //     setMonthlyData(res.data)
-  //   })
-  //   .catch(err => {console.log(err)})
-
-  // }, [rangeButton]);
+  useEffect(() => {
+    axios
+      .get(
+        `http://fam-promise-ds-teamb.eba-sj7vxixq.us-east-1.elasticbeanstalk.com/exits/${rangeValue}`
+      )
+      .then(res => {
+        console.log('***********MONTHLY EXITS************', res.data);
+        setMonthlyExit(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    axios
+      .get(
+        `http://fam-promise-ds-teamb.eba-sj7vxixq.us-east-1.elasticbeanstalk.com/average_stay/${rangeValue}`
+      )
+      .then(res => {
+        console.log('***********MONTHLY STAY************', res.data);
+        setMonthlyIncome(Math.round(res.data['Average Stay']));
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    axios
+      .get(
+        `http://fam-promise-ds-teamb.eba-sj7vxixq.us-east-1.elasticbeanstalk.com/income/${rangeValue}`
+      )
+      .then(res => {
+        console.log('**********MONTHLY INCOME************', res.data);
+        setMonthlyStay(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [rangeValue]);
 
   return (
     <>
@@ -201,7 +194,7 @@ const Analytics = () => {
         </Container>
         <Container>
           <hr className={classes.hr}></hr>
-          <h2>Daily Shelter Stats</h2>
+          <h2 className={classes.h2}>Daily Shelter Stats</h2>
         </Container>
         <Container className={classes.container1}>
           <Card className={classes.root} variant="outlined">
@@ -246,7 +239,7 @@ const Analytics = () => {
         <Container>
           <hr className={classes.hr}></hr>
           <Container className={classes.monthly}>
-            <h2>Monthly Stats</h2>
+            <h2 className={classes.h2}>Monthly Stats</h2>
             <FormControl className={classes.formControl}>
               <Select
                 value={rangeValue}
@@ -265,7 +258,7 @@ const Analytics = () => {
         </Container>
         <Container className={classes.monthlyContainer}>
           <Card className={classes.root} variant="outlined">
-            <CardContent>
+            <CardContent className={classes.guestExit}>
               <Typography
                 className={classes.title}
                 color="textPrimary"
@@ -273,9 +266,24 @@ const Analytics = () => {
               >
                 Guests Exit To
               </Typography>
-              <Typography>Permanent: 37%</Typography>
-              <Typography>Temporary: 17%</Typography>
-              <Typography>Transitional: 24%</Typography>
+              <Typography className={classes.exitStats}>
+                <div className="exitCategory">Permanent</div>
+                <div className="exitNum">{monthlyExit['Permanent Exits']}</div>
+              </Typography>
+              <Typography className={classes.exitStats}>
+                <div className="exitCategory">Temporary</div>
+                <div className="exitNum">
+                  {monthlyExit['Temporary Exits'] +
+                    monthlyExit['Emergency Shelter']}
+                </div>
+              </Typography>
+              <Typography className={classes.exitStats}>
+                <div className="exitCategory">Transitional</div>
+                <div className="exitNum">
+                  {monthlyExit['Transitional Homes'] +
+                    monthlyExit['Unknown/Other']}
+                </div>
+              </Typography>
             </CardContent>
           </Card>
           <Card className={classes.root} variant="outlined">
@@ -287,7 +295,9 @@ const Analytics = () => {
               >
                 Increased Family Income
               </Typography>
-              <Typography className={classes.number}>60</Typography>
+              <Typography className={classes.number}>
+                {monthlyIncome}
+              </Typography>
               <Typography>Families</Typography>
             </CardContent>
           </Card>
@@ -300,14 +310,14 @@ const Analytics = () => {
               >
                 Guest Average Stay
               </Typography>
-              <Typography className={classes.number}>37</Typography>
+              <Typography className={classes.number}>{monthlyStay}</Typography>
               <Typography>Days</Typography>
             </CardContent>
           </Card>
         </Container>
         <Container>
           <hr className={classes.hr}></hr>
-          <h2>Daily Guest Logs</h2>
+          <h2 className={classes.h2}>Daily Guest Logs</h2>
         </Container>
         <Container className={classes.container2}>
           <SupervisorGuestLogs />
