@@ -1,5 +1,7 @@
 import React from 'react';
-import { Button, Typography } from 'antd';
+import { Typography } from 'antd';
+import { Checkbox, Button } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
 import '../../../styles/app.scss';
 const CurrentReservation = ({ membersStaying, cancelButton, beds }) => {
   const { Text } = Typography;
@@ -18,8 +20,17 @@ const CurrentReservation = ({ membersStaying, cancelButton, beds }) => {
       <Text strong>
         If you would like to cancel, please click the cancel button below.
       </Text>
+
+      <br />
       <div className="btn-container">
-        <Button onClick={cancelButton}>Cancel Reservation</Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          size={'large'}
+          onClick={cancelButton}
+        >
+          Cancel Reservation
+        </Button>
       </div>
     </div>
     //THERE IS A BUG: if the user has a current reservation, the page will refresh and not keep the user's current total beds reserved. The back end will still have the same data, but it refreshes here. Need to rout everything with redux.
