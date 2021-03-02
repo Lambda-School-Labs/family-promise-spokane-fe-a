@@ -117,7 +117,7 @@ export const getLatestLog = () => async dispatch => {
 export const getDailyReservationLogs = () => dispatch => {
   dispatch({ type: 'LOGS_DAILY_LOADING' });
   axiosWithAuth()
-    .get('/logs')
+    .get('/logs/memberLogs')
     .then(res => {
       dispatch({ type: 'LOGS_DAILY_SUCCESS', payload: res.data });
     })
