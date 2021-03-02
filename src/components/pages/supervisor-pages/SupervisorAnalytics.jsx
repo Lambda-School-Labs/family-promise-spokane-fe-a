@@ -139,8 +139,10 @@ const Analytics = () => {
     let guestCount = 0;
     globalLogs.forEach(log => {
       // console.log(log)
-      if (log.check_in[0].on_site_10pm) {
-        guestCount += 1;
+      if (log.check_in) {
+        if (log.check_in[0].on_site_10pm) {
+          guestCount += 1;
+        }
       }
     });
     setGuestsCheckedInCount(guestCount);
