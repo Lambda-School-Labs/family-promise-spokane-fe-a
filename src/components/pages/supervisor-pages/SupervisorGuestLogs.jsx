@@ -40,7 +40,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Guests = () => {
+const Guests = ({ guestsCheckedInCount, setGuestsCheckedInCount }) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
@@ -120,7 +120,6 @@ const Guests = () => {
   const [result, setResult] = useState(null);
   const [clicked, setClicked] = useState(false);
   const history = useHistory();
-  const dispatch = useDispatch();
 
   const handleCheckInClick = rowData => {
     setClicked(!clicked);
@@ -141,22 +140,25 @@ const Guests = () => {
       .catch(err => console.log(err.message));
 
     // console.log(state.data)
-    /// in state.data, iterate through, if the id matches rowData.id then we set 0.on_site_10pm to opposite its value
-    // const newState = state.data.map(member => {
-    //   if (member.id === rowData.id) {
-    //     const newMem = {
-    //       ...member,
-    //       ['0']: {
-    //         ...member['0'],
-    //         on_site_10pm: !member['0'].on_site_10pm
-    //       }
-    //     }
-    //     return newMem
-    //   }
-    //   else return member
-    // })
-    // console.log(newState)
-    // setState(newState)
+    // / in state.data, iterate through, if the id matches rowData.id then we set 0.on_site_10pm to opposite its value
+    const newMembers = state.data.map(member => {
+      if (member.id === rowData.id) {
+        const newMem = {
+          ...member,
+          '0': {
+            ...member['0'],
+            on_site_10pm: !member['0'].on_site_10pm,
+          },
+        };
+        return newMem;
+      } else return member;
+    });
+    if (rowData['0'].on_site_10pm) {
+      setGuestsCheckedInCount(guestsCheckedInCount - 1);
+    } else {
+      setGuestsCheckedInCount(guestsCheckedInCount + 1);
+    }
+    setState({ ...state, data: newMembers });
   };
 
   if (loading) {
@@ -214,10 +216,9 @@ const Guests = () => {
               {
                 onClick: (e, rowData) => {
                   console.log(rowData);
-
                   handleCheckInClick(rowData);
                 },
-                icon: () => <AddOutlinedIcon />,
+                icon: () => <DoneOutlinedIcon />,
                 tooltip: 'Check In',
               },
               {
