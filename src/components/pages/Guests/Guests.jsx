@@ -3,7 +3,6 @@ import MaterialTable from 'material-table';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 import { useHistory } from 'react-router-dom';
 import NoteIcon from '@material-ui/icons/Note';
-import NoteOutlinedIcon from '@material-ui/icons/NoteOutlined';
 import PeopleIcon from '@material-ui/icons/People';
 import InfoIcon from '@material-ui/icons/Info';
 import { tableIcons } from '../../../utils/tableIcons';
@@ -68,6 +67,7 @@ const Guests = () => {
       .finally(() => {
         setLoading(false);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [isFlagOpen, setIsFlagOpen] = useState(false);

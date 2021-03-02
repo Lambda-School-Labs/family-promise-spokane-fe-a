@@ -7,7 +7,12 @@ import { axiosWithAuth } from '../../../api/axiosWithAuth';
 import { getLatestLog, updateBedCount } from '../../../state/actions/index';
 
 // UI
-import { Divider, Button, Checkbox, Typography } from 'antd';
+import { Divider, Typography } from 'antd';
+import { Checkbox, Button } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
+
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 import '../../../styles/app.scss';
 
 //redux
@@ -16,6 +21,7 @@ import { connect } from 'react-redux';
 
 // state
 import { useSelector, useDispatch } from 'react-redux';
+import { now } from 'underscore';
 
 const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   const dispatch = useDispatch();
@@ -31,6 +37,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   // console.log("users", users);
   //Mock beds counter
   const [count, setCount] = useState();
+  const [alert, setAlert] = useState();
   // useEffect(() => {
   //   axiosWithAuth()
   //     .get('/beds')
@@ -212,11 +219,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
       })
       .then(res => {
         setIsReserved(res.data.logs.reservation_status);
-        alert(
-          'You have canceled your reservation. If you canceled by mistake you will be able to make a reservation per available beds.'
-        );
-        window.location.reload();
-        // console.log('put res', res.data);
+        setAlert('You have canceled your reservation.');
       })
       .catch(err => {
         console.log('Nope', err);
@@ -234,6 +237,15 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   //For Date and time
   const date = new Date();
   const fullDate = date.toDateString();
+  var days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
   const hours = new Date().getHours();
   const getMinutes = new Date().getMinutes();
   const minutes = (getMinutes < 10 ? '0' : '') + getMinutes;
@@ -253,89 +265,117 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   //-----------------------------------------------------------------
 
   return 7 < hours < 21 ? (
-    <div className="container">
-      <h2>{`Today is ${fullDate} ${hours}:${minutes}`}</h2>
+    <div className="guest-container">
+      <div className="dashboardTitle">
+        <h1>Family Promise</h1>
+        <h2>Guest Dashboard</h2>
+        <h3>
+          <strong>{globalCount}</strong> Beds Available
+        </h3>
+      </div>
 
-      <h1>Guest dashboard</h1>
-      <h1 className="welcome-guest-dashboard">
-        Welcome To Family Promise of Spokane
-      </h1>
-      <h2>
-        There are currently{' '}
-        <span className="number-of-beds">{globalCount}</span> beds remaining at
-        the shelter
-      </h2>
+      <div className="checkin-area">
+        <h1>Family Check In</h1>
+        <h2>{`${days[date.getDay()]} - ${date.toLocaleString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        })}`}</h2>
+        <div className="semiwidth">
+          <Divider />
+        </div>
 
-      <Divider />
+        {/* When the user logs back in or when the user makes a reservation, they will need to have their session stored locally so they can see that they have already made a reservation and can cancel. */}
 
-      {/* When the user logs back in or when the user makes a reservation, they will need to have their session stored locally so they can see that they have already made a reservation and can cancel. */}
-
-      {isReserved === true ? (
-        <>
+        {isReserved && (
           <CurrentReservation
             membersStaying={log.members_staying}
             cancelButton={cancelButton}
             beds={log.beds_reserved}
           />
-        </>
-      ) : (
-        ''
-      )}
+        )}
 
-      {count === 0 && isReserved === false ? (
-        //WAITLIST ________________________________
-        <>
-          <p>To join the waitlist, please click below</p>
-          {users.map(member => {
-            return (
-              <div className="members">
-                <Checkbox
-                  value={`${member.demographics.first_name} ${member.demographics.last_name}`}
-                  onChange={waitListMembers}
-                >
-                  {member.demographics.first_name}{' '}
-                  {member.demographics.last_name}
-                </Checkbox>
-              </div>
-            );
-          })}
+        {count === 0 && isReserved === false ? (
+          //WAITLIST ________________________________
+          <>
+            <p>To join the waitlist, please click below</p>
+            {users.map(member => {
+              return (
+                <div className="members">
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        value={`${member.demographics.first_name} ${member.demographics.last_name}`}
+                        onChange={waitListMembers}
+                        color="primary"
+                      >
+                        {member.demographics.first_name}{' '}
+                        {member.demographics.last_name}
+                      </Checkbox>
+                    }
+                    label={`${member.demographics.first_name} ${member.demographics.last_name}`}
+                  />
+                </div>
+              );
+            })}
 
-          <Button shape="round" className="reservation-button">
-            Reserve Beds
-          </Button>
+            <Button shape="round" className="reservation-button">
+              Reserve Beds
+            </Button>
 
-          <p>
-            Message: Please be sure to arrive at the shelter by 7pm. The
-            supervisor will announce if there are any more beds available
-          </p>
-        </>
-      ) : (
-        //MEMBERS STAYING ___________________________
-        <div className={isReserved === true ? 'isReserved' : ''}>
-          <Text strong>
-            {' '}
-            If you would like to reserve {membersStaying.length} beds, please
-            click the button below:{' '}
-          </Text>
-
-          {users.map(member => {
-            return (
-              <div>
-                <Checkbox
-                  value={`${member.demographics.first_name} ${member.demographics.last_name}`}
-                  onChange={familyStaying}
-                >
-                  {member.demographics.first_name}{' '}
-                  {member.demographics.last_name}
-                </Checkbox>
-              </div>
-            );
-          })}
-          <Button className="reserve-button" onClick={reserveButton}>
-            Reserve Beds
-          </Button>
-        </div>
-      )}
+            <p>
+              Message: Please be sure to arrive at the shelter by 7pm. The
+              supervisor will announce if there are any more beds available
+            </p>
+          </>
+        ) : (
+          //MEMBERS STAYING ___________________________
+          <div className={isReserved === true ? 'isReserved' : ''}>
+            <Text strong>
+              Select which family members you would like to check in:
+            </Text>
+            <div className="membersContainer">
+              {users.map(member => {
+                return (
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        value={`${member.demographics.first_name} ${member.demographics.last_name}`}
+                        onChange={familyStaying}
+                        color="primary"
+                        size="large"
+                      >
+                        {member.demographics.first_name}{' '}
+                        {member.demographics.last_name}
+                      </Checkbox>
+                    }
+                    label={`${member.demographics.first_name} ${member.demographics.last_name}`}
+                  />
+                );
+              })}
+            </div>
+            <Text strong>
+              {' '}
+              {membersStaying.length !== 0
+                ? `After you select family members, click the button below.`
+                : 'Remember to select family members to reserve.'}
+            </Text>
+            <br />
+            <br />
+            <Button
+              variant="contained"
+              color="primary"
+              size={'large'}
+              onClick={reserveButton}
+            >
+              {membersStaying.length == 0
+                ? `Check in`
+                : `Reserve ${membersStaying.length} Beds + Check In`}
+            </Button>
+          </div>
+        )}
+        <br />
+        {alert && <Alert>{alert}</Alert>}
+      </div>
     </div>
   ) : (
     <OffHours />

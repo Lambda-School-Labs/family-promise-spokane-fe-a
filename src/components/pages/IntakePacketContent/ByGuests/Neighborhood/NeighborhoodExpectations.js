@@ -5,7 +5,7 @@ Requires Signatures from Neighborhood Agreement and Expectations
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 //Previous/Next buttons
-import IntakeButton from '../../IntakeButtons';
+//import IntakeButton from '../../IntakeButtons';
 import { axiosWithAuth } from '../../../../../api/axiosWithAuth';
 
 //Ant Design imports (https://ant.design/components/overview/)

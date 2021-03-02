@@ -43,34 +43,58 @@ body {
   width: 60%;
 }
 
-.initials{
-  width: 8%
+.initials {
+  width: 8%;
 }
-
 
 // Guest Dashboard
-.isReserved{
-  display: none
+.guest-container {
+  margin-left: 80px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
 }
-.members{
+.dashboardTitle * {
+  margin: 0;
+}
+h1 {
+  font-size: 3em;
+  font-weight: 700;
+  line-height: normal;
+}
+.dashboardTitle h2 {
+  font-size: 2em;
+  line-height: normal;
+}
+.checkin-area {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.isReserved {
+  display: none;
+}
+.number-of-beds {
+  font-weight: 500;
+  color: red;
+}
+.members {
   margin: 15%;
   padding-bottom: 25%;
 }
-.welcome-guest-dashboard{
-  color: purple;
+.membersContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
 }
-.number-of-beds{
-  color: blue;
+.semiwidth {
+  width: 50%;
 }
-.reservation-button{
-  margin-top: 3%;
-}
-
-.btn-container{
-  max-width: 10%;
-  padding-left: 45%;
-}
-.printName{
+.printName {
   width: 40%;
 }
 

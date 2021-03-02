@@ -27,7 +27,7 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 
 describe('<HomeContainer /> testing suite', () => {
   test('mounts a page', async () => {
-    const { findByText, getByTestId, queryByText } = render(
+    const { findByText, getByTestId } = render(
       <Provider store={store}>
         <Router>
           <HomePage
