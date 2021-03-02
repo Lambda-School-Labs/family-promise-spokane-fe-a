@@ -9,7 +9,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { useHistory, Route } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getDocuSignUrl } from '../../../../state/actions/index';
 // import { useHistory } from 'react-router-dom';
 //Previous/Next buttons
 import IntakeButton from '../IntakeButtons';
@@ -36,23 +37,25 @@ const Pets = ({
   step,
 }) => {
   //docusign
-  const [link, setLink] = useState('');
+  const link = useSelector(state => state.DOCUSIGN_URL);
+  const [loadDocuSign, setDocuSign] = useState(false);
   const history = useHistory();
-  const [noRefresh, setRefresh] = useState('');
+  const dispatch = useDispatch();
   useEffect(() => {
-    if (link) {
+    if (loadDocuSign) {
       history.push('/redirect');
     }
-  }, [noRefresh]);
+  }, [loadDocuSign]);
 
-  function accessedBE() {
+  function callDocuSign() {
     console.log('This is our envelope arguments: ', envelopeArgs);
     axios.post('http://localhost:8000/callDS', envelopeArgs).then(res => {
       console.log(res.data);
-      setLink(res.data);
-      setRefresh(!noRefresh);
+      setDocuSign(!loadDocuSign);
+      dispatch(getDocuSignUrl(res.data));
     });
   }
+  //docusign
 
   //Progress bar
   const pageNumber = steps.findIndex(item => item === step);
@@ -158,7 +161,7 @@ const Pets = ({
             />
           </Form.Item>
           <div className="docusign btn">
-            <button onClick={accessedBE}>Sign your life away</button>
+            <button onClick={callDocuSign}>Sign your life away</button>
             <Route
               path="/redirect"
               component={() => {
