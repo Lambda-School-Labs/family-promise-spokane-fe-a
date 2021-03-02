@@ -118,6 +118,7 @@ const Analytics = () => {
   const [monthlyExit, setMonthlyExit] = useState({});
   const [monthlyIncome, setMonthlyIncome] = useState();
   const [monthlyStay, setMonthlyStay] = useState();
+  const [guestsCheckedInCount, setGuestsCheckedInCount] = useState(0);
 
   const [rangeValue, setRangeValue] = useState(90);
   const dispatch = useDispatch();
@@ -133,9 +134,16 @@ const Analytics = () => {
   }, []);
 
   useEffect(() => {
-    const testBeds = 5;
-
-    setTotalBedsReserved(testBeds);
+    setTotalBedsReserved(globalLogs.length);
+    setLogs(globalLogs);
+    let guestCount = 0;
+    globalLogs.forEach(log => {
+      // console.log(log)
+      if (log.check_in[0].on_site_10pm) {
+        guestCount += 1;
+      }
+    });
+    setGuestsCheckedInCount(guestCount);
   }, [globalLogs]);
 
   const fetchLogs = e => {
@@ -220,7 +228,9 @@ const Analytics = () => {
               >
                 Guests Checked In
               </Typography>
-              <Typography className={classes.number}>3</Typography>
+              <Typography className={classes.number}>
+                {guestsCheckedInCount}
+              </Typography>
             </CardContent>
           </Card>
           <Card className={classes.root} variant="outlined">
@@ -320,7 +330,10 @@ const Analytics = () => {
           <h2 className={classes.h2}>Daily Guest Logs</h2>
         </Container>
         <Container className={classes.container2}>
-          <SupervisorGuestLogs />
+          <SupervisorGuestLogs
+            setGuestsCheckedInCount={setGuestsCheckedInCount}
+            guestsCheckedInCount={guestsCheckedInCount}
+          />
         </Container>
         <Container>
           <Card className={classes.root} variant="outlined">
