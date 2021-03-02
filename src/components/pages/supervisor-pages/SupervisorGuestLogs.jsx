@@ -26,6 +26,7 @@ import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import DoneOutlinedIcon from '@material-ui/icons/DoneOutlined';
 import { makeStyles } from '@material-ui/core';
 import { borders } from '@material-ui/system';
+import { getDailyReservationLogs } from '../../../state/actions/index';
 
 Modal.setAppElement('#root');
 
@@ -46,12 +47,13 @@ const Guests = () => {
   const user = useSelector(state => state.CURRENT_USER);
   const globalLogs = useSelector(state => state.RESERVATION_LOGS);
 
+  // type:boolean??
   const [state, setState] = useState({
     columns: [
       { title: 'First', field: 'first_name', type: 'hidden' },
       { title: 'Last ', field: 'last_name' },
       { title: 'Relationship', field: 'relationship' },
-      { title: 'Checked In', field: 'on_site_10pm' },
+      { title: 'Checked In', field: '0.on_site_10pm', type: 'boolean' },
     ],
     data: [],
   });
@@ -118,11 +120,43 @@ const Guests = () => {
   const [result, setResult] = useState(null);
   const [clicked, setClicked] = useState(false);
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  const handleCheckInClick = () => {
+  const handleCheckInClick = rowData => {
     setClicked(!clicked);
+    const checkIn = {
+      check_in: [
+        {
+          waitlist: rowData.waitlist,
+          on_site_7pm: rowData.on_site_7pm,
+          on_site_10pm: !rowData.check_in[0].on_site_10pm,
+          reservation_id: rowData.reservation_id,
+          reservation_status: rowData.reservation_status,
+        },
+      ],
+    };
+    axiosWithAuth()
+      .put(`/members/${rowData.id}`, checkIn)
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err.message));
 
-    axiosWithAuth().put('/members');
+    // console.log(state.data)
+    /// in state.data, iterate through, if the id matches rowData.id then we set 0.on_site_10pm to opposite its value
+    // const newState = state.data.map(member => {
+    //   if (member.id === rowData.id) {
+    //     const newMem = {
+    //       ...member,
+    //       ['0']: {
+    //         ...member['0'],
+    //         on_site_10pm: !member['0'].on_site_10pm
+    //       }
+    //     }
+    //     return newMem
+    //   }
+    //   else return member
+    // })
+    // console.log(newState)
+    // setState(newState)
   };
 
   if (loading) {
@@ -181,10 +215,9 @@ const Guests = () => {
                 onClick: (e, rowData) => {
                   console.log(rowData);
 
-                  handleCheckInClick();
+                  handleCheckInClick(rowData);
                 },
-                icon: rowData =>
-                  clicked ? <DoneOutlinedIcon /> : <AddOutlinedIcon />,
+                icon: () => <AddOutlinedIcon />,
                 tooltip: 'Check In',
               },
               {
