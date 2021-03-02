@@ -68,7 +68,11 @@ const Resources = ({ tempFormStyle }) => {
             <ul>
               <li>Phone: 877-501-223</li>
               <li>
-                <a href="https://www.dshs.wa.gov/" target="_blank">
+                <a
+                  href="https://www.dshs.wa.gov/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   dshs.wa.gov
                 </a>
               </li>
@@ -101,7 +105,11 @@ const Resources = ({ tempFormStyle }) => {
               <li>
                 Apply Online:
                 <li>
-                  <a href="https://www.wahealthplanfinder.org/" target="_blank">
+                  <a
+                    href="https://www.wahealthplanfinder.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     https://www.wahealthplanfinder.org
                   </a>
                 </li>

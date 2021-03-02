@@ -4,7 +4,6 @@ import {
   FileOutlined,
   TeamOutlined,
   InfoCircleOutlined,
-  InfoCircleFilled,
   HomeOutlined,
 } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
