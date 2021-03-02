@@ -18,16 +18,6 @@ import IntakeButton from '../IntakeButtons';
 //Ant Design imports (https://ant.design/components/overview/)
 import { Form, Input, Checkbox, Card, Progress } from 'antd';
 
-let envelopeArgs = {
-  accessToken: '',
-  accountId: 'd9ae37f1-949c-4649-87f1-bba5125c0159',
-  accountName: '6193c946-ca9e-4413-8fc7-e96e2e9e5776',
-  basePath: 'https://demo.docusign.net/restapi',
-  signer1Email: 'djviodes@ymail.com',
-  signer1Name: 'David Viodes',
-  tokenExpirationTimestamp: moment().add(3600, 's'),
-};
-
 const Pets = ({
   navigation,
   tempFormStyle,
@@ -37,6 +27,11 @@ const Pets = ({
   step,
 }) => {
   //docusign
+  const signerInfo = useSelector(state => state.SIGNER_INFORMATION);
+  let envelopeArgs = {
+    signer1Email: signerInfo.email,
+    signer1Name: signerInfo.firstName + ' ' + signerInfo.lastName,
+  };
   const link = useSelector(state => state.DOCUSIGN_URL);
   const [loadDocuSign, setDocuSign] = useState(false);
   const history = useHistory();

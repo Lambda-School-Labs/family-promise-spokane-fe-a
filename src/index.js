@@ -41,6 +41,7 @@ import Notes from './components/pages/Notes/Notes';
 import Members from './components/pages/guest-pages/Members';
 import CaseAnalytics from './components/pages/casemanager-pages/CaseManagerAnalytics';
 import ShelterInfo from './components/pages/guest-pages/ShelterInfo';
+import clientStaffSig from './components/pages/IntakePacketContent/ByGuests/ClientRelease/ClientReleaseStaffSig';
 const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 ReactDOM.render(
@@ -90,6 +91,11 @@ function App() {
             return null;
           }}
         />
+        <Route
+          path="/outtake"
+          roles={['executive_director', 'supervisor', 'case_manager']}
+          component={clientStaffSig}
+        />
         {/* any of the routes you need secured should be registered as SecureRoutes */}
 
         <PrivateRoute
@@ -136,7 +142,8 @@ function App() {
           roles={['executive_director', 'supervisor', 'case_manager']}
           component={IntakePacket}
         />
-        <PrivateRoute
+
+        <Route
           path="/guests"
           roles={['executive_director', 'supervisor', 'case_manager']}
           component={Guests}

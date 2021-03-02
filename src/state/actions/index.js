@@ -131,3 +131,6 @@ export const getDocuSignUrl = redirect => dispatch => {
   console.log('*******DOCUSIGN ACTION********', redirect);
   dispatch({ type: 'DOCUSIGN_REDIRECT', payload: redirect });
 };
+export const getSignerInfo = sigInfo => dispatch => {
+  dispatch({ type: 'SIGNER_INFO', payload: sigInfo });
+};
