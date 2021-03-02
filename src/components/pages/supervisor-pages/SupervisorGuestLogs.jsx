@@ -53,7 +53,7 @@ const Guests = () => {
       { title: 'First', field: 'first_name', type: 'hidden' },
       { title: 'Last ', field: 'last_name' },
       { title: 'Relationship', field: 'relationship' },
-      { title: 'Checked In', field: 'check_in[0].on_site_10pm' },
+      { title: 'Checked In', field: '0.on_site_10pm', type: 'boolean' },
     ],
     data: [],
   });
@@ -120,6 +120,7 @@ const Guests = () => {
   const [result, setResult] = useState(null);
   const [clicked, setClicked] = useState(false);
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleCheckInClick = rowData => {
     setClicked(!clicked);
@@ -138,6 +139,24 @@ const Guests = () => {
       .put(`/members/${rowData.id}`, checkIn)
       .then(res => console.log(res.data))
       .catch(err => console.log(err.message));
+
+    // console.log(state.data)
+    /// in state.data, iterate through, if the id matches rowData.id then we set 0.on_site_10pm to opposite its value
+    // const newState = state.data.map(member => {
+    //   if (member.id === rowData.id) {
+    //     const newMem = {
+    //       ...member,
+    //       ['0']: {
+    //         ...member['0'],
+    //         on_site_10pm: !member['0'].on_site_10pm
+    //       }
+    //     }
+    //     return newMem
+    //   }
+    //   else return member
+    // })
+    // console.log(newState)
+    // setState(newState)
   };
 
   if (loading) {
@@ -198,8 +217,7 @@ const Guests = () => {
 
                   handleCheckInClick(rowData);
                 },
-                icon: () =>
-                  clicked ? <DoneOutlinedIcon /> : <AddOutlinedIcon />,
+                icon: () => <AddOutlinedIcon />,
                 tooltip: 'Check In',
               },
               {
