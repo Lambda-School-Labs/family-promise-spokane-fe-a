@@ -42,14 +42,17 @@ import Members from './components/pages/guest-pages/Members';
 import CaseAnalytics from './components/pages/casemanager-pages/CaseManagerAnalytics';
 import ShelterInfo from './components/pages/guest-pages/ShelterInfo';
 import clientStaffSig from './components/pages/IntakePacketContent/ByGuests/ClientRelease/ClientReleaseStaffSig';
+import { LastLocationProvider } from 'react-router-last-location';
 const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
+      <LastLocationProvider>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </LastLocationProvider>
     </Router>
   </Provider>,
   document.getElementById('root')

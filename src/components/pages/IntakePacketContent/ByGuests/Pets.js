@@ -30,7 +30,8 @@ const Pets = ({
   const signerInfo = useSelector(state => state.SIGNER_INFORMATION);
   let envelopeArgs = {
     signer1Email: signerInfo.email,
-    signer1Name: signerInfo.firstName + ' ' + signerInfo.lastName,
+    signer1Name: signerInfo.first_name + ' ' + signerInfo.last_name,
+    signer1Id: signerInfo.id,
   };
   const link = useSelector(state => state.DOCUSIGN_URL);
   const [loadDocuSign, setDocuSign] = useState(false);

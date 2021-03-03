@@ -8,52 +8,35 @@ import { useHistory } from 'react-router-dom';
 import IntakeButton from '../../IntakeButtons';
 import { axiosWithAuth } from '../../../../../api/axiosWithAuth';
 //Ant Design imports (https://ant.design/components/overview/)
-import { Form, Input, Checkbox, Card, Progress, DatePicker } from 'antd';
+import { Form, Input, Checkbox, Card, Button, DatePicker } from 'antd';
 
-const ClientReleaseStaffSignature = ({
-  navigation,
-  formData,
-  setForm,
-  tempFormStyle,
-  count,
-  setCount,
-  nameString,
-  steps,
-  step,
-}) => {
+const ClientReleaseStaffSignature = () => {
+  const tempFormStyle = {
+    marginLeft: '20%',
+    marginTop: '50px',
+    maxWidth: '900px',
+  };
   //Progress bar
-  const pageNumber = steps.findIndex(item => item === step);
-  const pages = steps.length;
-  const percent = ((pageNumber + 1) / pages) * 100;
-  const history = useHistory();
-  // const submitHandler = e => {
-  //   e.preventDefault();
-  //   axiosWithAuth()
-  //     .post(`/families`, familyInfo)
-  //     .then(res => {
-  //       const familyId = res.data.families.id;
-  //       Object.keys(formData.familyMember).map(mem => {
-  //         familyMember[mem]['family_id'] = familyId;
-  //         axiosWithAuth()
-  //           .post('/members', familyMember[mem])
-  //           .then(res => {
-  //             history.push(`/familyprofile/${familyId}`);
-  //           })
-  //           .catch(err => {
-  //             console.log('MemberError', err.response);
-  //           });
-  //       });
-  //     })
-  //     .catch(err => console.log('FamiliesError', err));
-  // };
+  const submitHandler = e => {};
 
   return (
     <div style={tempFormStyle}>
-      {/*Progress bar*/}
-      <Progress percent={percent} status="active" showInfo={false} />
+      <div>
+        <Button
+          type="primary"
+          style={{
+            backgroundColor: 'green',
+            border: '1px solid green',
+            width: '100px',
+          }}
+          htmlType="Submit"
+          onClick={submitHandler}
+        >
+          Submit
+        </Button>
+      </div>
 
       <Card title="Client Release Staff Signature" bordered={false}>
-        <IntakeButton navigation={navigation} />
         <Form>
           <Form.Item>
             <Input bordered={false} placeholder="First & Last Name" />
