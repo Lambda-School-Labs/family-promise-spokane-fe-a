@@ -184,9 +184,7 @@ const Analytics = () => {
         console.log(err);
       });
     axios
-      .get(
-        `http://fam-promise-ds-teamb.eba-sj7vxixq.us-east-1.elasticbeanstalk.com/income/${rangeValue}`
-      )
+      .get(`https://b-ds.familypromisesofspokane.dev/income/${rangeValue}`)
       .then(res => {
         console.log('**********MONTHLY INCOME************', res.data);
         setMonthlyStay(res.data);

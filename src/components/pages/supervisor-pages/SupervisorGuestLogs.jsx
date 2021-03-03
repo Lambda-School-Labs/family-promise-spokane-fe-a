@@ -1,53 +1,34 @@
+//*****This component is being rendered in the SupervisorAnalytics component */
 import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 import { useHistory } from 'react-router-dom';
-//import NoteIcon from '@material-ui/icons/Note';
 import NoteOutlinedIcon from '@material-ui/icons/NoteOutlined';
-//import PeopleIcon from '@material-ui/icons/People';
 import PeopleOutlinedIcon from '@material-ui/icons/PeopleOutlined';
-//import InfoIcon from '@material-ui/icons/Info';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { tableIcons } from '../../../utils/tableIcons';
-//import FlagIcon from '@material-ui/icons/Flag';
 import FlagOutlinedIcon from '@material-ui/icons/FlagOutlined';
-// import CardShadow from '../../CardShadow';
 import FlagGuest from '../../modals/FlagGuest';
 import GuestNotes from '../../modals/GuestNotes';
-// import { CopyrightOutlined } from '@material-ui/icons';
 import LoadingComponent from '../../common/LoadingComponent';
 import Modal from 'react-modal';
 import '../Guests/guest.css';
-// import { CardContent, Card } from '@material-ui/core';
 import GuestMoreInfo from '../Guests/GuestMoreInfo';
 import { Paper } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import DoneOutlinedIcon from '@material-ui/icons/DoneOutlined';
-import { makeStyles } from '@material-ui/core';
-import { borders } from '@material-ui/system';
-import { getDailyReservationLogs } from '../../../state/actions/index';
-
 Modal.setAppElement('#root');
 
-const useStyles = makeStyles({
-  buttonColor: {
-    color: 'green',
-  },
-  tableStyle: {
-    shadows: 'none',
-    border: '1px solid gray',
-  },
-});
-
 const Guests = ({ guestsCheckedInCount, setGuestsCheckedInCount }) => {
-  const classes = useStyles();
+  const [isFlagOpen, setIsFlagOpen] = useState(false);
+  const [isNotesOpen, setIsNotesOpen] = useState(false);
+  const [guestId, setGuestId] = useState(null);
+  const [result, setResult] = useState(null);
+  const [clicked, setClicked] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
-  const user = useSelector(state => state.CURRENT_USER);
   const globalLogs = useSelector(state => state.RESERVATION_LOGS);
-
-  // type:boolean??
+  const history = useHistory();
   const [state, setState] = useState({
     columns: [
       { title: 'First', field: 'first_name', type: 'hidden' },
@@ -64,12 +45,9 @@ const Guests = ({ guestsCheckedInCount, setGuestsCheckedInCount }) => {
 
   useEffect(() => {
     let copy = { ...state };
-
     let filter = globalLogs.filter(
       member => member.check_in[0].reservation_status === true
     );
-    console.log('///////////////////////MY FILTER', filter);
-
     let formattedData = filter.map(member => {
       return {
         ...member.demographics,
@@ -88,44 +66,6 @@ const Guests = ({ guestsCheckedInCount, setGuestsCheckedInCount }) => {
     setLoading(false);
   }, [globalLogs]);
 
-  // useEffect(() => {
-  //   axiosWithAuth()
-  //     .get('/members')
-  //     .then(res => {
-  //       console.log(res.data);
-  //       let copy = { ...state };
-
-  //       let formattedData = res.data.map(member => {
-  //         return {
-  //           ...member.demographics,
-  //           ...member.bearers,
-  //           ...member.schools,
-  //           ...member.check_in,
-  //           flag_level: 0,
-  //           ...member,
-  //         };
-  //       });
-
-  //       copy.data.push(...formattedData);
-  //       console.log(copy);
-
-  //       setState(copy);
-  //     })
-  //     .catch(err => {
-  //       alert('error');
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // }, []);
-
-  const [isFlagOpen, setIsFlagOpen] = useState(false);
-  const [isNotesOpen, setIsNotesOpen] = useState(false);
-  const [guestId, setGuestId] = useState(null);
-  const [result, setResult] = useState(null);
-  const [clicked, setClicked] = useState(false);
-  const history = useHistory();
-
   const handleCheckInClick = rowData => {
     setClicked(!clicked);
     const checkIn = {
@@ -143,8 +83,6 @@ const Guests = ({ guestsCheckedInCount, setGuestsCheckedInCount }) => {
       .put(`/members/${rowData.id}`, checkIn)
       .then(res => console.log(res.data))
       .catch(err => console.log(err.message));
-
-    // console.log(state.data)
     // / in state.data, iterate through, if the id matches rowData.id then we set 0.on_site_10pm to opposite its value
     const newMembers = state.data.map(member => {
       if (member.id === rowData.id) {
@@ -200,7 +138,6 @@ const Guests = ({ guestsCheckedInCount, setGuestsCheckedInCount }) => {
             components={{
               Container: props => <Paper {...props} elevation={0} />,
             }}
-            className={classes.tableStyle}
             options={{
               actionsColumnIndex: -1,
               exportButton: true,
