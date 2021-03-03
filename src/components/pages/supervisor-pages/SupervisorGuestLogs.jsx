@@ -65,7 +65,12 @@ const Guests = ({ guestsCheckedInCount, setGuestsCheckedInCount }) => {
   useEffect(() => {
     let copy = { ...state };
 
-    let formattedData = globalLogs.map(member => {
+    let filter = globalLogs.filter(
+      member => member.check_in[0].reservation_status === true
+    );
+    console.log('///////////////////////MY FILTER', filter);
+
+    let formattedData = filter.map(member => {
       return {
         ...member.demographics,
         ...member.bearers,

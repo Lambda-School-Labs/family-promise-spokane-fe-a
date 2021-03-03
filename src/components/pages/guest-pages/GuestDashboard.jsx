@@ -72,7 +72,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
 
   //logs user state of reservation status
   const [isReserved, setIsReserved] = useState(false);
-  const [familyID, setFamilyID] = useState(null);
+  const [familyMemberIDs, setFamilyMemberIDs] = useState([]);
   const [localBedCount, setLocalBedCount] = useState(0);
   // console.log('Is Reserved', isReserved);
   //************THIS COULD BE A FUNCTION BECAUSE IT IS BEING USED TWICE:******************
@@ -183,6 +183,43 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
       });
     console.log('local bed count', localBedCount);
     console.log('global bed count', globalCount);
+
+    const checkIn = {
+      check_in: [
+        {
+          waitlist: false,
+          on_site_7pm: false,
+          on_site_10pm: false,
+          reservation_id: resID,
+          reservation_status: true,
+        },
+      ],
+    };
+    let memberIDs = [];
+
+    membersStaying.forEach(membername => {
+      let fname = membername.split(' ')[0];
+      household.forEach(hmember => {
+        if (fname === hmember.demographics.first_name) {
+          memberIDs.push(hmember.id);
+        }
+      });
+    });
+
+    setFamilyMemberIDs(memberIDs);
+
+    for (let i = 0; i < memberIDs.length; i++) {
+      console.log(memberIDs[i]);
+      axiosWithAuth()
+        .put(`/members/${memberIDs[i]}`, checkIn)
+        .then(res =>
+          console.log(
+            `Updated family id ${familyMemberIDs[i]} check in status`,
+            res
+          )
+        )
+        .catch(err => console.log(err));
+    }
     dispatch(updateBedCount(globalCount - membersStaying.length));
     dispatch(getLatestLog()); //We want to get log by res id ***********
   };
@@ -213,7 +250,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
         on_site_10pm: false,
         date: fullDate,
         time: `${hours}:${minutes}`,
-        beds_reserved: 1,
+        beds_reserved: 0,
         actual_beds_reserved: 0,
         members_staying: membersStaying,
       })
@@ -224,6 +261,31 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
       .catch(err => {
         console.log('Nope', err);
       });
+
+    const checkIn = {
+      check_in: [
+        {
+          waitlist: false,
+          on_site_7pm: false,
+          on_site_10pm: false,
+          reservation_id: resID,
+          reservation_status: false,
+        },
+      ],
+    };
+    for (let i = 0; i < household.length; i++) {
+      console.log(household[i].id);
+      axiosWithAuth()
+        .put(`/members/${household[i].id}`, checkIn)
+        .then(res =>
+          console.log(
+            `Updated family id ${household[i].id} check in status`,
+            res
+          )
+        )
+        .catch(err => console.log(err));
+    }
+
     dispatch(getLatestLog());
 
     // setIsReserved(false);
