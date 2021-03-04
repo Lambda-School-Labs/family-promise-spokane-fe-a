@@ -42,6 +42,7 @@ const Pets = ({
   }, [loadDocuSign]);
 
   function callDocusign() {
+    // Saves family information so it does not get deleted after redirecting
     axiosWithAuth()
       .post(`/families`, familyInfo)
       .then(res => {
@@ -55,6 +56,7 @@ const Pets = ({
               console.log('MemberError', err.response);
             });
         });
+        // This axios post request calls the eg001.createController function in the backend
         axios
           .post('http://localhost:8000/callDS', envelopeArgs)
           .then(res => {

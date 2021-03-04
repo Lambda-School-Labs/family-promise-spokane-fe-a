@@ -64,14 +64,7 @@ function App() {
   const history = useHistory();
   //**********docusign*********************** */
   const docuSignUrl = useSelector(state => state.DOCUSIGN_URL);
-  console.log(docuSignUrl);
-  // const [dsLink, setLink] = useState("")
-  // const history = useHistory()
-  // useEffect(() => {
-  //   if (dsLink) {
-  //     history.push("/redirect")
-  //   }
-  // }, [dsLink])
+
   const authHandler = () => {
     // We pass this to our <Security /> component that wraps our routes.
     // It'll automatically check if userToken is available and push back to login if not :)
@@ -86,6 +79,7 @@ function App() {
         <Route path="/login" component={LoginPage} />
         <Route path="/implicit/callback" component={LoginCallback} />
         <Route path="/landing" component={LandingPage} />
+        {/* This is the route for the redirect to DocuSign's web application */}
         <Route
           exact
           path="/redirect"
