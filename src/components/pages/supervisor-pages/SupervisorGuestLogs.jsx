@@ -50,6 +50,7 @@ const Guests = ({ guestsCheckedInCount, setGuestsCheckedInCount }) => {
         member.reservation_status === true &&
         member.check_in[0].reservation_status === true
     );
+    // this reformats the filtered logs to spread out the nested values
     let formattedData = filter.map(member => {
       return {
         ...member.demographics,
@@ -61,10 +62,13 @@ const Guests = ({ guestsCheckedInCount, setGuestsCheckedInCount }) => {
       };
     });
 
-    copy.data.push(...formattedData);
-    console.log(copy);
+    // if there is no data, we populate our table
+    if (copy.data.length === 0) {
+      copy.data.push(...formattedData);
+      console.log(copy);
+      setState(copy);
+    }
 
-    setState(copy);
     setLoading(false);
   }, [globalLogs]);
 
