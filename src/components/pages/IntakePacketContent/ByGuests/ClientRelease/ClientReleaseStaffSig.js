@@ -3,10 +3,6 @@ Signatures for Client Release form from Staff members
 */
 
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-//Previous/Next buttons
-import IntakeButton from '../../IntakeButtons';
-import { axiosWithAuth } from '../../../../../api/axiosWithAuth';
 //Ant Design imports (https://ant.design/components/overview/)
 import { Form, Input, Checkbox, Card, Button, DatePicker } from 'antd';
 
