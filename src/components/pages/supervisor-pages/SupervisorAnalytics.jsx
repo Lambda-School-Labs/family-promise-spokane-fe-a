@@ -134,11 +134,19 @@ const Analytics = () => {
   }, []);
 
   useEffect(() => {
-    setTotalBedsReserved(globalLogs.length);
+    let filteredLogs = [];
+    if (globalLogs !== []) {
+      filteredLogs = globalLogs.filter(
+        member =>
+          member.reservation_status === true &&
+          member.check_in[0].reservation_status === true
+      );
+    }
+    setTotalBedsReserved(filteredLogs.length);
     setLogs(globalLogs);
     let guestCount = 0;
-    globalLogs.forEach(log => {
-      // console.log(log)
+    filteredLogs.forEach(log => {
+      // sets the number of guests checked in by checking check_in status of each member
       if (log.check_in) {
         if (log.check_in[0].on_site_10pm) {
           guestCount += 1;
@@ -335,7 +343,8 @@ const Analytics = () => {
             guestsCheckedInCount={guestsCheckedInCount}
           />
         </Container>
-        <Container>
+        {/* Used for development purposes, this will display all global logs from the redux store*/}
+        {/* <Container>
           <Card className={classes.root} variant="outlined">
             <CardContent>
               <Typography
@@ -371,10 +380,9 @@ const Analytics = () => {
                     </Card>
                   ))
                 : ''}
-              {/* <Typography>22</Typography> */}
             </CardContent>
           </Card>
-        </Container>
+        </Container> */}
       </Container>
     </>
   );
