@@ -5,7 +5,12 @@ This component contains:
  
 */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import moment from 'moment';
+import { useHistory, Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDocuSignUrl } from '../../../../state/actions/index';
 // import { useHistory } from 'react-router-dom';
 //Previous/Next buttons
 import IntakeButton from '../IntakeButtons';
@@ -21,6 +26,32 @@ const Pets = ({
   steps,
   step,
 }) => {
+  //docusign
+  const signerInfo = useSelector(state => state.SIGNER_INFORMATION);
+  let envelopeArgs = {
+    signer1Email: signerInfo.email,
+    signer1Name: signerInfo.firstName + ' ' + signerInfo.lastName,
+  };
+  const link = useSelector(state => state.DOCUSIGN_URL);
+  const [loadDocuSign, setDocuSign] = useState(false);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (loadDocuSign) {
+      history.push('/redirect');
+    }
+  }, [loadDocuSign]);
+
+  function callDocuSign() {
+    console.log('This is our envelope arguments: ', envelopeArgs);
+    axios.post('http://localhost:8000/callDS', envelopeArgs).then(res => {
+      console.log(res.data);
+      setDocuSign(!loadDocuSign);
+      dispatch(getDocuSignUrl(res.data));
+    });
+  }
+  //docusign
+
   //Progress bar
   const pageNumber = steps.findIndex(item => item === step);
   const pages = steps.length;
@@ -124,6 +155,16 @@ const Pets = ({
               onChange={setForm}
             />
           </Form.Item>
+          <div className="docusign btn">
+            <button onClick={callDocuSign}>Sign your life away</button>
+            <Route
+              path="/redirect"
+              component={() => {
+                window.location.href = link;
+                return null;
+              }}
+            />
+          </div>
         </Form>
       </Card>
     </div>
