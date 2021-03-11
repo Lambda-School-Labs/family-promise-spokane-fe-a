@@ -126,3 +126,11 @@ export const getDailyReservationLogs = () => dispatch => {
       dispatch({ type: 'LOGS_DAILY_FAILURE', payload: error.message });
     });
 };
+//DOCUSIGN
+export const getDocuSignUrl = redirect => dispatch => {
+  console.log('*******DOCUSIGN ACTION********', redirect);
+  dispatch({ type: 'DOCUSIGN_REDIRECT', payload: redirect });
+};
+export const getSignerInfo = sigInfo => dispatch => {
+  dispatch({ type: 'SIGNER_INFO', payload: sigInfo });
+};
