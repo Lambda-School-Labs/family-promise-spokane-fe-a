@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import axiosWithAuth from '../../../../api/axiosWithAuth';
+import { axiosWithAuth } from '../../../../api/axiosWithAuth';
 import { getDocuSignUrl } from '../../../../state/actions/index';
 
 //Ant Design imports (https://ant.design/components/overview/)
