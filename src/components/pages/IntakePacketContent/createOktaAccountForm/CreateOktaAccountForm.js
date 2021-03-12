@@ -1,9 +1,10 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { axiosWithAuth } from '../../../../api/axiosWithAuth';
-
+import { getSignerInfo } from '../../../../state/actions/index';
 const okta_register_url =
   'https://dev-2240040.okta.com/api/v1/registration/reg2labm2m2Z3iPh05d6/register';
 const okta_activate_url = 'https://dev-2240040.okta.com/api/v1/authn';
@@ -11,7 +12,7 @@ const okta_activate_url = 'https://dev-2240040.okta.com/api/v1/authn';
 const CreateOktaAccountForm = ({ setUserId }) => {
   const [loading, setLoading] = React.useState(false);
   const [errors, setErrors] = React.useState(false);
-
+  const dispatch = useDispatch();
   const createOktaAccount = async values => {
     setLoading(true);
 
@@ -41,6 +42,7 @@ const CreateOktaAccountForm = ({ setUserId }) => {
 
       await axiosWithAuth().post('/users', profile);
       setUserId(userId);
+      dispatch(getSignerInfo(profile));
       console.log(userId);
     } catch (error) {
       setErrors(error.response?.data?.errorCauses[0]?.errorSummary);

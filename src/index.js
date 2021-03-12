@@ -33,7 +33,7 @@ import { rootReducer } from './state/reducers/index';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 // import logger from 'redux-logger';
 import GuestDashboard from './components/pages/guest-pages/GuestDashboard';
 import FamilyPage from './components/pages/guest-pages/FamilyPage';
@@ -41,14 +41,18 @@ import Notes from './components/pages/Notes/Notes';
 import Members from './components/pages/guest-pages/Members';
 import CaseAnalytics from './components/pages/casemanager-pages/CaseManagerAnalytics';
 import ShelterInfo from './components/pages/guest-pages/ShelterInfo';
+import clientStaffSig from './components/pages/IntakePacketContent/ByGuests/ClientRelease/ClientReleaseStaffSig';
+import { LastLocationProvider } from 'react-router-last-location';
 const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
+      <LastLocationProvider>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </LastLocationProvider>
     </Router>
   </Provider>,
   document.getElementById('root')
@@ -58,6 +62,8 @@ function App() {
   // The reason to declare App this way is so that we can use any helper functions we'd need for business logic, in our case auth.
   // React Router has a nifty useHistory hook we can use at this level to ensure we have security around our routes.
   const history = useHistory();
+  //**********docusign*********************** */
+  const docuSignUrl = useSelector(state => state.DOCUSIGN_URL);
 
   const authHandler = () => {
     // We pass this to our <Security /> component that wraps our routes.
@@ -73,7 +79,20 @@ function App() {
         <Route path="/login" component={LoginPage} />
         <Route path="/implicit/callback" component={LoginCallback} />
         <Route path="/landing" component={LandingPage} />
-
+        {/* This is the route for the redirect to DocuSign's web application */}
+        <Route
+          exact
+          path="/redirect"
+          component={() => {
+            window.location.href = docuSignUrl;
+            return null;
+          }}
+        />
+        <Route
+          path="/outtake"
+          roles={['executive_director', 'supervisor', 'case_manager']}
+          component={clientStaffSig}
+        />
         {/* any of the routes you need secured should be registered as SecureRoutes */}
 
         <PrivateRoute
@@ -120,7 +139,8 @@ function App() {
           roles={['executive_director', 'supervisor', 'case_manager']}
           component={IntakePacket}
         />
-        <PrivateRoute
+
+        <Route
           path="/guests"
           roles={['executive_director', 'supervisor', 'case_manager']}
           component={Guests}

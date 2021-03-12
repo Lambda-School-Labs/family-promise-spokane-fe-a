@@ -3,7 +3,6 @@ Requires Signatures from Neighborhood Agreement and Expectations
 */
 
 import React from 'react';
-
 //Previous/Next buttons
 import IntakeButton from '../../IntakeButtons';
 
