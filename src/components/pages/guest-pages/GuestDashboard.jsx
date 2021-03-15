@@ -329,15 +329,12 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   return 7 < hours < 21 ? (
     <div className="guest-container">
       <div className="dashboardTitle">
-        <h1>Family Promise</h1>
-        <h2>Guest Dashboard</h2>
-        <h3>
-          <strong>{globalCount}</strong> Beds Available
-        </h3>
+        <h1>Guest Dashboard</h1>
       </div>
 
       <div className="checkin-area">
         <h1>Family Check In</h1>
+        <h2>{globalCount} Beds Available</h2>
         <h2>{`${days[date.getDay()]} - ${date.toLocaleString([], {
           hour: '2-digit',
           minute: '2-digit',
