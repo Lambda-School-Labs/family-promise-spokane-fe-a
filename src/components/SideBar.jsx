@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Layout, Menu } from 'antd';
 import {
   FileOutlined,
@@ -18,7 +17,7 @@ const { Sider } = Layout;
 const SideBar = () => {
   const user = useSelector(state => state.CURRENT_USER);
   const history = useHistory();
-  const [collapsed, setCollapsed] = React.useState(false);
+  const [collapsed, setCollapsed] = React.useState(true);
   const onCollapse = () => {
     setCollapsed(!collapsed);
   };
@@ -63,14 +62,8 @@ const SideBar = () => {
     history.push('/guest-dashboard');
   };
 
-  const SideBarStyled = styled.div`
-    .logo {
-      background: red;
-    }
-  `;
-
   return (
-    <SideBarStyled>
+    <>
       {user.role && (
         <Sider
           theme="light"
@@ -160,7 +153,7 @@ const SideBar = () => {
           </Menu>
         </Sider>
       )}
-    </SideBarStyled>
+    </>
   );
 };
 
