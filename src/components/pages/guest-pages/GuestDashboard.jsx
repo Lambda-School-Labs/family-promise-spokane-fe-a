@@ -328,10 +328,6 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
 
   return 7 < hours < 21 ? (
     <div className="guest-container">
-      <div className="dashboardTitle">
-        <h1>Guest Dashboard</h1>
-      </div>
-
       <div className="checkin-area">
         <h1>Family Check In</h1>
         <h2>{globalCount} Beds Available</h2>
