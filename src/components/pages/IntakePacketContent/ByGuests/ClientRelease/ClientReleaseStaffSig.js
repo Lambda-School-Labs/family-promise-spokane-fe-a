@@ -3,36 +3,36 @@ Signatures for Client Release form from Staff members
 */
 
 import React from 'react';
-
-//Previous/Next buttons
-import IntakeButton from '../../IntakeButtons';
-
 //Ant Design imports (https://ant.design/components/overview/)
-import { Form, Input, Checkbox, Card, Progress, DatePicker } from 'antd';
+import { Form, Input, Checkbox, Card, Button, DatePicker } from 'antd';
 
-const ClientReleaseStaffSignature = ({
-  navigation,
-  formData,
-  setForm,
-  tempFormStyle,
-  count,
-  setCount,
-  nameString,
-  steps,
-  step,
-}) => {
+const ClientReleaseStaffSignature = () => {
+  const tempFormStyle = {
+    marginLeft: '20%',
+    marginTop: '50px',
+    maxWidth: '900px',
+  };
   //Progress bar
-  const pageNumber = steps.findIndex(item => item === step);
-  const pages = steps.length;
-  const percent = ((pageNumber + 1) / pages) * 100;
+  const submitHandler = e => {};
 
   return (
     <div style={tempFormStyle}>
-      {/*Progress bar*/}
-      <Progress percent={percent} status="active" showInfo={false} />
+      <div>
+        <Button
+          type="primary"
+          style={{
+            backgroundColor: 'green',
+            border: '1px solid green',
+            width: '100px',
+          }}
+          htmlType="Submit"
+          onClick={submitHandler}
+        >
+          Submit
+        </Button>
+      </div>
 
       <Card title="Client Release Staff Signature" bordered={false}>
-        <IntakeButton navigation={navigation} />
         <Form>
           <Form.Item>
             <Input bordered={false} placeholder="First & Last Name" />
