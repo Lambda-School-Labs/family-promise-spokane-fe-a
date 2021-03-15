@@ -4,3 +4,11 @@
   min-height: 100vh;
   z-index: 3;
 }
+
+.ant-menu-item:hover {
+  background-color: #e6faff;
+}
+
+.ant-menu-item-selected {
+  font-weight: bold;
+}
