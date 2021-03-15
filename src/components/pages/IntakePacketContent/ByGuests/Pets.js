@@ -5,13 +5,15 @@ This component contains:
  
 */
 
-import React from 'react';
-// import { useHistory } from 'react-router-dom';
-//Previous/Next buttons
-import IntakeButton from '../IntakeButtons';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useHistory, Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { axiosWithAuth } from '../../../../api/axiosWithAuth';
+import { getDocuSignUrl } from '../../../../state/actions/index';
 
 //Ant Design imports (https://ant.design/components/overview/)
-import { Form, Input, Checkbox, Card, Progress } from 'antd';
+import { Form, Input, Checkbox, Card, Progress, Button } from 'antd';
 
 const Pets = ({
   navigation,
@@ -21,13 +23,56 @@ const Pets = ({
   steps,
   step,
 }) => {
+  //docusign
+  const signerInfo = useSelector(state => state.SIGNER_INFORMATION);
+  let envelopeArgs = {
+    signer1Email: signerInfo.email,
+    signer1Name: signerInfo.first_name + ' ' + signerInfo.last_name,
+    signer1Id: signerInfo.id,
+  };
+  const [loadDocuSign, setLoadDocusign] = useState(false);
+  const { familyInfo, familyMember } = formData;
+  const { previous } = navigation;
+  const history = useHistory();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (loadDocuSign) {
+      history.push('/redirect');
+    }
+  }, [loadDocuSign]);
+
+  function callDocusign() {
+    // Saves family information so it does not get deleted after redirecting
+    axiosWithAuth()
+      .post(`/families`, familyInfo)
+      .then(res => {
+        const familyId = res.data.families.id;
+        Object.keys(formData.familyMember).map(mem => {
+          familyMember[mem]['family_id'] = familyId;
+          axiosWithAuth()
+            .post('/members', familyMember[mem])
+            .then(res => console.log('Members added', res.data))
+            .catch(err => {
+              console.log('MemberError', err.response);
+            });
+        });
+        // This axios post request calls the eg001.createController function in the backend
+        axios
+          .post('http://localhost:8000/callDS', envelopeArgs)
+          .then(res => {
+            setLoadDocusign(!loadDocuSign);
+            dispatch(getDocuSignUrl(res.data));
+          })
+          .catch(err => console.log('DocuSign error', err));
+      })
+      .catch(err => console.log('FamiliesError', err));
+  }
+  //docusign
+
   //Progress bar
   const pageNumber = steps.findIndex(item => item === step);
   const pages = steps.length;
   const percent = ((pageNumber + 1) / pages) * 100;
-
-  //FamilyInfo from ../../intakePacket.jsx (props)
-  const { familyInfo } = formData;
 
   return (
     <div style={tempFormStyle}>
@@ -35,7 +80,30 @@ const Pets = ({
       <Progress percent={percent} status="active" showInfo={false} />
 
       <Card title="Pets" bordered={false}>
-        <IntakeButton navigation={navigation} />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginBottom: '30px',
+          }}
+        >
+          <Button
+            type="primary"
+            htmlType="button"
+            onClick={previous}
+            style={{ width: '100px' }}
+          >
+            Previous
+          </Button>
+          <Button
+            type="primary"
+            htmlType="button"
+            onClick={callDocusign}
+            style={{ width: '100px' }}
+          >
+            Next
+          </Button>
+        </div>
 
         <Form layout="vertical">
           <Form.Item>
