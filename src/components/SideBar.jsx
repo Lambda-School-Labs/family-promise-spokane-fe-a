@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
 import {
-  FileOutlined,
+  PlusOutlined,
   TeamOutlined,
   InfoCircleOutlined,
   HomeOutlined,
@@ -123,7 +123,7 @@ const SideBar = () => {
                 <Menu.Item
                   onClick={redirectToIntake}
                   key="4"
-                  icon={<FileOutlined />}
+                  icon={<PlusOutlined />}
                 >
                   Register Family
                 </Menu.Item>
