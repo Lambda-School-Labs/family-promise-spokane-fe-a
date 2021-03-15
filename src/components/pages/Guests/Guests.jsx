@@ -8,6 +8,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import { tableIcons } from '../../../utils/tableIcons';
 import FlagIcon from '@material-ui/icons/Flag';
 import { Paper } from '@material-ui/core';
+import styled from 'styled-components';
 // import CardShadow from '../../CardShadow';
 import FlagGuest from '../../modals/FlagGuest';
 import GuestNotes from '../../modals/GuestNotes';
@@ -84,8 +85,15 @@ const Guests = () => {
     );
   }
 
+  const TitleStyled = styled.div`
+    h1 {
+      margin-top: 2%;
+      margin-left: 11%;
+    }
+  `;
+
   return (
-    <>
+    <TitleStyled>
       <Modal
         isOpen={isOpen}
         onRequestClose={toggleModal}
@@ -96,6 +104,7 @@ const Guests = () => {
       >
         {result ? <GuestMoreInfo familyInfo={result} /> : ''}
       </Modal>
+      <h1>Guests</h1>
       <div className="guest-table-container">
         {isNotesOpen && <GuestNotes setIsNotesOpen={setIsNotesOpen} />}
         {isFlagOpen && (
@@ -122,7 +131,7 @@ const Guests = () => {
               }),
             }}
             icons={tableIcons}
-            title="Guests"
+            title=""
             columns={state.columns}
             data={state.data}
             elevation={0}
@@ -166,7 +175,7 @@ const Guests = () => {
           />
         </div>
       </div>
-    </>
+    </TitleStyled>
   );
 };
 

@@ -79,6 +79,7 @@ const CaseAnalytics = () => {
         setMembers(JSON.parse(response.data[2]));
       })
       .catch(err => {
+        console.log(err);
         alert('error in DS API ');
       });
   };
@@ -87,6 +88,7 @@ const CaseAnalytics = () => {
     <>
       <div className="guest-table-container">
         <div className="guest-table">
+          <h1>Case Manager Analytics</h1>
           <MaterialTable
             options={{
               exportButton: true,
@@ -100,7 +102,7 @@ const CaseAnalytics = () => {
               }),
             }}
             icons={tableIcons}
-            title="Case Analytics"
+            title="Guests"
             columns={state.columns}
             data={state.data}
             actions={[

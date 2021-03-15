@@ -101,6 +101,7 @@ export default function SupervisorCheckIn() {
   return (
     <div className="guest-table-container">
       <div className="guest-table">
+        <h1>Guests Check-in</h1>
         <MaterialTable
           options={{
             exportButton: true,
@@ -114,7 +115,7 @@ export default function SupervisorCheckIn() {
             }),
           }}
           icons={tableIcons}
-          title="Guests Check-in"
+          title=""
           columns={table.columns}
           data={table.data}
         />
