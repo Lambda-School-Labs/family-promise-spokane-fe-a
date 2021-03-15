@@ -67,9 +67,9 @@ const SideBar = () => {
       {user.role && (
         <Sider
           theme="light"
-          collapsible
           collapsed={collapsed}
-          onCollapse={onCollapse}
+          onMouseEnter={onCollapse}
+          onMouseLeave={onCollapse}
           id="sider"
         >
           <div className="logo" />
