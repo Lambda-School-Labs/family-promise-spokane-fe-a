@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
 // ant design
-import { Progress, Button } from 'antd';
+import { Progress } from 'antd';
 //redux
 import { connect, useSelector } from 'react-redux';
 import actions from '../../../state/actions/families';
