@@ -29,6 +29,9 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   const [count, setCount] = useState();
   const [alert, setAlert] = useState();
 
+  const date = new Date();
+  const fullDate = date.toDateString();
+
   useEffect(() => {
     dispatch(getLatestLog());
   }, [dispatch]);
@@ -260,8 +263,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   };
 
   //For Date and time
-  const date = new Date();
-  const fullDate = date.toDateString();
+
   var days = [
     'Sunday',
     'Monday',
