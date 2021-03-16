@@ -5,10 +5,10 @@ import React from 'react';
 //Ant Design imports (https://ant.design/components/overview/)
 import { Form, Card } from 'antd';
 
-const Important = ({ tempFormStyle }) => {
+const Important = () => {
   return (
-    <div style={tempFormStyle}>
-      <Card title="Important Reminders" bordered={false}>
+    <div>
+      <Card bordered={false}>
         <Form>
           <strong>
             <u>Shelter Safety Protocol:</u>

@@ -5,10 +5,10 @@ import React from 'react';
 //Ant Design imports (https://ant.design/components/overview/)
 import { Form, Card, Row, Col } from 'antd';
 
-const ShelterSchedule = ({ tempFormStyle }) => {
+const ShelterSchedule = () => {
   return (
-    <div style={tempFormStyle}>
-      <Card title="Shelter Schedule" bordered={false}>
+    <div>
+      <Card bordered={false}>
         <Form>
           <strong>Shelter Schedule:</strong>
           <Form.Item>
