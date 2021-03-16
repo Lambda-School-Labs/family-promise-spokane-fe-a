@@ -83,12 +83,7 @@ function uninstall(packages) {
   exec(`npm uninstall ${packageNames}`, (error, stdout, stderr) => {
     console.log(stderr);
     if (error !== null) {
-      console.log(
-        kleur
-          .bold()
-          .yellow()
-          .bgRed(`exec error: ${error}`)
-      );
+      console.log(kleur.bold().yellow().bgRed(`exec error: ${error}`));
     }
     // why not run git init for them?
     console.log(

@@ -70,7 +70,7 @@ const Guests = ({ guestsCheckedInCount, setGuestsCheckedInCount }) => {
     }
 
     setLoading(false);
-  }, [globalLogs]);
+  }, [globalLogs, state]);
 
   const handleCheckInClick = rowData => {
     setClicked(!clicked);
@@ -94,7 +94,7 @@ const Guests = ({ guestsCheckedInCount, setGuestsCheckedInCount }) => {
       if (member.id === rowData.id) {
         const newMem = {
           ...member,
-          '0': {
+          0: {
             ...member['0'],
             on_site_10pm: !member['0'].on_site_10pm,
           },
