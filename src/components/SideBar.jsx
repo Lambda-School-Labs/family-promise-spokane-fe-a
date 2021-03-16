@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
 import {
-  FileOutlined,
+  PlusOutlined,
   TeamOutlined,
   InfoCircleOutlined,
   HomeOutlined,
@@ -41,10 +41,6 @@ const SideBar = () => {
   // const redirectToFamily = () => {
   //   history.push('/family');
   // };
-
-  const redirectToMembers = () => {
-    history.push('/members');
-  };
 
   const redirectToCaseManagerAnalytics = () => {
     history.push('/caseAnalytics');
@@ -86,13 +82,6 @@ const SideBar = () => {
             {(user.role === 'guest' || user.role === 'pending') && (
               <Menu>
                 <Menu.Item
-                  onClick={redirectToMembers}
-                  key="3"
-                  icon={<TeamOutlined />}
-                >
-                  Members
-                </Menu.Item>
-                <Menu.Item
                   onClick={redirectToShelterInfo}
                   key="4"
                   icon={<InfoCircleOutlined />}
@@ -123,7 +112,7 @@ const SideBar = () => {
                 <Menu.Item
                   onClick={redirectToIntake}
                   key="4"
-                  icon={<FileOutlined />}
+                  icon={<PlusOutlined />}
                 >
                   Register Family
                 </Menu.Item>

@@ -27,7 +27,7 @@ const GuestAnalytics = ({
   family,
 }) => {
   const user = useSelector(state => state.CURRENT_USER);
-  const [idRoute, setIdRoute] = useState(null);
+  // const [idRoute, setIdRoute] = useState(null);
 
   // const fetchFamilyInformation = async () => {
   //   try {
@@ -58,11 +58,12 @@ const GuestAnalytics = ({
   const [missingFields, setMissingFields] = useState([]);
   const history = useHistory();
 
-  const goToProfile = () => {
-    // We pass this to our <Security /> component that wraps our routes.
-    // It'll automatically check if userToken is available and push back to login if not :)
-    history.push(`/familyprofile/${idRoute}`);
-  };
+  // const goToProfile = () => {
+  //   // We pass this to our <Security /> component that wraps our routes.
+  //   // It'll automatically check if userToken is available and push back to login if not :)
+  //   history.push(`/familyprofile/${idRoute}`);
+  // };
+
   const getPercentComplete = () => {
     // fetch household data object
     fetchFamilyHousehold();
@@ -127,16 +128,16 @@ const GuestAnalytics = ({
           {formatMissingData().map(msg => {
             return <p>{msg}</p>;
           })}
-          {percentComplete < 100 ? (
+          {/* {percentComplete < 100 ? (
             <div>
               <p>
                 Click the link below to complete or update your information.{' '}
               </p>
-              <Button onClick={goToProfile}>Go to Profile </Button>
+              <Button onClick={goToProfile}>Go to Profile</Button>
             </div>
           ) : (
             <p>You're all set!</p>
-          )}
+          )} */}
         </div>
       </div>
       <div />
