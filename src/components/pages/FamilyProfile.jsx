@@ -15,6 +15,7 @@ import { Avatar, Descriptions, Card } from 'antd';
 //redux
 import { connect } from 'react-redux';
 import actions from '../../state/actions/families';
+import GuestAnalytics from './guest-pages/GuestAnalytics';
 
 //For tabs component from Ant Design
 //The key refrences the keys in the contentListNoTitle varible below
@@ -24,16 +25,20 @@ const tabListNoTitle = [
     tab: 'Contact Info',
   },
   {
-    key: 'History',
-    tab: 'History',
+    key: 'Members',
+    tab: 'Members',
   },
   {
     key: 'Additional Info',
     tab: 'Additional Info',
   },
   {
-    key: 'Members',
-    tab: 'Members',
+    key: 'Missing Information',
+    tab: 'Missing Information',
+  },
+  {
+    key: 'History',
+    tab: 'History',
   },
 ];
 
@@ -216,6 +221,7 @@ const FamilyProfile = ({ familyInfo, fetchFamily }) => {
           </Descriptions>
         </div>
       ),
+      'Missing Information': <GuestAnalytics />,
       Members: <Members />,
     };
   }

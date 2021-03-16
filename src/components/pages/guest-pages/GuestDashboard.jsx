@@ -1,27 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import OffHours from './OffHours';
 import CurrentReservation from './CurrentReservation';
-
 import { axiosWithAuth } from '../../../api/axiosWithAuth';
-
 import { getLatestLog, updateBedCount } from '../../../state/actions/index';
-
 // UI
 import { Divider, Typography } from 'antd';
 import { Checkbox, Button } from '@material-ui/core';
-import { Alert, AlertTitle } from '@material-ui/lab';
-
+import { Alert } from '@material-ui/lab';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-
 import '../../../styles/app.scss';
-
 //redux
 import actions from '../../../state/actions/families';
 import { connect } from 'react-redux';
-
 // state
 import { useSelector, useDispatch } from 'react-redux';
-import { now } from 'underscore';
 
 const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   const dispatch = useDispatch();
@@ -31,36 +23,22 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   const globalCount = useSelector(state => state.TOTAL_BEDS);
   const fam = useSelector(state => state.FAMILY);
   const household = useSelector(state => state.HOUSEHOLD);
-  const [checkLogs, setCheckLogs] = useState(true);
   //UserState
   const [users, setUsers] = useState([]);
-  // console.log("users", users);
   //Mock beds counter
   const [count, setCount] = useState();
   const [alert, setAlert] = useState();
-  // useEffect(() => {
-  //   axiosWithAuth()
-  //     .get('/beds')
-  //     .then(res => {
-  //       console.log('Beds', res.data[0].total_beds);
-  //       setCount(res.data[0].total_beds);
-  //     });
-  // }, []);
 
   useEffect(() => {
     dispatch(getLatestLog());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    //const myLog =  await
-    //console.log('myLog', myLog);
-
     if (log.date === fullDate && log.reservation_status === true) {
-      console.log('THIS IS THE RES STATUS');
       setIsReserved(true);
       setResID(log.reservation_id);
     }
-  }, [log]);
+  }, [fullDate, log]);
 
   const { Text } = Typography;
 
@@ -74,11 +52,10 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
   const [isReserved, setIsReserved] = useState(false);
   const [familyMemberIDs, setFamilyMemberIDs] = useState([]);
   const [localBedCount, setLocalBedCount] = useState(0);
-  // console.log('Is Reserved', isReserved);
+
   //************THIS COULD BE A FUNCTION BECAUSE IT IS BEING USED TWICE:******************
   // This will target the checked members and add or take them away from the holding array or state of the membersStaying list. It will also update the state of the count for total beds.
   const familyStaying = e => {
-    console.log(membersStaying.indexOf(e.target.value));
     if (e.target.checked === true) {
       if (count > 0) {
         setCount(count - 1);
@@ -121,14 +98,11 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
       const res = await axiosWithAuth().get(`/users/${user.id}/family`);
 
       const family = res.data.family;
-      // console.log('fetchFamilyInformation', family);
 
       axiosWithAuth()
         .get(`/families/${family.id}/members`)
         .then(res => {
-          // console.log('families/family.id/members', res.data);
           setUsers(res.data);
-          //console.log('dub ax out', res.data[0].family_id);
           axiosWithAuth()
             .get(`logs/${res.data[0].family_id}`)
             .then(res => console.log(res.data[0].reservation_status))
@@ -136,19 +110,16 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
         })
         .catch(err => console.log('get family error'));
     } catch (error) {
-      //alert('error');
       console.log(error);
     }
   };
 
   //Warning shows for this but it is needed in order to render the checkboxes *******************
   useEffect(() => {
-    fetchFamilyInformation().then(res => console.log(res));
-  }, [globalCount]);
-
-  let userId = users.map(user => {
-    return user.family_id;
-  });
+    fetchFamilyInformation()
+      .then(res => console.log(res))
+      .catch(err => console.log('ERROR IN GLOBAL COUNT USE EFFECT', err));
+  }, [fetchFamilyInformation, globalCount]);
 
   //Reserve button - Will post to the logs endpoint with the membersStaying , will set isReserved to true, will return the reservation ID for put requeset, Confirm that the user has made a reservation.
   const reserveButton = e => {
@@ -173,10 +144,6 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
         console.log('res data', res.data.logs.reservation_status);
         setResID(resId);
         setIsReserved(res.data.logs.reservation_status);
-        //setLocalBedCount(res.data.logs.beds_reserved);
-        // axiosWithAuth().put('/beds', {
-        //   total_beds: count,
-        // });
       })
       .catch(err => {
         console.log('Nope', err);
@@ -231,9 +198,6 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
     console.log('before put inside cancel function', resID);
     e.preventDefault();
 
-    // axiosWithAuth().put('/beds', {
-    //   total_beds: globalCount + log.beds_reserved,
-    // });
     dispatch(updateBedCount(globalCount + log.actual_beds_reserved));
 
     membersStaying.length = 0;
@@ -288,7 +252,6 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
 
     dispatch(getLatestLog());
 
-    // setIsReserved(false);
     /*
     1. This button will change the membersStaying array length to 0
     2. Number of beds will be updated
@@ -320,12 +283,12 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
       setSeconds(sec);
     }, 1000);
     return () => clearInterval(interval);
-  }, [seconds]);
+  }, [sec, seconds]);
 
   //-----------------------------------------------------------------
   // --------------------------START OF RENDER-----------------------
   //-----------------------------------------------------------------
-
+  console.log(isReserved);
   return 7 < hours < 21 ? (
     <div className="guest-container">
       <div className="checkin-area">
@@ -422,7 +385,7 @@ const GuestDashboard = ({ fetchHousehold, fetchFamily, fetchMembers }) => {
               size={'large'}
               onClick={reserveButton}
             >
-              {membersStaying.length == 0
+              {membersStaying.length === 0
                 ? `Check in`
                 : `Reserve ${membersStaying.length} Beds + Check In`}
             </Button>
