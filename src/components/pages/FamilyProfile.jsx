@@ -7,15 +7,14 @@ This component contains:
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Members from '../pages/guest-pages/Members';
 
 //Ant Design imports (https://ant.design/components/overview/)
-import { Avatar, Descriptions, Card, Typography } from 'antd';
+import { Avatar, Descriptions, Card } from 'antd';
 
 //redux
 import { connect } from 'react-redux';
 import actions from '../../state/actions/families';
-
-const { Text } = Typography;
 
 //For tabs component from Ant Design
 //The key refrences the keys in the contentListNoTitle varible below
@@ -31,6 +30,10 @@ const tabListNoTitle = [
   {
     key: 'Additional Info',
     tab: 'Additional Info',
+  },
+  {
+    key: 'Members',
+    tab: 'Members',
   },
 ];
 
@@ -57,8 +60,7 @@ const FamilyProfile = ({ familyInfo, fetchFamily }) => {
     contentListNoTitle = {
       'Contact Info': (
         <div className="contact_info">
-          <Text strong>Main Contact(s):</Text>
-          <Descriptions>
+          <Descriptions title="Main Contact(s):">
             <Descriptions.Item label="Name">
               {familyInfo?.phone_one?.name}
             </Descriptions.Item>
@@ -75,8 +77,7 @@ const FamilyProfile = ({ familyInfo, fetchFamily }) => {
             </Descriptions.Item>
           </Descriptions>
           <br></br>
-          <Text strong>Alternative Contact:</Text>
-          <Descriptions>
+          <Descriptions title="Alternative Contact:">
             <Descriptions.Item label="Name">
               {familyInfo?.safe_alternate?.name}
             </Descriptions.Item>
@@ -85,8 +86,7 @@ const FamilyProfile = ({ familyInfo, fetchFamily }) => {
             </Descriptions.Item>
           </Descriptions>
           <br></br>
-          <Text strong>Emergency Contact:</Text>
-          <Descriptions>
+          <Descriptions title="Emergency Contact:">
             <Descriptions.Item label="Name">
               {familyInfo?.emergencyContact?.name}
             </Descriptions.Item>
@@ -98,54 +98,64 @@ const FamilyProfile = ({ familyInfo, fetchFamily }) => {
       ),
       History: (
         <div className="history">
-          <Text strong>Last Permanent Address:</Text>
-          <p>{familyInfo?.last_permanent_address}</p>
-          <br></br>
-
-          <Text strong>Current Location:</Text>
-          <p>{familyInfo?.homeless_info?.current_location}</p>
-          <Text strong>Length of time at current location:</Text>
-          <p>{familyInfo?.homeless_info?.length_at_current_location}</p>
-          <br></br>
-
-          <Text strong>Prior Location:</Text>
-          <p>{familyInfo?.homeless_info?.prior_location}</p>
-          <Text strong>Length of time at prior location:</Text>
-          <p>{familyInfo?.homeless_info?.length_at_prior_location}</p>
-          <br></br>
-
-          <Text>
-            Number of times homeless in the last three years:{' '}
-            {familyInfo?.homeless_info?.num_times_homeless}
-          </Text>
-          <br></br>
-          <Text>
-            Total months homeless in the last three years:{' '}
-            {familyInfo?.homeless_info?.total_len_homeless}
-          </Text>
+          <Descriptions title="Last Permanent Address:">
+            <Descriptions.Item>
+              {familyInfo?.last_permanent_address}
+            </Descriptions.Item>
+          </Descriptions>
+          <Descriptions title="Current Location:">
+            <Descriptions.Item>
+              {familyInfo?.homeless_info?.current_location}
+            </Descriptions.Item>
+          </Descriptions>
+          <Descriptions title="Time at Current Location:">
+            <Descriptions.Item>
+              {familyInfo?.homeless_info?.length_at_current_location}
+            </Descriptions.Item>
+          </Descriptions>
+          <Descriptions title="Prior Location:">
+            <Descriptions.Item>
+              {familyInfo?.homeless_info?.prior_location}
+            </Descriptions.Item>
+          </Descriptions>
+          <Descriptions title="Time at Prior Location:">
+            <Descriptions.Item>
+              {familyInfo?.homeless_info?.length_at_prior_location}
+            </Descriptions.Item>
+          </Descriptions>
+          <Descriptions title="Times Homeless in Last Three Years:">
+            <Descriptions.Item>
+              {familyInfo?.homeless_info?.num_times_homeless}
+            </Descriptions.Item>
+          </Descriptions>
+          <Descriptions title="Months Homeless in Last Three Years:">
+            <Descriptions.Item>
+              {familyInfo?.homeless_info?.total_len_homeless}
+            </Descriptions.Item>
+          </Descriptions>
         </div>
       ),
       'Additional Info': (
         <div className="additional_info">
-          <Descriptions title="Insurance">
-            <Descriptions.Item label="Insurance type">
+          <Descriptions title="Insurance:">
+            <Descriptions.Item label="Insurance Type">
               {familyInfo?.insurance?.health_insurance_type}
             </Descriptions.Item>
-            <Descriptions.Item label="Members covered">
+            <Descriptions.Item label="Members Covered">
               {familyInfo?.insurance?.members_covered}
             </Descriptions.Item>
-            <Descriptions.Item label="Has pregnant member">
+            <Descriptions.Item label="Has Pregnant Member">
               {familyInfo?.insurance?.pregnancies === true ? 'yes' : 'no'}
             </Descriptions.Item>
           </Descriptions>
-          <Descriptions title="Goverment Benefits">
+          <Descriptions title="Government Benefits:">
             <Descriptions.Item label="RRH">
               {familyInfo?.gov_benefits?.RRH === true ? 'yes' : 'no'}
             </Descriptions.Item>
             <Descriptions.Item label="CPS/FPS">
               {familyInfo?.gov_benefits?.cps_fps === true ? 'yes' : 'no'}
             </Descriptions.Item>
-            <Descriptions.Item label="Foodstamps">
+            <Descriptions.Item label="Food Stamps">
               {familyInfo?.gov_benefits?.foodstamps === true ? 'yes' : 'no'}
             </Descriptions.Item>
             <Descriptions.Item label="Housing Voucher">
@@ -162,7 +172,7 @@ const FamilyProfile = ({ familyInfo, fetchFamily }) => {
                 : 'no'}
             </Descriptions.Item>
           </Descriptions>
-          <Descriptions title="Vehicle">
+          <Descriptions title="Vehicle:">
             <Descriptions.Item label="Make">
               {familyInfo?.vehicle?.make}
             </Descriptions.Item>
@@ -175,15 +185,15 @@ const FamilyProfile = ({ familyInfo, fetchFamily }) => {
             <Descriptions.Item label="Color">
               {familyInfo?.vehicle?.color}
             </Descriptions.Item>
-            <Descriptions.Item label="License plate">
+            <Descriptions.Item label="License Plate">
               {familyInfo?.vehicle?.license_plate}
             </Descriptions.Item>
           </Descriptions>
-          <Descriptions title="Domestic Violence">
-            <Descriptions.Item label="Date of last incident">
+          <Descriptions title="Domestic Violence:">
+            <Descriptions.Item label="Date of Last Incident">
               {familyInfo?.domestic_violence_info?.date_last_incident}
             </Descriptions.Item>
-            <Descriptions.Item label="YWCA has been contacted">
+            <Descriptions.Item label="YWCA Has Been Contacted">
               {familyInfo?.domestic_violence_info?.YWCA_contacted === true
                 ? 'yes'
                 : 'no'}
@@ -198,7 +208,7 @@ const FamilyProfile = ({ familyInfo, fetchFamily }) => {
                 ? 'yes'
                 : 'no'}
             </Descriptions.Item>
-            <Descriptions.Item label="Has court order of protection">
+            <Descriptions.Item label="Has Court Order of Protection">
               {familyInfo?.domestic_violence_info?.has_court_order === true
                 ? 'yes'
                 : 'no'}
@@ -206,6 +216,7 @@ const FamilyProfile = ({ familyInfo, fetchFamily }) => {
           </Descriptions>
         </div>
       ),
+      Members: <Members />,
     };
   }
 

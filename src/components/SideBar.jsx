@@ -42,10 +42,6 @@ const SideBar = () => {
   //   history.push('/family');
   // };
 
-  const redirectToMembers = () => {
-    history.push('/members');
-  };
-
   const redirectToCaseManagerAnalytics = () => {
     history.push('/caseAnalytics');
   };
@@ -85,13 +81,6 @@ const SideBar = () => {
             </Menu.Item>
             {(user.role === 'guest' || user.role === 'pending') && (
               <Menu>
-                <Menu.Item
-                  onClick={redirectToMembers}
-                  key="3"
-                  icon={<TeamOutlined />}
-                >
-                  Members
-                </Menu.Item>
                 <Menu.Item
                   onClick={redirectToShelterInfo}
                   key="4"
