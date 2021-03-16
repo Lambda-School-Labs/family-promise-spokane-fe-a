@@ -5,10 +5,10 @@ import React from 'react';
 //Ant Design imports (https://ant.design/components/overview/)
 import { Form, Card } from 'antd';
 
-const Resources = ({ tempFormStyle }) => {
+const Resources = () => {
   return (
-    <div style={tempFormStyle}>
-      <Card title="Important Resources and Phone Numbers" bordered={false}>
+    <div>
+      <Card bordered={false}>
         <p>
           <strong>
             This is NOT an exhaustive list however it should help you get
