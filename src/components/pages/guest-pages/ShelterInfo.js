@@ -1,5 +1,5 @@
 //
-import React, { useState } from 'react';
+import React from 'react';
 import ShelterSchedule from './ShelterInfo/ShelterSchedule';
 import NightShelter from './ShelterInfo/NightShelter';
 import Welcome from './ShelterInfo/Welcome';
@@ -7,96 +7,51 @@ import Inside from './ShelterInfo/Inside';
 import Outside from './ShelterInfo/Outside';
 import Important from './ShelterInfo/Important';
 import Resources from './ShelterInfo/Resources';
-//Shelter info components(originally from Intake Form)
-import { Card, Modal } from 'antd';
 
-//Navigation path for Shelter info. Each name correspons with the switch statement id
-const pages = [
-  {
-    id: <Welcome />,
-    name: 'Welcome to Open Doors',
-  },
-  {
-    id: <ShelterSchedule />,
-    name: 'Shelter Schedule',
-  },
-  {
-    id: <NightShelter />,
-    name: 'Night Shelter Expectations & Safety',
-  },
-  {
-    id: <Inside />,
-    name: 'Inside the Shelter',
-  },
-  {
-    id: <Outside />,
-    name: 'Outside the Shelter',
-  },
-  {
-    id: <Important />,
-    name: 'Important Reminders',
-  },
-  {
-    id: <Resources />,
-    name: 'Important Resources & Phone Numbers',
-  },
-];
+import { Collapse } from 'antd';
+import 'antd/dist/antd.css';
+
+const { Panel } = Collapse;
 
 const ShelterInfo = () => {
-  // const [info, setInfo] = useState(pages);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [pageId, setPageId] = useState();
-
-  const showModal = async pageId => {
-    await setPageId(pageId);
-    setIsModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-
-  //Inline styling for form container
-  const tempFormStyle = {
-    marginLeft: '20%',
-    marginTop: '50px',
-    maxWidth: '900px',
-  };
-
-  const gridStyle = {
-    width: '33%',
-    textAlign: 'center',
-  };
-
   return (
-    <div style={tempFormStyle}>
-      <Card title="Shelter Information & Additional Resources">
-        {pages.map((page, index) => (
-          <Card.Grid
-            key={page.id}
-            style={gridStyle}
-            onClick={() => {
-              showModal(page.id);
-            }}
-          >
-            {page.name}
-          </Card.Grid>
-        ))}
-      </Card>
-      <Modal
-        width={1000}
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        {pageId}
-      </Modal>
-    </div>
-  ); //ends return
-}; //ends function
+    <div className="shelter-info-padding">
+      <div className="shelter-info-container">
+        <h1 className="shelter-info-title">
+          Shelter Information and Additional Resources
+        </h1>
 
+        <Collapse accordion>
+          <Panel header="Welcome to Open Doors">
+            <Welcome />
+          </Panel>
+
+          <Panel header="Shelter Schedule">
+            <ShelterSchedule />
+          </Panel>
+
+          <Panel header="Night Shelter Expectations and Safety">
+            <NightShelter />
+          </Panel>
+
+          <Panel header="Inside the Shelter">
+            <Inside />
+          </Panel>
+
+          <Panel header="Outside the Shelter">
+            <Outside />
+          </Panel>
+
+          <Panel header="Important Reminders">
+            <Important />
+          </Panel>
+
+          <Panel header="Important Resources and Phone Numbers">
+            <Resources />
+          </Panel>
+        </Collapse>
+      </div>
+    </div>
+  );
+};
 export default ShelterInfo;

@@ -72,13 +72,13 @@ const SideBar = () => {
 
           <Menu theme="light" mode="inline">
             <br />
-            <Menu.Item
+            {/* <Menu.Item
               onClick={redirectToAnalytics}
               key="2"
               icon={<BarChartOutlined />}
             >
               Analytics
-            </Menu.Item>
+            </Menu.Item> */}
             {(user.role === 'guest' || user.role === 'pending') && (
               <Menu>
                 <Menu.Item
