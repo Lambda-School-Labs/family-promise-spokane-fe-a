@@ -5,10 +5,10 @@ import React from 'react';
 //Ant Design imports (https://ant.design/components/overview/)
 import { Form, Card } from 'antd';
 
-const NightShelter = ({ tempFormStyle }) => {
+const NightShelter = () => {
   return (
-    <div style={tempFormStyle}>
-      <Card title="Night Shelter Expectations and Safety" bordered={false}>
+    <div>
+      <Card bordered={false}>
         <Form>
           <strong>
             <u>Night Shelter Expectations:</u>
