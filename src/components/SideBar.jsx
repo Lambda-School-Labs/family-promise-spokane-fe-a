@@ -5,9 +5,9 @@ import {
   TeamOutlined,
   InfoCircleOutlined,
   HomeOutlined,
+  UnorderedListOutlined,
 } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
-import BarChartOutlined from '@ant-design/icons/BarChartOutlined';
 import MonitorOutlined from '@ant-design/icons/MonitorOutlined';
 import PieChartOutlinedIcon from '@material-ui/icons/PieChartOutlined';
 import { useSelector } from 'react-redux';
@@ -22,10 +22,6 @@ const SideBar = () => {
     setCollapsed(!collapsed);
   };
 
-  // const redirectToUserProfile = () => {
-  //   history.push('/me');
-  // };
-
   const redirectToAnalytics = () => {
     history.push('/analytics');
   };
@@ -37,10 +33,6 @@ const SideBar = () => {
   const redirectToGuests = () => {
     history.push('/guests');
   };
-
-  // const redirectToFamily = () => {
-  //   history.push('/family');
-  // };
 
   const redirectToCaseManagerAnalytics = () => {
     history.push('/caseAnalytics');
@@ -58,6 +50,10 @@ const SideBar = () => {
     history.push('/guest-dashboard');
   };
 
+  const redirectToDailyChecklist = () => {
+    history.push('/dailyChecklist');
+  };
+
   return (
     <>
       {user.role && (
@@ -71,16 +67,15 @@ const SideBar = () => {
           <div className="logo" />
 
           <Menu theme="light" mode="inline">
-            <br />
-            {/* <Menu.Item
-              onClick={redirectToAnalytics}
-              key="2"
-              icon={<BarChartOutlined />}
-            >
-              Analytics
-            </Menu.Item> */}
             {(user.role === 'guest' || user.role === 'pending') && (
               <Menu>
+                <Menu.Item
+                  onClick={redirectToDashboard}
+                  key="3"
+                  icon={<HomeOutlined />}
+                >
+                  Dashboard
+                </Menu.Item>
                 <Menu.Item
                   onClick={redirectToShelterInfo}
                   key="4"
@@ -89,11 +84,11 @@ const SideBar = () => {
                   Shelter Info
                 </Menu.Item>
                 <Menu.Item
-                  onClick={redirectToDashboard}
+                  onClick={redirectToDailyChecklist}
                   key="5"
-                  icon={<HomeOutlined />}
+                  icon={<UnorderedListOutlined />}
                 >
-                  Dashboard
+                  Daily Checklist
                 </Menu.Item>
               </Menu>
             )}

@@ -43,6 +43,7 @@ import CaseAnalytics from './components/pages/casemanager-pages/CaseManagerAnaly
 import ShelterInfo from './components/pages/guest-pages/ShelterInfo';
 import clientStaffSig from './components/pages/IntakePacketContent/ByGuests/ClientRelease/ClientReleaseStaffSig';
 import { LastLocationProvider } from 'react-router-last-location';
+import DailyChecklist from './components/pages/guest-pages/DailyChecklist';
 const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 ReactDOM.render(
@@ -112,6 +113,12 @@ function App() {
           path="/shelterInfo"
           roles={['guest', 'pending']}
           component={ShelterInfo}
+        />
+        <PrivateRoute
+          exact
+          path="/dailyChecklist"
+          roles={['guest', 'pending']}
+          component={DailyChecklist}
         />
         <Route
           path="/families/:family_id/notes/"
