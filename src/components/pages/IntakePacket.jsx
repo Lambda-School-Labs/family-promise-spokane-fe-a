@@ -49,7 +49,7 @@ the data structure is in ./IntakePacketContent/ByGuests/FamilyMembers.js*/
 
 let defaultData = {
   familyInfo: {
-    user_id: null,
+    head_of_household: null,
     case_number: 1234,
     phone_one: {
       name: 'Mary Jane',
@@ -140,28 +140,6 @@ const steps = [
   { id: 'Insurance' },
   { id: 'AdditionalInfo' },
   { id: 'Pets' },
-  { id: 'ClientRelease' },
-  { id: 'ClientReleaseSignature' },
-  { id: 'ClientReleaseStaffSig' },
-  { id: 'ThirdPartyConsent' },
-  { id: 'ThirdPartySigs' },
-  { id: 'GuestWaiver' },
-  { id: 'CaseManagement' },
-  { id: 'PhotoRelease' },
-  { id: 'CoreValues' },
-  { id: 'AntiDiscrimination' },
-  { id: 'Expectations' },
-  { id: 'Decorum' },
-  { id: 'AbideBy' },
-  { id: 'SuspensionAgreement' },
-  { id: 'GrievanceAppeal' },
-  { id: 'Belongings' },
-  { id: 'Schedule' },
-  { id: 'Safety' },
-  { id: 'AnimalNo' },
-  { id: 'AnimalYes' },
-  { id: 'Neighborhood' },
-  { id: 'NeighborhoodExpectations' },
 ];
 
 const IntakePacket = () => {
@@ -228,50 +206,6 @@ const IntakePacket = () => {
       return <AdditionalInfo {...props} />;
     case 'Pets':
       return <Pets {...props} />;
-    case 'ClientRelease':
-      return <ClientRelease {...props} />;
-    case 'ClientReleaseSignature':
-      return <ClientReleaseSignature {...props} />;
-    case 'ClientReleaseStaffSig':
-      return <ClientReleaseStaffSig {...props} />;
-    case 'ThirdPartyConsent':
-      return <ThirdPartyConsent {...props} />;
-    case 'ThirdPartySigs':
-      return <ThirdPartySigs {...props} />;
-    case 'GuestWaiver':
-      return <GuestWaiver {...props} />;
-    case 'CaseManagement':
-      return <CaseManagement {...props} />;
-    case 'PhotoRelease':
-      return <PhotoRelease {...props} />;
-    case 'CoreValues':
-      return <CoreValues {...props} />;
-    case 'AntiDiscrimination':
-      return <AntiDiscrimination {...props} />;
-    case 'Expectations':
-      return <Expectations {...props} />;
-    case 'Decorum':
-      return <Decorum {...props} />;
-    case 'AbideBy':
-      return <AbideBy {...props} />;
-    case 'SuspensionAgreement':
-      return <SuspensionAgreement {...props} />;
-    case 'GrievanceAppeal':
-      return <GrievanceAppeal {...props} />;
-    case 'Belongings':
-      return <Belongings {...props} />;
-    case 'Schedule':
-      return <Schedule {...props} />;
-    case 'Safety':
-      return <Safety {...props} />;
-    case 'AnimalNo':
-      return <AnimalNo {...props} />;
-    case 'AnimalYes':
-      return <AnimalYes {...props} />;
-    case 'Neighborhood':
-      return <Neighborhood {...props} />;
-    case 'NeighborhoodExpectations':
-      return <NeighborhoodExpectations {...props} />;
     default:
       return null;
   }

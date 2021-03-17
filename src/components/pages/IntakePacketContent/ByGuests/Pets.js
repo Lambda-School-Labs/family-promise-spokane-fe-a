@@ -39,7 +39,7 @@ const Pets = ({
     if (loadDocuSign) {
       history.push('/redirect');
     }
-  }, [loadDocuSign]);
+  }, [history, loadDocuSign]);
 
   function callDocusign() {
     // Saves family information so it does not get deleted after redirecting
@@ -65,9 +65,24 @@ const Pets = ({
           })
           .catch(err => console.log('DocuSign error', err));
       })
-      .catch(err => console.log('FamiliesError', err));
+      .catch(err => {
+        console.log('FamiliesError', err);
+        err.send(err);
+      });
   }
   //docusign
+  const redirectToDocusign = async () => {
+    try {
+      const res = await axios.post(
+        'http://localhost:8000/callDS',
+        envelopeArgs
+      );
+      setLoadDocusign(!loadDocuSign);
+      dispatch(getDocuSignUrl(res.data));
+    } catch (error) {
+      console.log('Error in load docusign', error);
+    }
+  };
 
   //Progress bar
   const pageNumber = steps.findIndex(item => item === step);
