@@ -4,7 +4,7 @@ Requires Signatures from Neighborhood Agreement and Expectations
 
 import React from 'react';
 //Previous/Next buttons
-import IntakeButton from '../../IntakeButtons';
+import IntakeButton from '../../IntakePacketContent/IntakeButtons';
 
 //Ant Design imports (https://ant.design/components/overview/)
 import { Card, Progress } from 'antd';

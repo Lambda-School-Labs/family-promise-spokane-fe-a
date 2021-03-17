@@ -17,33 +17,12 @@ import ChildSchoolInfo from './IntakePacketContent/ByGuests/ChildSchoolInfo';
 import DomesticViolence from './IntakePacketContent/ByGuests/DomesticViolence';
 import HomelessHistory from './IntakePacketContent/ByGuests/HomelessHistory';
 import Insurance from './IntakePacketContent/ByGuests/Insurance';
-import ClientRelease from './IntakePacketContent/ByGuests/ClientRelease/ClientRelease';
-import ClientReleaseSignature from './IntakePacketContent/ByGuests/ClientRelease/ClientReleaseSignature';
-import ClientReleaseStaffSig from './IntakePacketContent/ByGuests/ClientRelease/ClientReleaseStaffSig';
-import ThirdPartyConsent from './IntakePacketContent/ByGuests/ThirdPartyConsent/ThirdPartyConsent';
 import FamilyDemographics from './IntakePacketContent/ByGuests/FamilyDemographics';
 import AdditionalInfo from './IntakePacketContent/ByGuests/AdditionalInfo';
 import IntakeStart from './IntakePacketContent/IntakeStart';
 import CreateOktaAccountForm from './IntakePacketContent/createOktaAccountForm/CreateOktaAccountForm';
 import Pets from './IntakePacketContent/ByGuests/Pets';
-import Expectations from './IntakePacketContent/ByGuests/Expectations/Expectations';
-import Decorum from './IntakePacketContent/ByGuests/Expectations/Decorum';
-import AbideBy from './IntakePacketContent/ByGuests/Expectations/AbideBy';
-import PhotoRelease from './IntakePacketContent/ByGuests/PhotoRelease';
-import CoreValues from './IntakePacketContent/ByGuests/CoreValues';
-import SuspensionAgreement from './IntakePacketContent/ByGuests/SuspensionAgreement/SuspensionAgreement';
-import GrievanceAppeal from './IntakePacketContent/ByGuests/GrievanceAppeal/GrievanceAppeal';
-import GuestWaiver from './IntakePacketContent/ByGuests/GuestWaiver';
-import CaseManagement from './IntakePacketContent/ByGuests/CaseManagement';
-import AntiDiscrimination from './IntakePacketContent/ByGuests/AntiDiscrimination';
-import Belongings from './IntakePacketContent/ByGuests/Belongings';
-import Schedule from './IntakePacketContent/ByGuests/ScheduleSafety/Schedule';
-import Safety from './IntakePacketContent/ByGuests/ScheduleSafety/Safety';
-import AnimalNo from './IntakePacketContent/ByGuests/AnimalAgreement/AnimalNo';
-import AnimalYes from './IntakePacketContent/ByGuests/AnimalAgreement/AnimalYes';
-import Neighborhood from './IntakePacketContent/ByGuests/Neighborhood/Neighborhood';
-import NeighborhoodExpectations from './IntakePacketContent/ByGuests/Neighborhood/NeighborhoodExpectations';
-import ThirdPartySigs from './IntakePacketContent/ByGuests/ThirdPartyConsent/ThirdPartySigs';
+
 /* Data structure for familyInfo. Each familyMember is pushed to the familyMember array here but 
 the data structure is in ./IntakePacketContent/ByGuests/FamilyMembers.js*/
 
