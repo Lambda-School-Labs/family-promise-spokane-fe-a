@@ -1,17 +1,43 @@
 /*
 Signatures for Client Release form from Staff members
 */
-
-import React from 'react';
+import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 //Ant Design imports (https://ant.design/components/overview/)
 import { Form, Input, Checkbox, Card, Button, DatePicker } from 'antd';
+import { axiosWithAuth } from '../../../../../api/axiosWithAuth';
 
 const ClientReleaseStaffSignature = () => {
+  const [intakeGuest, setIntakeGuest] = useState({});
   const tempFormStyle = {
     marginLeft: '20%',
     marginTop: '50px',
     maxWidth: '900px',
   };
+  //bring in user from params
+  const { signerId } = useParams();
+  console.log(signerId);
+
+  //will have to getUser with id that is living in params
+  const fetchUser = () => {
+    axiosWithAuth()
+      .get(`/users/${signerId}`)
+      .then(res => {
+        setIntakeGuest(res.data);
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    fetchUser();
+    console.log(intakeGuest);
+  }, []);
+
+  console.log(intakeGuest);
+
   //Progress bar
   const submitHandler = e => {};
 
@@ -32,7 +58,10 @@ const ClientReleaseStaffSignature = () => {
         </Button>
       </div>
 
-      <Card title="Client Release Staff Signature" bordered={false}>
+      <Card
+        title={`Client Release Staff Signature For Guest ${intakeGuest.first_name} ${intakeGuest.last_name}`}
+        bordered={false}
+      >
         <Form>
           <Form.Item>
             <Input bordered={false} placeholder="First & Last Name" />

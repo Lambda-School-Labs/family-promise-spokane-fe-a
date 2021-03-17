@@ -89,7 +89,7 @@ function App() {
           }}
         />
         <Route
-          path="/outtake"
+          path="/outtake/:signerId"
           roles={['executive_director', 'supervisor', 'case_manager']}
           component={clientStaffSig}
         />
