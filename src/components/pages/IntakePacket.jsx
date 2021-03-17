@@ -17,33 +17,12 @@ import ChildSchoolInfo from './IntakePacketContent/ByGuests/ChildSchoolInfo';
 import DomesticViolence from './IntakePacketContent/ByGuests/DomesticViolence';
 import HomelessHistory from './IntakePacketContent/ByGuests/HomelessHistory';
 import Insurance from './IntakePacketContent/ByGuests/Insurance';
-import ClientRelease from './IntakePacketContent/ByGuests/ClientRelease/ClientRelease';
-import ClientReleaseSignature from './IntakePacketContent/ByGuests/ClientRelease/ClientReleaseSignature';
-import ClientReleaseStaffSig from './IntakePacketContent/ByGuests/ClientRelease/ClientReleaseStaffSig';
-import ThirdPartyConsent from './IntakePacketContent/ByGuests/ThirdPartyConsent/ThirdPartyConsent';
 import FamilyDemographics from './IntakePacketContent/ByGuests/FamilyDemographics';
 import AdditionalInfo from './IntakePacketContent/ByGuests/AdditionalInfo';
 import IntakeStart from './IntakePacketContent/IntakeStart';
 import CreateOktaAccountForm from './IntakePacketContent/createOktaAccountForm/CreateOktaAccountForm';
 import Pets from './IntakePacketContent/ByGuests/Pets';
-import Expectations from './IntakePacketContent/ByGuests/Expectations/Expectations';
-import Decorum from './IntakePacketContent/ByGuests/Expectations/Decorum';
-import AbideBy from './IntakePacketContent/ByGuests/Expectations/AbideBy';
-import PhotoRelease from './IntakePacketContent/ByGuests/PhotoRelease';
-import CoreValues from './IntakePacketContent/ByGuests/CoreValues';
-import SuspensionAgreement from './IntakePacketContent/ByGuests/SuspensionAgreement/SuspensionAgreement';
-import GrievanceAppeal from './IntakePacketContent/ByGuests/GrievanceAppeal/GrievanceAppeal';
-import GuestWaiver from './IntakePacketContent/ByGuests/GuestWaiver';
-import CaseManagement from './IntakePacketContent/ByGuests/CaseManagement';
-import AntiDiscrimination from './IntakePacketContent/ByGuests/AntiDiscrimination';
-import Belongings from './IntakePacketContent/ByGuests/Belongings';
-import Schedule from './IntakePacketContent/ByGuests/ScheduleSafety/Schedule';
-import Safety from './IntakePacketContent/ByGuests/ScheduleSafety/Safety';
-import AnimalNo from './IntakePacketContent/ByGuests/AnimalAgreement/AnimalNo';
-import AnimalYes from './IntakePacketContent/ByGuests/AnimalAgreement/AnimalYes';
-import Neighborhood from './IntakePacketContent/ByGuests/Neighborhood/Neighborhood';
-import NeighborhoodExpectations from './IntakePacketContent/ByGuests/Neighborhood/NeighborhoodExpectations';
-import ThirdPartySigs from './IntakePacketContent/ByGuests/ThirdPartyConsent/ThirdPartySigs';
+
 /* Data structure for familyInfo. Each familyMember is pushed to the familyMember array here but 
 the data structure is in ./IntakePacketContent/ByGuests/FamilyMembers.js*/
 
@@ -140,28 +119,6 @@ const steps = [
   { id: 'Insurance' },
   { id: 'AdditionalInfo' },
   { id: 'Pets' },
-  { id: 'ClientRelease' },
-  { id: 'ClientReleaseSignature' },
-  { id: 'ClientReleaseStaffSig' },
-  { id: 'ThirdPartyConsent' },
-  { id: 'ThirdPartySigs' },
-  { id: 'GuestWaiver' },
-  { id: 'CaseManagement' },
-  { id: 'PhotoRelease' },
-  { id: 'CoreValues' },
-  { id: 'AntiDiscrimination' },
-  { id: 'Expectations' },
-  { id: 'Decorum' },
-  { id: 'AbideBy' },
-  { id: 'SuspensionAgreement' },
-  { id: 'GrievanceAppeal' },
-  { id: 'Belongings' },
-  { id: 'Schedule' },
-  { id: 'Safety' },
-  { id: 'AnimalNo' },
-  { id: 'AnimalYes' },
-  { id: 'Neighborhood' },
-  { id: 'NeighborhoodExpectations' },
 ];
 
 const IntakePacket = () => {
@@ -228,50 +185,6 @@ const IntakePacket = () => {
       return <AdditionalInfo {...props} />;
     case 'Pets':
       return <Pets {...props} />;
-    case 'ClientRelease':
-      return <ClientRelease {...props} />;
-    case 'ClientReleaseSignature':
-      return <ClientReleaseSignature {...props} />;
-    case 'ClientReleaseStaffSig':
-      return <ClientReleaseStaffSig {...props} />;
-    case 'ThirdPartyConsent':
-      return <ThirdPartyConsent {...props} />;
-    case 'ThirdPartySigs':
-      return <ThirdPartySigs {...props} />;
-    case 'GuestWaiver':
-      return <GuestWaiver {...props} />;
-    case 'CaseManagement':
-      return <CaseManagement {...props} />;
-    case 'PhotoRelease':
-      return <PhotoRelease {...props} />;
-    case 'CoreValues':
-      return <CoreValues {...props} />;
-    case 'AntiDiscrimination':
-      return <AntiDiscrimination {...props} />;
-    case 'Expectations':
-      return <Expectations {...props} />;
-    case 'Decorum':
-      return <Decorum {...props} />;
-    case 'AbideBy':
-      return <AbideBy {...props} />;
-    case 'SuspensionAgreement':
-      return <SuspensionAgreement {...props} />;
-    case 'GrievanceAppeal':
-      return <GrievanceAppeal {...props} />;
-    case 'Belongings':
-      return <Belongings {...props} />;
-    case 'Schedule':
-      return <Schedule {...props} />;
-    case 'Safety':
-      return <Safety {...props} />;
-    case 'AnimalNo':
-      return <AnimalNo {...props} />;
-    case 'AnimalYes':
-      return <AnimalYes {...props} />;
-    case 'Neighborhood':
-      return <Neighborhood {...props} />;
-    case 'NeighborhoodExpectations':
-      return <NeighborhoodExpectations {...props} />;
     default:
       return null;
   }

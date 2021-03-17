@@ -10,7 +10,7 @@ import {
 } from '../../../state/actions/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLastLocation } from 'react-router-last-location';
-import StaffSig from '../IntakePacketContent/ByGuests/ClientRelease/ClientReleaseStaffSig';
+import StaffSig from '../IntakePacketContent/BySupervisor/ClientReleaseStaffSig';
 
 function HomeContainer({ LoadingComponent }) {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ function HomeContainer({ LoadingComponent }) {
       dispatch(getMembers());
       dispatch(getLatestLog());
     }
-  }, []);
+  }, [LOGGED_IN, dispatch]);
 
   if (LOADING) {
     return (

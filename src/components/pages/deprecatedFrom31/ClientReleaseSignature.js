@@ -5,7 +5,7 @@ Signatures for Client Release form from Guests
 import React from 'react';
 
 //Previous/Next buttons
-import IntakeButton from '../../IntakeButtons';
+import IntakeButton from '../IntakePacketContent/IntakeButtons';
 
 //Ant Design imports (https://ant.design/components/overview/)
 import { Form, Input, Card, Progress, DatePicker, Row, Col } from 'antd';

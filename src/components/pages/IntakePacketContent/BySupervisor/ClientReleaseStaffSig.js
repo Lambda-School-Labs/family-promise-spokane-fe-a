@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 //Ant Design imports (https://ant.design/components/overview/)
 import { Form, Input, Checkbox, Card, Button, DatePicker } from 'antd';
-import { axiosWithAuth } from '../../../../../api/axiosWithAuth';
+import { axiosWithAuth } from '../../../../api/axiosWithAuth';
 
 const ClientReleaseStaffSignature = () => {
   const [intakeGuest, setIntakeGuest] = useState({});
@@ -34,6 +34,7 @@ const ClientReleaseStaffSignature = () => {
   useEffect(() => {
     fetchUser();
     console.log(intakeGuest);
+    //eslint-disable-next-line
   }, []);
 
   console.log(intakeGuest);
