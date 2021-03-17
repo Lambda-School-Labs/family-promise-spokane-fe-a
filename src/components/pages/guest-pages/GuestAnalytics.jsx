@@ -17,6 +17,8 @@ const GuestAnalytics = ({
   family,
 }) => {
   const user = useSelector(state => state.CURRENT_USER);
+  const [percentComplete, setPercentComplete] = useState(0);
+  const [missingFields, setMissingFields] = useState([]);
 
   const fetchFamilyHousehold = async () => {
     try {
@@ -30,9 +32,6 @@ const GuestAnalytics = ({
     }
   };
 
-  const [percentComplete, setPercentComplete] = useState(0);
-  const [missingFields, setMissingFields] = useState([]);
-
   useEffect(() => {
     fetchFamilyHousehold();
 
@@ -40,7 +39,8 @@ const GuestAnalytics = ({
     const percent = returnPercentComplete(household);
     setPercentComplete(percent[0]);
     setMissingFields(percent[1]);
-  }, [fetchFamilyHousehold, household]);
+    // eslint-disable-next-line
+  }, []);
   // fetch household data object
 
   const formatMissingData = () => {
