@@ -41,7 +41,6 @@ const GuestAnalytics = ({
     setPercentComplete(percent[0]);
     setMissingFields(percent[1]);
   }, [fetchFamilyHousehold, household]);
-  // fetch household data object
 
   const formatMissingData = () => {
     // counts all missing fields using underscore countby library to cound a modified key value
