@@ -22,10 +22,6 @@ const SideBar = () => {
     setCollapsed(!collapsed);
   };
 
-  const redirectToAnalytics = () => {
-    history.push('/analytics');
-  };
-
   const redirectToIntake = () => {
     history.push('/intake');
   };

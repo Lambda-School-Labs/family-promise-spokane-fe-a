@@ -91,6 +91,15 @@ h1 {
   justify-content: center;
   flex-direction: row;
 }
+.taskListContainer {
+  margin: 0 auto;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  span {
+    margin: 10%;
+  }
+}
 .semiwidth {
   width: 50%;
 }
