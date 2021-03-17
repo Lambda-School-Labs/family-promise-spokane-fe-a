@@ -28,7 +28,7 @@ the data structure is in ./IntakePacketContent/ByGuests/FamilyMembers.js*/
 
 let defaultData = {
   familyInfo: {
-    head_of_household: null,
+    user_id: null,
     case_number: 1234,
     phone_one: {
       name: 'Mary Jane',
