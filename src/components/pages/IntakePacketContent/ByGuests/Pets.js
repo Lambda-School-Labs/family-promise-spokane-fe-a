@@ -67,7 +67,6 @@ const Pets = ({
       })
       .catch(err => {
         console.log('FamiliesError', err);
-        err.send(err);
       });
   }
   //docusign
