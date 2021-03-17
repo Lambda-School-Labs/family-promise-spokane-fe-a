@@ -34,7 +34,8 @@ const ClientReleaseStaffSignature = () => {
   useEffect(() => {
     fetchUser();
     console.log(intakeGuest);
-  }, [fetchUser, intakeGuest]);
+    //eslint-disable-next-line
+  }, []);
 
   console.log(intakeGuest);
 
